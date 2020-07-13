@@ -1,5 +1,5 @@
 # SpiffyShow
 
-It's a innovative android app with combination of Youtube and Tik Tok apps.
+It's an innovative android app with a combination of Youtube and Tik Tok apps.
 
 More features will update soon.
