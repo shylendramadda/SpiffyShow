@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "733593394227",
+    "firebase_url": "https://spiffyshow-7dddf.firebaseio.com",
+    "project_id": "spiffyshow-7dddf",
+    "storage_bucket": "spiffyshow-7dddf.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:733593394227:android:38020578efe494eb99d746",
+        "android_client_info": {
+          "package_name": "com.geeklabs.spiffyshow"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "733593394227-os751uqil7r8s0vi3bo1l7kl3og53kok.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.geeklabs.spiffyshow",
+            "certificate_hash": "3c8e13eb9e6af1eb83984df092df03172d07e0be"
+          }
+        },
+        {
+          "client_id": "733593394227-e7hgq6u6mg76h7cdvou1d34rjguuckup.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBwNrhjlcyKtKXYz7c4DktbXQrpCFdmaNM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "733593394227-e7hgq6u6mg76h7cdvou1d34rjguuckup.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

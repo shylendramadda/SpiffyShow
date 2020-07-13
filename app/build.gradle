@@ -1,0 +1,170 @@
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlinx-serialization'
+apply plugin: 'com.google.gms.google-services'
+apply plugin: 'com.google.firebase.crashlytics'
+
+android {
+    ext {
+        APP_NAME = "@string/app_name"
+        APP_NAME_DEV = "@string/app_name_dev"
+    }
+    compileSdkVersion rootProject.compileSdkVersion
+    defaultConfig {
+        applicationId "com.geeklabs.spiffyshow"
+        minSdkVersion rootProject.minSdkVersion
+        targetSdkVersion rootProject.targetSdkVersion
+        multiDexEnabled true
+        versionCode project.hasProperty("versionCode") ? project.versionCode.toInteger() : 1
+        versionName project.hasProperty("versionName") ? project.versionName : "1"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        buildConfigField 'String', 'apiEndpointUrl', '"http://192.168.1.10:8080/api/"'
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                includeCompileClasspath = true
+            }
+        }
+    }
+    signingConfigs {
+        release {
+            storeFile file('keystore/spiffyshow.jks')
+            storePassword 'spiffyshow'
+            keyAlias 'spiffyshow'
+            keyPassword 'spiffyshow'
+        }
+    }
+    buildTypes {
+        debug {
+            minifyEnabled false
+            shrinkResources false
+            zipAlignEnabled false
+        }
+        dev {
+            debuggable true
+            minifyEnabled true
+            shrinkResources true
+            zipAlignEnabled true
+            signingConfig signingConfigs.release
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+//            applicationIdSuffix ".dev"
+            manifestPlaceholders = [applicationLabel: APP_NAME_DEV]
+            buildConfigField 'Boolean', 'sqliteEncryptionEnabled', 'false'
+            buildConfigField 'String', 'apiEndpointUrl', '"https://jsonplaceholder.typicode.com/"'
+            ndk {
+                abiFilters "armeabi-v7a", "x86", 'arm64-v8a'
+            }
+        }
+        release {
+            debuggable false
+            minifyEnabled true
+            shrinkResources true
+            zipAlignEnabled true
+            signingConfig signingConfigs.release
+            manifestPlaceholders = [applicationLabel: APP_NAME]
+            buildConfigField 'String', 'apiEndpointUrl', '"https://jsonplaceholder.typicode.com/"'
+            buildConfigField 'Boolean', 'sqliteEncryptionEnabled', 'true'
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            ndk {
+                abiFilters 'arm64-v8a'
+            }
+        }
+    }
+    applicationVariants.all { variant ->
+        variant.outputs.all {
+            def versionName = variant.versionName
+            def versionCode = variant.versionCode
+            def variantName = variant.name
+            outputFileName = variantName + '_' + versionName + '_' + versionCode + '.apk'
+        }
+    }
+
+    defaultConfig {
+        vectorDrawables.useSupportLibrary = true
+    }
+    dexOptions {
+        jumboMode true
+        javaMaxHeapSize "4g"
+    }
+    packagingOptions {
+        exclude 'META-INF/services/javax.annotation.processing.Processor'
+    }
+    lintOptions {
+        disable 'InvalidPackage'
+    }
+    compileOptions {
+        sourceCompatibility = '1.8'
+        targetCompatibility = '1.8'
+    }
+}
+
+repositories {
+    mavenCentral()
+    maven { url "https://kotlin.bintray.com/kotlinx" }
+    maven { url "https://s3.amazonaws.com/repo.commonsware.com" }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    //Android SDK libraries & Kotlin
+    implementation libraries.constraintLayout
+    implementation libraries.appCompact
+    implementation libraries.materialComponents
+    implementation libraries.recyclerView
+    implementation libraries.kotlinStdLib
+    //Lifecycle Components
+    implementation libraries.lifeCycleRuntime
+    implementation libraries.lifeCycleRuntimeExtensions
+    kapt libraries.lifeCycleCompiler
+    //RuntimePermission(PermissionsDispatcher)
+    implementation libraries.permission
+    kapt libraries.permissionProcessor
+    //Room Database
+    implementation libraries.roomRuntime
+    kapt libraries.roomCompiler
+    implementation libraries.roomRxJava2
+    //Retrofit
+    implementation libraries.okhttpLogging
+    implementation libraries.retrofitConverter
+    implementation libraries.retrofitScalarConverter
+    implementation libraries.retrofit
+    implementation libraries.retrofitRxJava2Adapter
+    //Dagger
+    implementation libraries.dagger
+    implementation libraries.daggerAndroid
+    implementation libraries.daggerAndroidSupport
+    kapt libraries.daggerCompiler
+    kapt libraries.daggerAndroidProcessor
+    //RxJava
+    implementation libraries.rxJava
+    implementation libraries.rxAndroid
+    implementation libraries.rxKotlin
+    implementation libraries.multidex
+    //Work Manager
+    implementation libraries.workManager
+    //Google map
+    implementation libraries.googleMap
+    implementation libraries.googleMapLocation
+    implementation libraries.googleMapUtils
+    //Image Loader
+    implementation libraries.imageLoader
+    implementation libraries.imageLoaderCompiler
+    implementation libraries.circleImage
+    //Logging
+    implementation libraries.logger
+    implementation libraries.loggerAndroid
+    //Serialization
+    implementation libraries.serialization
+    implementation libraries.coroutines
+    //Firebase
+    implementation libraries.firebaseMobileAuth
+    implementation libraries.firebaseMessage
+    implementation libraries.firebaseAnalytics
+    implementation libraries.firebaseCrashlytics
+    //Video Trimmer
+    implementation libraries.videoTrimmer
+}

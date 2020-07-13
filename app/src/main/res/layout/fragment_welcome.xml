@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/whitePrimary">
+
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/welcomeViewPager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/radioHS" />
+
+    <HorizontalScrollView
+        android:id="@+id/radioHS"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/skipLL"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="@dimen/spacing_micro">
+
+        <RadioGroup
+            android:id="@+id/dotIndicatorRadioGroup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:orientation="horizontal" />
+
+    </HorizontalScrollView>
+
+    <LinearLayout
+        android:id="@+id/skipLL"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:gravity="center"
+        android:paddingBottom="@dimen/spacing_double">
+
+        <TextView
+            android:id="@+id/skip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/spacing_normal"
+            android:padding="@dimen/spacing_normal"
+            android:text="@string/skip"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:visibility="gone" />
+
+        <Button
+            android:id="@+id/gotItButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/blueTertiary"
+            android:text="@string/got_it"
+            android:textColor="@color/whitePrimary"
+            android:textSize="14sp"
+            android:visibility="visible" />
+    </LinearLayout>
+
+</RelativeLayout>

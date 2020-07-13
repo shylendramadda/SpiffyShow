@@ -1,0 +1,112 @@
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
+
+buildscript {
+    ext.kotlin_version = '1.3.72'
+    ext.serialization_version = '0.9.1'
+    repositories {
+        google()
+        jcenter()
+        maven { url "https://kotlin.bintray.com/kotlinx" }
+        maven { url 'https://maven.fabric.io/public' }
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:4.0.0'
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        classpath "org.jetbrains.kotlin:kotlin-serialization:$kotlin_version"
+        classpath 'io.fabric.tools:gradle:1.31.2'
+        classpath 'com.google.gms:google-services:4.3.3'
+        classpath 'com.google.firebase:firebase-crashlytics-gradle:2.2.0'
+    }
+}
+
+allprojects {
+    repositories {
+        google()
+        jcenter()
+        maven { url 'https://maven.google.com/' }
+        maven { url 'https://oss.sonatype.org/content/repositories/snapshots/' }
+    }
+}
+
+ext {
+    // Sdk and tools
+    minSdkVersion = 26
+    targetSdkVersion = 29
+    compileSdkVersion = 29
+    buildToolsVersion = '29.0.2'
+
+    // App dependencies
+    daggerVersion = '2.16'
+    retrofitVersion = '2.4.0'
+    permissionVersion = '4.1.0'
+    lifeCycleVersion = '2.0.0'
+    roomVersion = "2.1.0"
+    mlKitVersion = "19.0.2"
+    googleMapVersion = "17.0.0"
+    log4kVersion = "1.0.1"
+    glide_version = "4.11.0"
+}
+
+ext.libraries = [
+        appCompact                : "androidx.appcompat:appcompat:1.0.0",
+        constraintLayout          : "androidx.constraintlayout:constraintlayout:2.0.0-beta4",
+        materialComponents        : "com.google.android.material:material:1.0.0",
+        recyclerView              : "androidx.recyclerview:recyclerview:1.1.0-beta01",
+
+        lifeCycleRuntime          : "androidx.lifecycle:lifecycle-runtime:$lifeCycleVersion",
+        lifeCycleRuntimeExtensions: "androidx.lifecycle:lifecycle-extensions:$lifeCycleVersion",
+        lifeCycleCompiler         : "androidx.lifecycle:lifecycle-compiler:$lifeCycleVersion",
+
+        //Permission(PermissionsDispatcher)
+        permission                : "com.github.hotchemi:permissionsdispatcher:$permissionVersion",
+        permissionProcessor       : "com.github.hotchemi:permissionsdispatcher-processor:$permissionVersion",
+        //Room
+        roomRuntime               : "androidx.room:room-runtime:$roomVersion",
+        roomCompiler              : "androidx.room:room-compiler:$roomVersion",
+        roomRxJava2               : "androidx.room:room-rxjava2:$roomVersion",
+        //Rx
+        rxJava                    : "io.reactivex.rxjava2:rxjava:2.1.8",
+        rxAndroid                 : "io.reactivex.rxjava2:rxandroid:2.0.1",
+        rxKotlin                  : "io.reactivex.rxjava2:rxkotlin:2.3.0",
+        okhttpLogging             : "com.squareup.okhttp3:logging-interceptor:3.10.0",
+        retrofitConverter         : "com.squareup.retrofit2:converter-gson:$retrofitVersion",
+        retrofitScalarConverter   : "com.squareup.retrofit2:converter-scalars:$retrofitVersion",
+        retrofit                  : "com.squareup.retrofit2:retrofit:$retrofitVersion",
+        retrofitRxJava2Adapter    : "com.squareup.retrofit2:adapter-rxjava2:$retrofitVersion",
+        //Dagger
+        dagger                    : "com.google.dagger:dagger:$daggerVersion",
+        daggerAndroid             : "com.google.dagger:dagger-android:$daggerVersion",
+        daggerAndroidSupport      : "com.google.dagger:dagger-android-support:$daggerVersion",
+        daggerCompiler            : "com.google.dagger:dagger-compiler:$daggerVersion",
+        daggerAndroidProcessor    : "com.google.dagger:dagger-android-processor:$daggerVersion",
+        //Worker
+        workManager               : "android.arch.work:work-runtime-ktx:2.3.3",
+        //Multi dex
+        multidex                  : 'androidx.multidex:multidex:2.0.0',
+        kotlinStdLib              : "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version",
+        //Image loading
+        imageLoader               : "com.github.bumptech.glide:glide:$glide_version",
+        imageLoaderCompiler       : "com.github.bumptech.glide:compiler:$glide_version",
+        circleImage               : "de.hdodenhof:circleimageview:3.1.0",
+        //Google map
+        googleMap                 : "com.google.android.gms:play-services-maps:$googleMapVersion",
+        googleMapLocation         : "com.google.android.gms:play-services-location:$googleMapVersion",
+        googleMapUtils            : "com.google.maps.android:android-maps-utils:1.0.0",
+        //Logging
+        logger                    : "com.log4k:log4k:${log4kVersion}",
+        loggerAndroid             : "com.log4k:log4k-android:${log4kVersion}",
+        //Serialization
+        serialization             : "org.jetbrains.kotlinx:kotlinx-serialization-runtime:$serialization_version",
+        coroutines                : "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.4",
+        //Firebase
+        firebaseMobileAuth        : "com.google.firebase:firebase-auth:19.3.1",
+        firebaseMessage           : "com.google.firebase:firebase-messaging:20.2.0",
+        firebaseAnalytics         : "com.google.firebase:firebase-analytics:17.4.2",
+        firebaseCrashlytics       : "com.google.firebase:firebase-crashlytics:17.0.0-beta01",
+        //Video Trimmer
+        videoTrimmer              : "life.knowledge4:k4l-video-trimmer:1.1.3-SNAPSHOT",
+]
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}

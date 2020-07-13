@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#2196F3</color>
+    <color name="colorPrimaryDark">#0479D5</color>
+    <color name="colorAccent">#03A9F4</color>
+    <color name="colorDarkBlue">#3F51B5</color>
+
+    <color name="blackPrimary">#000000</color>
+    <color name="blackSecondary">#212121</color>
+    <color name="blackTertiary">#333333</color>
+    <color name="blackXtra">#707070</color>
+    <color name="blackPrimaryOpacity80">#CC000000</color>
+    <color name="blackPrimaryOpacity50">#80000000</color>
+    <color name="blackPrimaryOpacity20">#33000000</color>
+    <color name="grayPrimary">#9B9B9B</color>
+    <color name="graySecondary">#CCCCCC</color>
+    <color name="grayTertiary">#D8D8D8</color>
+    <color name="grayExtra">#F4F4F4</color>
+    <color name="bluePrimary">#042E54</color>
+    <color name="blueSecondary">#005282</color>
+    <color name="blueTertiary">#0072C1</color>
+    <color name="blueXtra">#0086CD</color>
+    <color name="blueLightOpacity10">#1A0086CD</color>
+    <color name="blueGrayPrimary">#434F65</color>
+    <color name="blueGraySecondary">#3973AF</color>
+    <color name="blueGrayTertiary">#7584A0</color>
+    <color name="blueGrayExtra">#015A87</color>
+    <color name="blueTertiaryOpacity60">#990072C1</color>
+    <color name="whitePrimary">#FFFFFF</color>
+    <color name="whiteSecondary">#F9F9F9</color>
+    <color name="whitePrimaryOpacity20">#33FFFFFF</color>
+    <color name="redPrimary">#31050A</color>
+    <color name="redSecondary">#7F0D1A</color>
+    <color name="redTertiary">#AD5661</color>
+    <color name="redXtra">#DCB7BB</color>
+    <color name="greenPrimary">#008836</color>
+    <color name="greenSecondary">#88C1A0</color>
+    <color name="yellowPrimary">#FFB600</color>
+    <color name="yellowSecondary">#FFD870</color>
+    <color name="transparent">#00000000</color>
+</resources>
