@@ -111,7 +111,7 @@ class MainPresenter @Inject constructor(
             getView()?.showToast(stringUtil.getString(StringEnum.FILE_PATH_ERROR.resId))
             return
         }
-        getView()?.navigateToOriginal(fileMetaData)
+        getView()?.navigateToTrim(fileMetaData, false)
     }
 
     private fun saveUpdateUser(user: User) {

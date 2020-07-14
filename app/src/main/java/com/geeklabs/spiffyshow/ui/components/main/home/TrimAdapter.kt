@@ -1,5 +1,6 @@
 package com.geeklabs.spiffyshow.ui.components.main.home
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.net.Uri
 import android.view.View
@@ -12,13 +13,16 @@ import com.geeklabs.spiffyshow.R
 import com.geeklabs.spiffyshow.data.local.models.item.Trim
 import com.geeklabs.spiffyshow.data.local.models.user.User
 import com.geeklabs.spiffyshow.extensions.inflate
+import com.geeklabs.spiffyshow.extensions.setTint
 import com.geeklabs.spiffyshow.extensions.shouldShow
+import com.geeklabs.spiffyshow.extensions.visible
 import com.geeklabs.spiffyshow.utils.Utils.getTimeAgo
 import kotlinx.android.synthetic.main.item_layout.view.*
 
-class ItemsAdapter(
+class TrimAdapter(
     private val itemEditClicked: (Trim) -> Unit,
-    private val itemDeleteClicked: (Trim) -> Unit
+    private val itemDeleteClicked: (Trim) -> Unit,
+    private val onItemShareClick: (Trim) -> Unit
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     var items = mutableListOf<Trim>()
@@ -36,11 +40,13 @@ class ItemsAdapter(
     }
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        @SuppressLint("SetTextI18n")
         fun bind(item: Trim) = with(itemView) {
+            shareIV.visible = true
             titleTV.text = item.title
             categoryTV.text = item.category
             descriptionTV.text = item.description
-            sizeTV.text = item.fileMetaData.size
+            viewsTV.text = "${adapterPosition + 2} Views"
             dateTV.text = getTimeAgo(item.time)
 
             if (user?.imageUrl?.isNotEmpty() == true) {
@@ -64,6 +70,15 @@ class ItemsAdapter(
 
             moreOptions.setOnClickListener {
                 showPopup(item, context, it)
+            }
+            shareIV.setOnClickListener {
+                onItemShareClick(item)
+            }
+            var likeCount = 10
+            likeIV.setOnClickListener {
+                ++likeCount
+                likesTV.text = "$likeCount Likes"
+                likeIV.setTint(R.color.blueTertiary)
             }
         }
     }

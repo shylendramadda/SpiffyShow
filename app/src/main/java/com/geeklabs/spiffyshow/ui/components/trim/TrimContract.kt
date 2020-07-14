@@ -10,6 +10,7 @@ interface TrimContract {
         fun navigateToHome()
         fun showProgress()
         fun hideProgress()
+        fun navigateToOriginals()
     }
 
     interface Presenter : BaseContract.Presenter<View> {
@@ -19,10 +20,10 @@ interface TrimContract {
         fun onVideoPrepared()
         fun onGetResult(uri: String?)
         fun onSaveClicked(
-            uri: String?,
             title: String,
             description: String,
-            category: String
+            category: String,
+            isTrim: Boolean
         )
     }
 }

@@ -1,7 +1,9 @@
 package com.geeklabs.spiffyshow.ui.components.main.home
 
 import android.app.AlertDialog
+import android.content.Intent
 import androidx.appcompat.widget.SearchView
+import androidx.core.content.FileProvider
 import com.geeklabs.spiffyshow.R
 import com.geeklabs.spiffyshow.data.local.models.item.Trim
 import com.geeklabs.spiffyshow.data.local.models.user.User
@@ -13,13 +15,15 @@ import com.geeklabs.spiffyshow.utils.Constants
 import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.view_state_layout.*
 import kotlinx.android.synthetic.main.view_state_layout.view.*
+import java.io.File
 import javax.inject.Inject
+
 
 class HomeFragment : BaseFragment<HomeContract.View, HomeContract.Presenter>(), HomeContract.View {
 
     @Inject
     lateinit var homePresenter: HomePresenter
-    private lateinit var itemsAdapter: ItemsAdapter
+    private lateinit var trimAdapter: TrimAdapter
     private var fileMetaData: FileMetaData? = null
 
     override fun initUI() {
@@ -27,12 +31,13 @@ class HomeFragment : BaseFragment<HomeContract.View, HomeContract.Presenter>(), 
         if (fileMetaData != null) {
             presenter?.setFileMetaData(fileMetaData!!)
         }
-        itemsAdapter = ItemsAdapter(
+        trimAdapter = TrimAdapter(
             { presenter?.onEditClicked(it) },
-            { presenter?.onDeleteClicked(it) }
+            { presenter?.onDeleteClicked(it) },
+            { presenter?.onShareClicked(it) }
         )
-        recyclerViewItemList.adapter = itemsAdapter
-        itemsAdapter.setEmptyStateView(stateLayout)
+        recyclerViewItemList.adapter = trimAdapter
+        trimAdapter.setEmptyStateView(stateLayout)
 
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String): Boolean {
@@ -65,9 +70,9 @@ class HomeFragment : BaseFragment<HomeContract.View, HomeContract.Presenter>(), 
         items: MutableList<Trim>,
         user: User?
     ) {
-        itemsAdapter.user = user
-        itemsAdapter.items = items
-        itemsAdapter.notifyDataSetChanged()
+        trimAdapter.user = user
+        trimAdapter.items = items
+        trimAdapter.notifyDataSetChanged()
         val isMoreThanOne = items.size > 1
         if (isMoreThanOne) recyclerViewItemList.smoothScrollToPosition(0)
     }
@@ -97,12 +102,40 @@ class HomeFragment : BaseFragment<HomeContract.View, HomeContract.Presenter>(), 
             .show()
     }
 
+    override fun startFileShareIntent(item: Trim) {
+        val shareIntent = Intent(Intent.ACTION_SEND).apply {
+            val fileNameWithExtension = "${item.fileMetaData.name}.${item.fileMetaData.ext}"
+            type = FILE_TYPE
+            flags = Intent.FLAG_GRANT_READ_URI_PERMISSION
+            flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+            flags = Intent.FLAG_ACTIVITY_NEW_TASK
+            putExtra(
+                Intent.EXTRA_SUBJECT,
+                "Sharing File $fileNameWithExtension from SpiffyShow"
+            )
+            putExtra(
+                Intent.EXTRA_TEXT,
+                "Sharing File $fileNameWithExtension from SpiffyShow"
+            )
+            val fileURI = FileProvider.getUriForFile(
+                context!!, context!!.packageName + ".provider",
+                File(item.fileMetaData.path)
+            )
+            putExtra(Intent.EXTRA_STREAM, fileURI)
+        }
+        startActivity(shareIntent)
+    }
+
+    override fun notifyAdapter() {
+        trimAdapter.notifyDataSetChanged()
+    }
+
     override fun showToast(title: String) {
         activity?.toast(title)
     }
 
     override fun navigateToTrim(item: Trim) {
-        (activity as MainActivity).navigateToTrim(item.fileMetaData)
+        (activity as MainActivity).navigateToTrim(item.fileMetaData, false)
     }
 
     override fun initPresenter() = homePresenter
@@ -112,6 +145,7 @@ class HomeFragment : BaseFragment<HomeContract.View, HomeContract.Presenter>(), 
     override fun getLayoutResId() = R.layout.fragment_home
 
     companion object {
+        private const val FILE_TYPE = "video/*"
         fun newInstance(fileMetaData: FileMetaData): HomeFragment {
             return HomeFragment().apply {
                 this.fileMetaData = fileMetaData

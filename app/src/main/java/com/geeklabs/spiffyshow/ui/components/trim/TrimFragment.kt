@@ -1,9 +1,11 @@
 package com.geeklabs.spiffyshow.ui.components.trim
 
 import android.net.Uri
+import android.widget.MediaController
 import com.geeklabs.spiffyshow.R
 import com.geeklabs.spiffyshow.enums.Navigation
 import com.geeklabs.spiffyshow.extensions.toast
+import com.geeklabs.spiffyshow.extensions.visible
 import com.geeklabs.spiffyshow.models.FileMetaData
 import com.geeklabs.spiffyshow.ui.base.BaseFragment
 import com.geeklabs.spiffyshow.ui.common.Progress
@@ -20,8 +22,8 @@ class TrimFragment : BaseFragment<TrimContract.View, TrimContract.Presenter>(),
     @Inject
     lateinit var trimPresenter: TrimPresenter
     private var fileMetaData: FileMetaData? = null
+    private var isTrim: Boolean = false
     private lateinit var progress: Progress
-    private var processedUri: Uri? = null
 
     override fun initUI() {
         if (fileMetaData == null) {
@@ -32,14 +34,11 @@ class TrimFragment : BaseFragment<TrimContract.View, TrimContract.Presenter>(),
             val title = titleET.text.toString().trim()
             val description = descriptionET.text.toString().trim()
             val category = categoryET.text.toString().trim()
-            presenter?.onSaveClicked(processedUri.toString(), title, description, category)
+            presenter?.onSaveClicked(title, description, category, isTrim)
         }
         progress = Progress(context, R.string.please_wait, false)
-        startVideo(fileMetaData!!)
         presenter?.setFileMetaData(fileMetaData!!)
-        videoTrimmer.setOnTrimVideoListener(this)
-        videoTrimmer.setOnK4LVideoListener(this)
-        videoTrimmer.setVideoInformationVisibility(true)
+        setVideoView(fileMetaData!!.path)
     }
 
     override fun showProgress() {
@@ -50,10 +49,23 @@ class TrimFragment : BaseFragment<TrimContract.View, TrimContract.Presenter>(),
         progress.dismiss()
     }
 
-    private fun startVideo(fileMetaData: FileMetaData) {
-        val uri = Uri.parse(fileMetaData.path)
-        videoTrimmer.setMaxDuration(120) // 2 min
-        videoTrimmer.setVideoURI(uri)
+    private fun setVideoView(filePath: String) {
+        val uri = Uri.parse(filePath)
+        if (isTrim) {
+            videoTrimmer.setMaxDuration(120) // 2 min
+            videoTrimmer.setVideoURI(uri)
+            videoTrimmer.setOnTrimVideoListener(this)
+            videoTrimmer.setOnK4LVideoListener(this)
+            videoTrimmer.setVideoInformationVisibility(true)
+        } else {
+            val mediaController = MediaController(context)
+            mediaController.setAnchorView(videoView)
+            videoView.setMediaController(mediaController)
+            videoView.setVideoURI(uri)
+            videoView.seekTo(1)
+        }
+        videoTrimmer.visible = isTrim
+        videoView.visible = !isTrim
     }
 
     override fun onTrimStarted() {
@@ -61,7 +73,6 @@ class TrimFragment : BaseFragment<TrimContract.View, TrimContract.Presenter>(),
     }
 
     override fun getResult(uri: Uri?) {
-        this.processedUri = uri
         presenter?.onGetResult(uri.toString())
     }
 
@@ -85,6 +96,10 @@ class TrimFragment : BaseFragment<TrimContract.View, TrimContract.Presenter>(),
         (activity as MainActivity).navigateToScreen(Navigation.HOME)
     }
 
+    override fun navigateToOriginals() {
+        (activity as MainActivity).navigateToScreen(Navigation.ORIGINAL)
+    }
+
     override fun initPresenter() = trimPresenter
 
     override fun injectDependencies() = getApplicationComponent().inject(this)
@@ -92,9 +107,13 @@ class TrimFragment : BaseFragment<TrimContract.View, TrimContract.Presenter>(),
     override fun getLayoutResId() = R.layout.fragment_trim
 
     companion object {
-        fun newInstance(fileMetaData: FileMetaData): TrimFragment {
+        fun newInstance(
+            fileMetaData: FileMetaData,
+            isTrim: Boolean
+        ): TrimFragment {
             return TrimFragment().apply {
                 this.fileMetaData = fileMetaData
+                this.isTrim = isTrim
             }
         }
     }

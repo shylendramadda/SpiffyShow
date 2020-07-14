@@ -4,12 +4,9 @@ import com.geeklabs.spiffyshow.data.local.models.item.Item
 import com.geeklabs.spiffyshow.data.local.models.user.User
 import com.geeklabs.spiffyshow.domain.local.item.DeleteItemLocalUseCase
 import com.geeklabs.spiffyshow.domain.local.item.FetchItemsFromLocalUseCase
-import com.geeklabs.spiffyshow.domain.local.item.SaveUpdateItemsInLocalUseCase
 import com.geeklabs.spiffyshow.extensions.applySchedulers
 import com.geeklabs.spiffyshow.models.ApplicationState
-import com.geeklabs.spiffyshow.models.FileMetaData
 import com.geeklabs.spiffyshow.ui.base.BasePresenter
-import com.geeklabs.spiffyshow.utils.Utils
 import com.log4k.e
 import io.reactivex.Observable
 import io.reactivex.schedulers.Schedulers
@@ -19,13 +16,11 @@ import javax.inject.Inject
 class OriginalPresenter @Inject constructor(
     private val applicationState: ApplicationState,
     private val fetchItemsFromLocalUseCase: FetchItemsFromLocalUseCase,
-    private val saveUpdateItemsInLocalUseCase: SaveUpdateItemsInLocalUseCase,
     private val deleteItemLocalUseCase: DeleteItemLocalUseCase
 ) : BasePresenter<OriginalContract.View>(),
     OriginalContract.Presenter {
 
     private var items = mutableListOf<Item>()
-    private lateinit var fileMetaData: FileMetaData
     private var user: User? = null
 
     override fun onCreated() {
@@ -33,18 +28,6 @@ class OriginalPresenter @Inject constructor(
         getView()?.initUI()
         loadItemsFromLocal()
         this.user = applicationState.user
-    }
-
-    override fun setFileMetaData(fileMetaData: FileMetaData) {
-        this.fileMetaData = fileMetaData
-        val item = Item(
-            userId = applicationState.user?.id ?: 0,
-            time = Utils.getCurrentTime(),
-            fileMetaData = fileMetaData
-        )
-        Observable.fromCallable {
-            saveUpdateItemsInLocalUseCase.execute(mutableListOf(item))
-        }.subscribeOn(Schedulers.newThread()).subscribe()
     }
 
     private fun loadItemsFromLocal() {
@@ -58,7 +41,7 @@ class OriginalPresenter @Inject constructor(
                         getView()?.setState(empty = true)
                         return@subscribe
                     }
-                    it.sortBy { item -> item.title }
+                    it.sortByDescending { item -> item.time }
                     items = it
                     getView()?.showItems(it, user)
                 }, {
@@ -80,8 +63,11 @@ class OriginalPresenter @Inject constructor(
         getView()?.showItems(finalList.toMutableList(), user)
     }
 
-    override fun onEditClicked(item: Item) {
-        getView()?.navigateToTrim(item)
+    override fun onEditClicked(
+        item: Item,
+        isTrim: Boolean
+    ) {
+        getView()?.navigateToTrim(item, isTrim)
     }
 
     override fun onDeleteClicked(item: Item) {
@@ -90,5 +76,6 @@ class OriginalPresenter @Inject constructor(
         }.subscribeOn(Schedulers.io()).subscribe({}, {
             e("Error deleteCategoryLocal: ${it.message}")
         }))
+        getView()?.notifyAdapter()
     }
 }

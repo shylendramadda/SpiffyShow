@@ -5,6 +5,8 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Bitmap
+import android.net.Uri
 import android.provider.MediaStore
 import androidx.appcompat.app.AlertDialog
 import com.bumptech.glide.Glide
@@ -13,13 +15,16 @@ import com.geeklabs.spiffyshow.data.local.models.user.User
 import com.geeklabs.spiffyshow.enums.Navigation
 import com.geeklabs.spiffyshow.extensions.shouldShow
 import com.geeklabs.spiffyshow.extensions.toast
+import com.geeklabs.spiffyshow.models.FileMetaData
 import com.geeklabs.spiffyshow.ui.base.BaseFragment
 import com.geeklabs.spiffyshow.ui.components.main.MainActivity
+import com.geeklabs.spiffyshow.utils.Utils
 import kotlinx.android.synthetic.main.fragment_settings.*
 import kotlinx.android.synthetic.main.layout_content_settings.*
 import permissions.dispatcher.*
 import javax.inject.Inject
 
+@Suppress("DEPRECATION")
 @RuntimePermissions
 class SettingsFragment : BaseFragment<SettingsContract.View, SettingsContract.Presenter>(),
     SettingsContract.View {
@@ -57,7 +62,7 @@ class SettingsFragment : BaseFragment<SettingsContract.View, SettingsContract.Pr
         interestET.setText(user.interests)
         bioET.setText(user.bio)
         if (user.imageUrl?.isNotEmpty() == true) {
-            updateProfileImage(user.imageUrl ?: "")
+            Glide.with(context!!).load(user.imageUrl).dontAnimate().into(userImage)
         } else if (user.name?.isNotEmpty() == true) {
             userImageText.text = user.name?.substring(0, 1)
             userImage.shouldShow = false
@@ -65,10 +70,14 @@ class SettingsFragment : BaseFragment<SettingsContract.View, SettingsContract.Pr
         }
     }
 
-    override fun updateProfileImage(filePath: String) {
-        Glide.with(activity!!).load(filePath).placeholder(R.drawable.ic_icon_user)
-            .dontAnimate()
-            .into(userImage)
+    override fun updateProfileImage(fileMetaData: FileMetaData) {
+        val filePath = fileMetaData.path
+        if (filePath.isEmpty() && fileMetaData.isOnlineFile) {
+            Glide.with(context!!).asBitmap().load(fileMetaData.uri).dontAnimate()
+                .into(userImage)
+        } else {
+            Glide.with(context!!).load(filePath).dontAnimate().into(userImage)
+        }
         userImage.shouldShow = true
         userImageText.shouldShow = false
     }
@@ -126,12 +135,25 @@ class SettingsFragment : BaseFragment<SettingsContract.View, SettingsContract.Pr
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
         if (data == null || resultCode != Activity.RESULT_OK) {
             return
         }
-        val fileUri = data.data.toString()
+        val fileUri = when (requestCode) {
+            GALLERY -> data.data.toString()
+            CAMERA -> {
+                val bitmap = data.extras?.get("data") as Bitmap
+                val path = MediaStore.Images.Media.insertImage(
+                    context!!.contentResolver,
+                    bitmap,
+                    "CameraImage_${Utils.getCurrentTime()}",
+                    null
+                )
+                Uri.parse(path).toString()
+            }
+            else -> ""
+        }
         presenter?.onSaveFilePath(fileUri)
-        super.onActivityResult(requestCode, resultCode, data)
     }
 
     @NeedsPermission(

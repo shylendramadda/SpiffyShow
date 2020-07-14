@@ -24,8 +24,6 @@ import com.geeklabs.spiffyshow.ui.base.BaseActivity
 import com.geeklabs.spiffyshow.ui.common.NavigationHandler
 import com.geeklabs.spiffyshow.ui.components.login.LoginActivity
 import com.geeklabs.spiffyshow.ui.components.main.drawer.DrawerFragment
-import com.geeklabs.spiffyshow.ui.components.main.original.OriginalFragment
-import com.geeklabs.spiffyshow.ui.components.main.settings.SettingsFragment
 import com.geeklabs.spiffyshow.ui.components.trim.TrimFragment
 import com.geeklabs.spiffyshow.utils.Constants
 import com.geeklabs.spiffyshow.utils.Utils
@@ -127,13 +125,17 @@ class MainActivity : BaseActivity<MainContract.View, MainContract.Presenter>(), 
                 bottomNavigation.menu.findItem(R.id.navigation_home).isChecked = true
                 R.string.app_name
             }
+            Navigation.ORIGINAL -> {
+                bottomNavigation.menu.findItem(R.id.navigation_original).isChecked = true
+                R.string.original
+            }
             Navigation.NOTIFICATION -> R.string.notifications
             Navigation.TRIM -> {
                 isShowBottomNav = false
-                R.string.trimmed_videos
+                R.string.trim_and_upload_video
             }
-            Navigation.ADD -> R.string.add_video
             Navigation.SETTINGS -> R.string.settings
+            Navigation.SEARCH -> R.string.search_without_colon
             Navigation.ABOUT -> {
                 isShowBottomNav = false
                 R.string.about
@@ -191,16 +193,13 @@ class MainActivity : BaseActivity<MainContract.View, MainContract.Presenter>(), 
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        val fragment = supportFragmentManager.primaryNavigationFragment
-        if (fragment != null && fragment is SettingsFragment) {
-            fragment.onActivityResult(requestCode, resultCode, data)
-            return
-        }
         if (data == null || resultCode != Activity.RESULT_OK) {
             return
         }
-        val fileUri = data.data.toString()
-        presenter?.onSaveFilePath(fileUri)
+        if (requestCode == GALLERY) {
+            val fileUri = data.data.toString()
+            presenter?.onSaveFilePath(fileUri)
+        }
     }
 
     override fun askPermissions() {
@@ -285,14 +284,11 @@ class MainActivity : BaseActivity<MainContract.View, MainContract.Presenter>(), 
         finishView()
     }
 
-    override fun navigateToOriginal(fileMetaData: FileMetaData) {
-        val fragment = OriginalFragment.newInstance(fileMetaData)
-        navigationHandler.navigateTo(fragment, "OriginalFragment")
-        setToolBarTitle(Navigation.ORIGINAL)
-    }
-
-    override fun navigateToTrim(fileMetaData: FileMetaData) {
-        val fragment = TrimFragment.newInstance(fileMetaData)
+    override fun navigateToTrim(
+        fileMetaData: FileMetaData,
+        isTrim: Boolean
+    ) {
+        val fragment = TrimFragment.newInstance(fileMetaData, isTrim)
         navigationHandler.navigateTo(fragment, "TrimFragment")
         setToolBarTitle(Navigation.TRIM)
     }
@@ -332,8 +328,8 @@ class MainActivity : BaseActivity<MainContract.View, MainContract.Presenter>(), 
     override fun getLayoutResId() = R.layout.activity_main
 
     companion object {
-        // private const val CAMERA = 1
-        private const val GALLERY = 2
+        // private const val CAMERA = 101
+        private const val GALLERY = 102
         private const val VIDEO_TYPE = "video/*"
     }
 }

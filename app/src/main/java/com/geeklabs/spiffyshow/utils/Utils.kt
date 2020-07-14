@@ -214,7 +214,8 @@ object Utils {
 
     fun getTimeAgo(timeInMillis: Long): String {
         val format = SimpleDateFormat(Constants.DATE_TIME_FORMAT, Locale.getDefault())
-        val past = format.parse(getDateAsString(Date(timeInMillis), Constants.DATE_TIME_FORMAT))
+        val past =
+            format.parse(getDateAsString(Date(timeInMillis), Constants.DATE_TIME_FORMAT)) ?: Date()
         val now = Date()
         val seconds: Long = TimeUnit.MILLISECONDS.toSeconds(now.time - past.time)
         val minutes: Long = TimeUnit.MILLISECONDS.toMinutes(now.time - past.time)
@@ -223,6 +224,7 @@ object Utils {
         return when {
             seconds < 60 -> "$seconds seconds ago"
             minutes < 60 -> "$minutes minutes ago"
+            hours < 2 -> "$hours hour ago"
             hours < 24 -> "$hours hours ago"
             else -> "$days days ago"
         }

@@ -18,7 +18,20 @@
         <life.knowledge4.videotrimmer.K4LVideoTrimmer
             android:id="@+id/videoTrimmer"
             android:layout_width="match_parent"
-            android:layout_height="400dp" />
+            android:layout_height="400dp"
+            android:visibility="gone" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/blackTertiary"
+            android:gravity="center">
+
+            <VideoView
+                android:id="@+id/videoView"
+                android:layout_width="match_parent"
+                android:layout_height="300dp" />
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -56,8 +69,7 @@
                     android:focusable="true"
                     android:hint="@string/description"
                     android:importantForAutofill="yes"
-                    android:inputType="textMultiLine"
-                    android:minLines="3"
+                    android:inputType="text"
                     android:padding="@dimen/spacing_normal"
                     android:textSize="16sp" />
             </com.google.android.material.textfield.TextInputLayout>

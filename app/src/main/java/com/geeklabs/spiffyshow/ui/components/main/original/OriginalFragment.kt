@@ -5,7 +5,6 @@ import com.geeklabs.spiffyshow.R
 import com.geeklabs.spiffyshow.data.local.models.item.Item
 import com.geeklabs.spiffyshow.data.local.models.user.User
 import com.geeklabs.spiffyshow.extensions.*
-import com.geeklabs.spiffyshow.models.FileMetaData
 import com.geeklabs.spiffyshow.ui.base.BaseFragment
 import com.geeklabs.spiffyshow.ui.components.main.MainActivity
 import com.geeklabs.spiffyshow.utils.Constants
@@ -20,15 +19,10 @@ class OriginalFragment : BaseFragment<OriginalContract.View, OriginalContract.Pr
     @Inject
     lateinit var originalPresenter: OriginalPresenter
     private lateinit var itemsAdapter: OriginalAdapter
-    private var fileMetaData: FileMetaData? = null
 
     override fun initUI() {
         view?.hideKeyboard(context!!)
-        if (fileMetaData != null) {
-            presenter?.setFileMetaData(fileMetaData!!)
-        }
-        itemsAdapter = OriginalAdapter(
-            { presenter?.onEditClicked(it) },
+        itemsAdapter = OriginalAdapter(onEditClicked,
             { presenter?.onDeleteClicked(it) }
         )
         recyclerViewItemList.adapter = itemsAdapter
@@ -52,6 +46,13 @@ class OriginalFragment : BaseFragment<OriginalContract.View, OriginalContract.Pr
         }
     }
 
+    private val onEditClicked = fun(
+        item: Item,
+        isTrim: Boolean
+    ) {
+        presenter?.onEditClicked(item, isTrim)
+    }
+
     override fun setState(progress: Boolean, empty: Boolean, error: Boolean) {
         stateLayout.visible = true
         stateLayout.stateProgress.visible = progress
@@ -73,8 +74,15 @@ class OriginalFragment : BaseFragment<OriginalContract.View, OriginalContract.Pr
         if (isMoreThanOne) recyclerViewItemList.smoothScrollToPosition(0)
     }
 
-    override fun navigateToTrim(item: Item) {
-        (activity as MainActivity).navigateToTrim(item.fileMetaData)
+    override fun navigateToTrim(
+        item: Item,
+        isTrim: Boolean
+    ) {
+        (activity as MainActivity).navigateToTrim(item.fileMetaData, isTrim)
+    }
+
+    override fun notifyAdapter() {
+        itemsAdapter.notifyDataSetChanged()
     }
 
     override fun showToast(title: String) {
@@ -86,12 +94,4 @@ class OriginalFragment : BaseFragment<OriginalContract.View, OriginalContract.Pr
     override fun injectDependencies() = getApplicationComponent().inject(this)
 
     override fun getLayoutResId() = R.layout.fragment_original
-
-    companion object {
-        fun newInstance(fileMetaData: FileMetaData): OriginalFragment {
-            return OriginalFragment().apply {
-                this.fileMetaData = fileMetaData
-            }
-        }
-    }
 }

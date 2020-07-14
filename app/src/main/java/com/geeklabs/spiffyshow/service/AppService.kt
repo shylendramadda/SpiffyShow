@@ -184,36 +184,41 @@ class AppService : Service() {
     }
 
     private fun fetchAddressFromLocation(location: Location) {
-        disposables.add(Observable.fromCallable {
-            val geoCoder = Geocoder(this, Locale.getDefault())
-            val addresses = geoCoder.getFromLocation(
-                location.latitude,
-                location.longitude,
-                1
-            )
-            addresses
-        }.observeOn(Schedulers.newThread())
-            .subscribe {
-                // If any additional address line present than only, check with max available address lines by getMaxAddressLineIndex()
-                if (it.isNotEmpty()) {
-                    val addressOne = it[0]
-                    val city = addressOne.locality
-                    val state = addressOne.adminArea
-                    val country = addressOne.countryName
-                    val postalCode = addressOne.postalCode
-                    val addressLine = addressOne.getAddressLine(0)
-                    val deviceLocation = DeviceLocation(
-                        city = city,
-                        state = state,
-                        country = country,
-                        pinCode = postalCode,
-                        addressLine = addressLine,
-                        latitude = location.latitude,
-                        longitude = location.longitude
-                    )
-                    saveLocationInfo(deviceLocation, location)
-                }
-            })
+        try {
+            disposables.add(Observable.fromCallable {
+                val geoCoder = Geocoder(this, Locale.getDefault())
+                val addresses = geoCoder.getFromLocation(
+                    location.latitude,
+                    location.longitude,
+                    1
+                )
+                addresses
+            }.observeOn(Schedulers.newThread())
+                .subscribe {
+                    // If any additional address line present than only, check with max available address lines by getMaxAddressLineIndex()
+                    if (it.isNotEmpty()) {
+                        val addressOne = it[0]
+                        val city = addressOne.locality
+                        val state = addressOne.adminArea
+                        val country = addressOne.countryName
+                        val postalCode = addressOne.postalCode
+                        val addressLine = addressOne.getAddressLine(0)
+                        val deviceLocation = DeviceLocation(
+                            city = city,
+                            state = state,
+                            country = country,
+                            pinCode = postalCode,
+                            addressLine = addressLine,
+                            latitude = location.latitude,
+                            longitude = location.longitude
+                        )
+                        saveLocationInfo(deviceLocation, location)
+                    }
+                })
+        } catch (e: java.lang.Exception) {
+            e.printStackTrace()
+            e("Unable to get the address from Geo coder")
+        }
     }
 
     @WorkerThread

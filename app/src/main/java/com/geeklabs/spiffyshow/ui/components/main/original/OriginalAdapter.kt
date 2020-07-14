@@ -14,11 +14,13 @@ import com.geeklabs.spiffyshow.data.local.models.item.Item
 import com.geeklabs.spiffyshow.data.local.models.user.User
 import com.geeklabs.spiffyshow.extensions.inflate
 import com.geeklabs.spiffyshow.extensions.shouldShow
+import com.geeklabs.spiffyshow.extensions.visible
+import com.geeklabs.spiffyshow.utils.Utils
 import com.geeklabs.spiffyshow.utils.Utils.getTimeAgo
 import kotlinx.android.synthetic.main.item_layout.view.*
 
 class OriginalAdapter(
-    private val itemEditClicked: (Item) -> Unit,
+    private val itemEditClicked: (Item, Boolean) -> Unit,
     private val itemDeleteClicked: (Item) -> Unit
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
@@ -39,10 +41,11 @@ class OriginalAdapter(
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         @SuppressLint("SetTextI18n")
         fun bind(item: Item) = with(itemView) {
-            titleTV.text = item.fileMetaData.name
-            categoryTV.text = item.fileMetaData.ext
-            descriptionTV.text = item.fileMetaData.path
-            sizeTV.text = item.fileMetaData.size
+            trimTV.visible = true
+            Utils.showHideViews(false, commentIV, shareIV, viewsTV, likeIV, likesTV, followText)
+            titleTV.text = item.title
+            categoryTV.text = item.category
+            descriptionTV.text = item.description
             dateTV.text = getTimeAgo(item.time)
 
             if (user?.imageUrl?.isNotEmpty() == true) {
@@ -67,6 +70,9 @@ class OriginalAdapter(
             moreOptions.setOnClickListener {
                 showPopup(item, context, it)
             }
+            trimTV.setOnClickListener {
+                itemEditClicked(item, true)
+            }
         }
     }
 
@@ -77,7 +83,7 @@ class OriginalAdapter(
         popup.setOnMenuItemClickListener(PopupMenu.OnMenuItemClickListener {
             when (it?.itemId) {
                 R.id.itemEdit -> {
-                    itemEditClicked(item)
+                    itemEditClicked(item, false)
                 }
                 R.id.itemDelete -> {
                     itemDeleteClicked(item)

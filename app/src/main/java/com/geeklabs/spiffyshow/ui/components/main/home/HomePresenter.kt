@@ -43,9 +43,10 @@ class HomePresenter @Inject constructor(
                         getView()?.setState(empty = true)
                         return@subscribe
                     }
-                    it.sortBy { item -> item.title }
+                    it.sortByDescending { item -> item.time }
                     items = it
                     getView()?.showItems(it, user)
+                    getView()?.setState(progress = false)
                 }, {
                     getView()?.setState(error = true)
                     e("Error getItemsFromLocal: ${it.message}")
@@ -79,6 +80,11 @@ class HomePresenter @Inject constructor(
         }.subscribeOn(Schedulers.io()).subscribe({}, {
             e("Error deleteCategoryLocal: ${it.message}")
         }))
+        getView()?.notifyAdapter()
+    }
+
+    override fun onShareClicked(item: Trim) {
+        getView()?.startFileShareIntent(item)
     }
 
 }

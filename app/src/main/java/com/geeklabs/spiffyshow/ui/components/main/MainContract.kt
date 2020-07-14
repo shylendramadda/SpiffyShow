@@ -14,9 +14,11 @@ interface MainContract {
         fun stopService()
         fun navigateToHome()
         fun startVideoIntent()
-        fun navigateToTrim(fileMetaData: FileMetaData)
+        fun navigateToTrim(
+            fileMetaData: FileMetaData,
+            isTrim: Boolean
+        )
         fun askPermissions()
-        fun navigateToOriginal(fileMetaData: FileMetaData)
     }
 
     interface Presenter : BaseContract.Presenter<View> {

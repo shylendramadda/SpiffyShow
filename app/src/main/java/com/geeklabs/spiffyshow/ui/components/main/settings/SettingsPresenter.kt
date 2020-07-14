@@ -62,12 +62,15 @@ class SettingsPresenter @Inject constructor(
     override fun onSaveFilePath(imagePath: String) {
         isImageUpdate = true
         val fileMetaData = fileUtil.getFileMetaData(imagePath)
-        if (fileMetaData == null || fileMetaData.path.isEmpty()) {
+        if (fileMetaData == null || (fileMetaData.path.isEmpty() && fileMetaData.uri.isEmpty())) {
             getView()?.showToast(stringUtil.getString(StringEnum.FILE_PATH_ERROR.resId))
             return
         }
+        if (fileMetaData.path.isEmpty()) {
+            fileMetaData.path = fileMetaData.uri
+        }
         user.imageUrl = fileMetaData.path
-        getView()?.updateProfileImage(fileMetaData.path)
+        getView()?.updateProfileImage(fileMetaData)
         saveUpdateUser(user)
     }
 

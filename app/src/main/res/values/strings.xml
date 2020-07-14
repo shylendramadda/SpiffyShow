@@ -129,7 +129,7 @@
     <string name="order_details">Order Details</string>
     <string name="no_notifications">No notifications to display</string>
     <string name="no_categories">No categories to display</string>
-    <string name="original">Original</string>
+    <string name="original">Originals</string>
     <string name="upload">Upload</string>
     <string name="checkout">Checkout</string>
     <string name="cart_items">Cart Items</string>
@@ -149,7 +149,7 @@
     <string name="items">Products</string>
     <string name="user_location_not_updated">User location not yet updated to navigate via map</string>
     <string name="delete">Delete</string>
-    <string name="edit">Trim</string>
+    <string name="edit">Edit</string>
     <string name="category_info">Category Info</string>
     <string name="product_info">Product Info</string>
     <string name="weight">Weight</string>
@@ -159,10 +159,10 @@
     <string name="day_ago">1 day ago</string>
     <string name="title">Title</string>
     <string name="description">Description</string>
-    <string name="trimmed_videos">Trim and upload video</string>
+    <string name="trim_and_upload_video">Trim and upload video</string>
     <string name="add_video">Add Video</string>
     <string name="category">Category</string>
     <string name="s">S</string>
     <string name="follow"> + Follow</string>
-    <string name="trim">Trim</string>
+    <string name="trim">Trim Video</string>
 </resources>

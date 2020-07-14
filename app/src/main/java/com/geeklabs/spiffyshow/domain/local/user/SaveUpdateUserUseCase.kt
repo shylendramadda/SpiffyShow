@@ -19,6 +19,8 @@ class SaveUpdateUserUseCase @Inject constructor(private val dataRepository: Data
                 user.phoneNumber = parameters.phoneNumber ?: user.phoneNumber
                 user.email = parameters.email ?: user.email
                 user.imageUrl = parameters.imageUrl ?: user.imageUrl
+                user.interests = parameters.interests ?: user.interests
+                user.bio = parameters.bio ?: user.bio
                 user.pinCode = parameters.pinCode ?: user.pinCode
                 user.city = parameters.city ?: user.city
                 user.state = parameters.state ?: user.state

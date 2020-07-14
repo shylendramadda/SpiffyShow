@@ -102,7 +102,8 @@
                         android:gravity="center_vertical"
                         android:padding="@dimen/spacing_nano"
                         android:src="@drawable/ic_icon_more"
-                        android:tint="@color/blackPrimary" />
+                        android:tint="@color/blackPrimary"
+                        tools:ignore="ContentDescription" />
 
                 </RelativeLayout>
 
@@ -133,21 +134,20 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/grayPrimary"
-            android:orientation="vertical"
-            android:padding="@dimen/spacing_normal">
+            android:background="@color/blackTertiary"
+            android:gravity="center">
 
-            <LinearLayout
+            <VideoView
+                android:id="@+id/videoView"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/blackTertiary"
-                android:gravity="center">
+                android:layout_height="250dp" />
+        </LinearLayout>
 
-                <VideoView
-                    android:id="@+id/videoView"
-                    android:layout_width="match_parent"
-                    android:layout_height="250dp" />
-            </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/whiteSecondary"
+            android:orientation="vertical">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -160,28 +160,41 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/spacing_double"
-                    android:src="@drawable/ic_icon_like" />
-
-                <ImageView
-                    android:id="@+id/disLikeIV"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/spacing_double"
-                    android:src="@drawable/ic_icon_dislike" />
+                    android:src="@drawable/ic_icon_like"
+                    android:tint="@color/grayPrimary"
+                    tools:ignore="ContentDescription" />
 
                 <ImageView
                     android:id="@+id/commentIV"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/spacing_double"
-                    android:src="@drawable/ic_icon_comment" />
+                    android:src="@drawable/ic_icon_comment"
+                    android:tint="@color/grayPrimary"
+                    tools:ignore="ContentDescription" />
 
                 <ImageView
                     android:id="@+id/shareIV"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/spacing_double"
-                    android:src="@drawable/ic_icon_forward" />
+                    android:src="@drawable/ic_icon_forward"
+                    android:tint="@color/grayPrimary"
+                    android:visibility="gone"
+                    tools:ignore="ContentDescription"
+                    tools:visibility="visible" />
+
+                <TextView
+                    android:id="@+id/trimTV"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/spacing_normal"
+                    android:padding="@dimen/spacing_micro"
+                    android:text="@string/trim"
+                    android:textColor="@color/blueTertiary"
+                    android:textStyle="bold"
+                    android:visibility="gone"
+                    tools:visibility="visible" />
 
             </LinearLayout>
 
@@ -189,14 +202,17 @@
                 android:id="@+id/likesTV"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:padding="@dimen/spacing_micro"
+                android:layout_marginStart="@dimen/spacing_medium"
+                android:padding="@dimen/spacing_nano"
                 android:text="@string/likes"
-                android:textColor="@color/whitePrimary" />
+                android:textColor="@color/blackTertiary" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:layout_marginHorizontal="@dimen/spacing_normal"
+                android:orientation="horizontal"
+                android:paddingBottom="@dimen/spacing_micro">
 
                 <TextView
                     android:id="@+id/dateTV"
@@ -204,15 +220,15 @@
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/spacing_normal"
                     android:text="@string/day_ago"
-                    android:textColor="@color/whitePrimary" />
+                    android:textColor="@color/blackTertiary" />
 
                 <TextView
-                    android:id="@+id/sizeTV"
+                    android:id="@+id/viewsTV"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/spacing_normal"
-                    android:textColor="@color/whitePrimary"
-                    tools:text="12 MB" />
+                    android:textColor="@color/blackTertiary"
+                    tools:text="100 Views" />
 
             </LinearLayout>
         </LinearLayout>

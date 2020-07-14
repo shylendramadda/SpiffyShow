@@ -17,6 +17,8 @@ interface HomeContract {
         fun showMessage(message: Int)
         fun showAlertDialog(message: Int)
         fun navigateToTrim(item: Trim)
+        fun startFileShareIntent(item: Trim)
+        fun notifyAdapter()
     }
 
     interface Presenter : BaseContract.Presenter<View> {
@@ -24,5 +26,6 @@ interface HomeContract {
         fun setFileMetaData(fileMetaData: FileMetaData)
         fun onEditClicked(item: Trim)
         fun onDeleteClicked(item: Trim)
+        fun onShareClicked(item: Trim)
     }
 }

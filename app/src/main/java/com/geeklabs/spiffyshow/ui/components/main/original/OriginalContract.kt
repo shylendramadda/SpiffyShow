@@ -14,13 +14,19 @@ interface OriginalContract {
             user: User?
         )
         fun showToast(title: String)
-        fun navigateToTrim(item: Item)
+        fun navigateToTrim(
+            item: Item,
+            isTrim: Boolean
+        )
+        fun notifyAdapter()
     }
 
     interface Presenter : BaseContract.Presenter<View> {
         fun onSearch(query: String)
-        fun setFileMetaData(fileMetaData: FileMetaData)
-        fun onEditClicked(item: Item)
+        fun onEditClicked(
+            item: Item,
+            isTrim: Boolean
+        )
         fun onDeleteClicked(item: Item)
     }
 }
