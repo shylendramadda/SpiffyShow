@@ -129,7 +129,6 @@
     <string name="order_details">Order Details</string>
     <string name="no_notifications">No notifications to display</string>
     <string name="no_categories">No categories to display</string>
-    <string name="original">Originals</string>
     <string name="upload">Upload</string>
     <string name="checkout">Checkout</string>
     <string name="cart_items">Cart Items</string>
@@ -165,4 +164,8 @@
     <string name="s">S</string>
     <string name="follow"> + Follow</string>
     <string name="trim">Trim Video</string>
+    <string name="profile">Profile</string>
+    <string name="trims">Trims</string>
+    <string name="followers">Followers</string>
+    <string name="originals">Originals</string>
 </resources>

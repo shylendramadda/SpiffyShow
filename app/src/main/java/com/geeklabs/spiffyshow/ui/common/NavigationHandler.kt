@@ -17,6 +17,7 @@ import com.geeklabs.spiffyshow.ui.components.main.original.OriginalFragment
 import com.geeklabs.spiffyshow.ui.components.main.search.SearchFragment
 import com.geeklabs.spiffyshow.ui.components.main.settings.SettingsFragment
 import com.geeklabs.spiffyshow.ui.components.notifications.NotificationFragment
+import com.geeklabs.spiffyshow.ui.components.profile.ProfileFragment
 import com.geeklabs.spiffyshow.ui.components.trim.TrimFragment
 
 class NavigationHandler(
@@ -46,6 +47,7 @@ class NavigationHandler(
             is NotificationFragment -> Navigation.NOTIFICATION
             is AboutFragment -> Navigation.ABOUT
             is FeedbackFragment -> Navigation.FEEDBACK
+            is ProfileFragment -> Navigation.PROFILE
             else -> Navigation.NONE
         }
     }
@@ -59,6 +61,7 @@ class NavigationHandler(
         Navigation.NOTIFICATION -> NotificationFragment()
         Navigation.ABOUT -> AboutFragment()
         Navigation.FEEDBACK -> FeedbackFragment()
+        Navigation.PROFILE -> ProfileFragment()
         Navigation.NONE -> null
         else -> null
     }

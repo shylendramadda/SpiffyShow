@@ -36,11 +36,15 @@ class TrimPresenter @Inject constructor(
     }
 
     override fun onGetResult(uri: String?) {
-        if (uri?.isEmpty() == true) {
-            getView()?.showToast("Unable to get the file path")
-        } else {
-            this.processedUri = uri
-            getView()?.showToast("Processed video successfully")
+        try {
+            if (uri?.isEmpty() == true) {
+                getView()?.showToast("Unable to get the file path")
+            } else {
+                this.processedUri = uri
+                getView()?.showToast("Processed video successfully")
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
         }
         getView()?.hideProgress()
     }

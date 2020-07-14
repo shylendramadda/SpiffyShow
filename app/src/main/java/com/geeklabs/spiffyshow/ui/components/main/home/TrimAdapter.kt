@@ -5,7 +5,6 @@ import android.content.Context
 import android.net.Uri
 import android.view.View
 import android.view.ViewGroup
-import android.widget.MediaController
 import androidx.appcompat.widget.PopupMenu
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -17,12 +16,14 @@ import com.geeklabs.spiffyshow.extensions.setTint
 import com.geeklabs.spiffyshow.extensions.shouldShow
 import com.geeklabs.spiffyshow.extensions.visible
 import com.geeklabs.spiffyshow.utils.Utils.getTimeAgo
+import com.jarvanmo.exoplayerview.media.SimpleMediaSource
 import kotlinx.android.synthetic.main.item_layout.view.*
 
 class TrimAdapter(
     private val itemEditClicked: (Trim) -> Unit,
     private val itemDeleteClicked: (Trim) -> Unit,
-    private val onItemShareClick: (Trim) -> Unit
+    private val onItemShareClicked: (Trim) -> Unit,
+    private val onProfileClicked: (User) -> Unit
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     var items = mutableListOf<Trim>()
@@ -62,17 +63,17 @@ class TrimAdapter(
             }
 
             val uri = Uri.parse(item.fileMetaData.path)
-            val mediaController = MediaController(context)
-            mediaController.setAnchorView(videoView)
-            videoView.setMediaController(mediaController)
-            videoView.setVideoURI(uri)
-            videoView.seekTo(1)
+            val simpleMediaSource = SimpleMediaSource(uri)
+            videoView.play(simpleMediaSource, false)
 
             moreOptions.setOnClickListener {
                 showPopup(item, context, it)
             }
             shareIV.setOnClickListener {
-                onItemShareClick(item)
+                onItemShareClicked(item)
+            }
+            userImageLayout.setOnClickListener {
+                onProfileClicked(user!!)
             }
             var likeCount = 10
             likeIV.setOnClickListener {

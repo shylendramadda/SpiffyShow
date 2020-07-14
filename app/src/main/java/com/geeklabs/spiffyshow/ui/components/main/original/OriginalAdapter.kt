@@ -5,7 +5,6 @@ import android.content.Context
 import android.net.Uri
 import android.view.View
 import android.view.ViewGroup
-import android.widget.MediaController
 import androidx.appcompat.widget.PopupMenu
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -17,6 +16,8 @@ import com.geeklabs.spiffyshow.extensions.shouldShow
 import com.geeklabs.spiffyshow.extensions.visible
 import com.geeklabs.spiffyshow.utils.Utils
 import com.geeklabs.spiffyshow.utils.Utils.getTimeAgo
+import com.jarvanmo.exoplayerview.media.SimpleMediaSource
+import com.jarvanmo.exoplayerview.ui.ExoVideoView
 import kotlinx.android.synthetic.main.item_layout.view.*
 
 class OriginalAdapter(
@@ -26,6 +27,7 @@ class OriginalAdapter(
 
     var items = mutableListOf<Item>()
     var user: User? = null
+    var videoPlayer: ExoVideoView? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val listItemView = parent.inflate(R.layout.item_layout)
@@ -61,11 +63,9 @@ class OriginalAdapter(
             }
 
             val uri = Uri.parse(item.fileMetaData.path)
-            val mediaController = MediaController(context)
-            mediaController.setAnchorView(videoView)
-            videoView.setMediaController(mediaController)
-            videoView.setVideoURI(uri)
-            videoView.seekTo(1)
+            val simpleMediaSource = SimpleMediaSource(uri)
+            videoPlayer = videoView
+            videoView.play(simpleMediaSource, false)
 
             moreOptions.setOnClickListener {
                 showPopup(item, context, it)
@@ -91,7 +91,11 @@ class OriginalAdapter(
             }
             true
         })
-
         popup.show()
+    }
+
+    override fun onDetachedFromRecyclerView(recyclerView: RecyclerView) {
+        super.onDetachedFromRecyclerView(recyclerView)
+        videoPlayer?.releasePlayer()
     }
 }

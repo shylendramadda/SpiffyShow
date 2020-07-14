@@ -82,7 +82,7 @@ class OriginalFragment : BaseFragment<OriginalContract.View, OriginalContract.Pr
     }
 
     override fun notifyAdapter() {
-        itemsAdapter.notifyDataSetChanged()
+//        itemsAdapter.notifyDataSetChanged()
     }
 
     override fun showToast(title: String) {

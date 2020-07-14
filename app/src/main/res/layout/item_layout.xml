@@ -131,17 +131,17 @@
             </LinearLayout>
         </LinearLayout>
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/blackTertiary"
             android:gravity="center">
 
-            <VideoView
+            <com.jarvanmo.exoplayerview.ui.ExoVideoView
                 android:id="@+id/videoView"
                 android:layout_width="match_parent"
                 android:layout_height="250dp" />
-        </LinearLayout>
+        </RelativeLayout>
 
         <LinearLayout
             android:layout_width="match_parent"

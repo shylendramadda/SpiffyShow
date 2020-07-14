@@ -34,7 +34,8 @@ class HomeFragment : BaseFragment<HomeContract.View, HomeContract.Presenter>(), 
         trimAdapter = TrimAdapter(
             { presenter?.onEditClicked(it) },
             { presenter?.onDeleteClicked(it) },
-            { presenter?.onShareClicked(it) }
+            { presenter?.onShareClicked(it) },
+            { presenter?.onProfileClicked(it) }
         )
         recyclerViewItemList.adapter = trimAdapter
         trimAdapter.setEmptyStateView(stateLayout)
@@ -127,7 +128,7 @@ class HomeFragment : BaseFragment<HomeContract.View, HomeContract.Presenter>(), 
     }
 
     override fun notifyAdapter() {
-        trimAdapter.notifyDataSetChanged()
+//        trimAdapter.notifyDataSetChanged()
     }
 
     override fun showToast(title: String) {
@@ -138,6 +139,10 @@ class HomeFragment : BaseFragment<HomeContract.View, HomeContract.Presenter>(), 
         (activity as MainActivity).navigateToTrim(item.fileMetaData, false)
     }
 
+    override fun navigateToUserProfile(user: User) {
+        (activity as MainActivity).navigateToUserProfile(user)
+    }
+
     override fun initPresenter() = homePresenter
 
     override fun injectDependencies() = getApplicationComponent().inject(this)
@@ -146,10 +151,5 @@ class HomeFragment : BaseFragment<HomeContract.View, HomeContract.Presenter>(), 
 
     companion object {
         private const val FILE_TYPE = "video/*"
-        fun newInstance(fileMetaData: FileMetaData): HomeFragment {
-            return HomeFragment().apply {
-                this.fileMetaData = fileMetaData
-            }
-        }
     }
 }

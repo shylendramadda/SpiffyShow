@@ -17,6 +17,7 @@ import com.geeklabs.spiffyshow.ui.components.main.search.SearchFragment
 import com.geeklabs.spiffyshow.ui.components.main.settings.SettingsFragment
 import com.geeklabs.spiffyshow.ui.components.trim.TrimFragment
 import com.geeklabs.spiffyshow.ui.components.notifications.NotificationFragment
+import com.geeklabs.spiffyshow.ui.components.profile.ProfileFragment
 import com.geeklabs.spiffyshow.ui.components.register.RegisterActivity
 import com.geeklabs.spiffyshow.ui.components.splash.SplashActivity
 import com.geeklabs.spiffyshow.ui.components.welcome.WelcomeActivity
@@ -47,4 +48,5 @@ interface ApplicationComponent {
     fun inject(originalFragment: OriginalFragment)
     fun inject(searchFragment: SearchFragment)
     fun inject(trimFragment: TrimFragment)
+    fun inject(profileFragment: ProfileFragment)
 }

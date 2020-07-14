@@ -28,8 +28,8 @@ class HomePresenter @Inject constructor(
     override fun onCreated() {
         super.onCreated()
         getView()?.initUI()
-        loadItemsFromLocal()
         this.user = applicationState.user
+        loadItemsFromLocal()
     }
 
     private fun loadItemsFromLocal() {
@@ -85,6 +85,10 @@ class HomePresenter @Inject constructor(
 
     override fun onShareClicked(item: Trim) {
         getView()?.startFileShareIntent(item)
+    }
+
+    override fun onProfileClicked(user: User) {
+        getView()?.navigateToUserProfile(user)
     }
 
 }

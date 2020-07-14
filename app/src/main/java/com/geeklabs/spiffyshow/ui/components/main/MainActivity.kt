@@ -15,6 +15,7 @@ import androidx.drawerlayout.widget.DrawerLayout
 import androidx.work.OneTimeWorkRequest
 import androidx.work.WorkManager
 import com.geeklabs.spiffyshow.R
+import com.geeklabs.spiffyshow.data.local.models.user.User
 import com.geeklabs.spiffyshow.enums.Navigation
 import com.geeklabs.spiffyshow.extensions.*
 import com.geeklabs.spiffyshow.models.ApplicationState
@@ -24,6 +25,7 @@ import com.geeklabs.spiffyshow.ui.base.BaseActivity
 import com.geeklabs.spiffyshow.ui.common.NavigationHandler
 import com.geeklabs.spiffyshow.ui.components.login.LoginActivity
 import com.geeklabs.spiffyshow.ui.components.main.drawer.DrawerFragment
+import com.geeklabs.spiffyshow.ui.components.profile.ProfileFragment
 import com.geeklabs.spiffyshow.ui.components.trim.TrimFragment
 import com.geeklabs.spiffyshow.utils.Constants
 import com.geeklabs.spiffyshow.utils.Utils
@@ -127,9 +129,12 @@ class MainActivity : BaseActivity<MainContract.View, MainContract.Presenter>(), 
             }
             Navigation.ORIGINAL -> {
                 bottomNavigation.menu.findItem(R.id.navigation_original).isChecked = true
-                R.string.original
+                R.string.originals
             }
-            Navigation.NOTIFICATION -> R.string.notifications
+            Navigation.NOTIFICATION -> {
+                isShowBottomNav = false
+                R.string.notifications
+            }
             Navigation.TRIM -> {
                 isShowBottomNav = false
                 R.string.trim_and_upload_video
@@ -143,6 +148,10 @@ class MainActivity : BaseActivity<MainContract.View, MainContract.Presenter>(), 
             Navigation.FEEDBACK -> {
                 isShowBottomNav = false
                 R.string.feedback_no_colon
+            }
+            Navigation.PROFILE -> {
+                isShowBottomNav = false
+                R.string.profile
             }
             else -> {
                 R.string.app_name
@@ -291,6 +300,12 @@ class MainActivity : BaseActivity<MainContract.View, MainContract.Presenter>(), 
         val fragment = TrimFragment.newInstance(fileMetaData, isTrim)
         navigationHandler.navigateTo(fragment, "TrimFragment")
         setToolBarTitle(Navigation.TRIM)
+    }
+
+    fun navigateToUserProfile(user: User) {
+        val fragment = ProfileFragment.newInstance(user)
+        navigationHandler.navigateTo(fragment, "ProfileFragment")
+        setToolBarTitle(Navigation.PROFILE)
     }
 
     override fun onBackPressed() {

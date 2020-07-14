@@ -19,6 +19,7 @@ interface HomeContract {
         fun navigateToTrim(item: Trim)
         fun startFileShareIntent(item: Trim)
         fun notifyAdapter()
+        fun navigateToUserProfile(user: User)
     }
 
     interface Presenter : BaseContract.Presenter<View> {
@@ -27,5 +28,6 @@ interface HomeContract {
         fun onEditClicked(item: Trim)
         fun onDeleteClicked(item: Trim)
         fun onShareClicked(item: Trim)
+        fun onProfileClicked(user: User)
     }
 }
