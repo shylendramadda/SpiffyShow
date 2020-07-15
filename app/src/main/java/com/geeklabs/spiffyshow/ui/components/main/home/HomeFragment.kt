@@ -77,6 +77,7 @@ class HomeFragment : BaseFragment<HomeContract.View, HomeContract.Presenter>(), 
         trimAdapter.notifyDataSetChanged()
         val isMoreThanOne = items.size > 1
         if (isMoreThanOne) recyclerViewItemList.smoothScrollToPosition(0)
+        if (items.size == 0) setState(empty = true)
     }
 
     override fun showMessage(message: Int) {
@@ -136,7 +137,7 @@ class HomeFragment : BaseFragment<HomeContract.View, HomeContract.Presenter>(), 
     }
 
     override fun navigateToTrim(item: Trim) {
-        (activity as MainActivity).navigateToTrim(item.fileMetaData, false)
+        (activity as MainActivity).navigateToTrim(item, false)
     }
 
     override fun navigateToUserProfile(user: User) {

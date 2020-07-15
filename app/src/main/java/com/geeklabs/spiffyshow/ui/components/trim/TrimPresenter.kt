@@ -20,7 +20,10 @@ class TrimPresenter @Inject constructor(
     TrimContract.Presenter {
 
     private var processedUri: String? = null
-    private lateinit var fileMetaData: FileMetaData
+    private var obj: Any? = null
+    private var item: Item? = null
+    private var trim: Trim? = null
+    private var fileMetaData: FileMetaData? = null
 
     override fun onCreated() {
         super.onCreated()
@@ -31,8 +34,16 @@ class TrimPresenter @Inject constructor(
         getView()?.showProgress()
     }
 
-    override fun setFileMetaData(fileMetaData: FileMetaData) {
-        this.fileMetaData = fileMetaData
+    override fun setItem(obj: Any) {
+        this.obj = obj
+        if (obj is Trim) {
+            this.trim = obj
+            this.fileMetaData = obj.fileMetaData
+        } else {
+            val item = obj as Item
+            this.item = item
+            this.fileMetaData = item.fileMetaData
+        }
     }
 
     override fun onGetResult(uri: String?) {
@@ -44,6 +55,7 @@ class TrimPresenter @Inject constructor(
                 getView()?.showToast("Processed video successfully")
             }
         } catch (e: Exception) {
+            getView()?.showToast("Problem occurred while processing the video")
             e.printStackTrace()
         }
         getView()?.hideProgress()
@@ -67,18 +79,18 @@ class TrimPresenter @Inject constructor(
             title.isEmpty() -> getView()?.showToast("Please enter title")
             description.isEmpty() -> getView()?.showToast("Please enter description")
             category.isEmpty() -> getView()?.showToast("Please enter category")
+            fileMetaData == null -> getView()?.showToast("Data not found")
             else -> {
-                if (isTrim) {
-                    if (processedUri?.isEmpty() == true) {
-                        getView()?.showToast("Unable to get the file path")
-                        return
+                if (trim != null || isTrim) {
+                    if (processedUri?.isEmpty() == false) {
+                        fileMetaData?.path = processedUri ?: ""
                     }
-                    fileMetaData.path = processedUri ?: ""
                     val trim = Trim(
+                        id = this.trim?.id ?: 0,
                         title = title,
                         description = description,
                         category = category,
-                        fileMetaData = fileMetaData,
+                        fileMetaData = fileMetaData!!,
                         time = Utils.getCurrentTime(),
                         userId = applicationState.user?.id ?: 0
                     )
@@ -88,10 +100,11 @@ class TrimPresenter @Inject constructor(
                     getView()?.navigateToHome()
                 } else {
                     val item = Item(
+                        id = this.item?.id ?: 0,
                         title = title,
                         description = description,
                         category = category,
-                        fileMetaData = fileMetaData,
+                        fileMetaData = fileMetaData!!,
                         time = Utils.getCurrentTime(),
                         userId = applicationState.user?.id ?: 0
                     )

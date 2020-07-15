@@ -74,13 +74,14 @@ class OriginalFragment : BaseFragment<OriginalContract.View, OriginalContract.Pr
         itemsAdapter.notifyDataSetChanged()
         val isMoreThanOne = items.size > 1
         if (isMoreThanOne) recyclerViewItemList.smoothScrollToPosition(0)
+        if (items.size == 0) setState(empty = true)
     }
 
     override fun navigateToTrim(
         item: Item,
         isTrim: Boolean
     ) {
-        (activity as MainActivity).navigateToTrim(item.fileMetaData, isTrim)
+        (activity as MainActivity).navigateToTrim(item, isTrim)
     }
 
     override fun notifyAdapter() {

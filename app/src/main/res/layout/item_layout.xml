@@ -7,8 +7,7 @@
     android:layout_height="wrap_content"
     android:layout_marginHorizontal="@dimen/spacing_medium"
     android:layout_marginVertical="@dimen/spacing_micro"
-    card_view:cardElevation="4dp"
-    card_view:cardUseCompatPadding="true">
+    card_view:cardElevation="4dp">
 
     <LinearLayout
         android:layout_width="match_parent"

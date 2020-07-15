@@ -1,5 +1,6 @@
 package com.geeklabs.spiffyshow.ui.components.main
 
+import com.geeklabs.spiffyshow.data.local.models.item.Item
 import com.geeklabs.spiffyshow.data.local.models.user.User
 import com.geeklabs.spiffyshow.domain.local.location.FetchDeviceLocationUseCase
 import com.geeklabs.spiffyshow.domain.local.user.FetchUserFromLocalUseCase
@@ -111,7 +112,7 @@ class MainPresenter @Inject constructor(
             getView()?.showToast(stringUtil.getString(StringEnum.FILE_PATH_ERROR.resId))
             return
         }
-        getView()?.navigateToTrim(fileMetaData, false)
+        getView()?.navigateToTrim(Item(fileMetaData = fileMetaData), false)
     }
 
     private fun saveUpdateUser(user: User) {

@@ -19,7 +19,6 @@ import com.geeklabs.spiffyshow.data.local.models.user.User
 import com.geeklabs.spiffyshow.enums.Navigation
 import com.geeklabs.spiffyshow.extensions.*
 import com.geeklabs.spiffyshow.models.ApplicationState
-import com.geeklabs.spiffyshow.models.FileMetaData
 import com.geeklabs.spiffyshow.service.AppService
 import com.geeklabs.spiffyshow.ui.base.BaseActivity
 import com.geeklabs.spiffyshow.ui.common.NavigationHandler
@@ -33,6 +32,7 @@ import com.geeklabs.spiffyshow.utils.Utils
 import com.geeklabs.spiffyshow.utils.Utils.showHideViews
 import com.geeklabs.spiffyshow.worker.ItemsWorker
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.firebase.crashlytics.internal.common.CommonUtils.hideKeyboard
 import com.log4k.d
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.toolbar_main.*
@@ -138,7 +138,7 @@ class MainActivity : BaseActivity<MainContract.View, MainContract.Presenter>(), 
             }
             Navigation.TRIM -> {
                 isShowBottomNav = false
-                R.string.trim_and_upload_video
+                R.string.add_video
             }
             Navigation.SETTINGS -> R.string.settings
             Navigation.SEARCH -> R.string.search_without_colon
@@ -299,10 +299,10 @@ class MainActivity : BaseActivity<MainContract.View, MainContract.Presenter>(), 
     }
 
     override fun navigateToTrim(
-        fileMetaData: FileMetaData,
+        obj: Any,
         isTrim: Boolean
     ) {
-        val fragment = TrimFragment.newInstance(fileMetaData, isTrim)
+        val fragment = TrimFragment.newInstance(obj, isTrim)
         navigationHandler.navigateTo(fragment, "TrimFragment")
         setToolBarTitle(Navigation.TRIM)
     }
@@ -320,6 +320,7 @@ class MainActivity : BaseActivity<MainContract.View, MainContract.Presenter>(), 
     }
 
     override fun onBackPressed() {
+        hideKeyboard(this, toolBar)
         if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
             this.currentFocus?.setKeyboardVisibility(false)
             closeDrawer()

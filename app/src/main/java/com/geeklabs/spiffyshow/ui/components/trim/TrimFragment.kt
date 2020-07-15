@@ -3,6 +3,8 @@ package com.geeklabs.spiffyshow.ui.components.trim
 import android.net.Uri
 import android.widget.MediaController
 import com.geeklabs.spiffyshow.R
+import com.geeklabs.spiffyshow.data.local.models.item.Item
+import com.geeklabs.spiffyshow.data.local.models.item.Trim
 import com.geeklabs.spiffyshow.enums.Navigation
 import com.geeklabs.spiffyshow.extensions.toast
 import com.geeklabs.spiffyshow.extensions.visible
@@ -10,6 +12,7 @@ import com.geeklabs.spiffyshow.models.FileMetaData
 import com.geeklabs.spiffyshow.ui.base.BaseFragment
 import com.geeklabs.spiffyshow.ui.common.Progress
 import com.geeklabs.spiffyshow.ui.components.main.MainActivity
+import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.fragment_trim.*
 import life.knowledge4.videotrimmer.interfaces.OnK4LVideoListener
 import life.knowledge4.videotrimmer.interfaces.OnTrimVideoListener
@@ -21,14 +24,29 @@ class TrimFragment : BaseFragment<TrimContract.View, TrimContract.Presenter>(),
 
     @Inject
     lateinit var trimPresenter: TrimPresenter
+    private var obj: Any? = null
     private var fileMetaData: FileMetaData? = null
     private var isTrim: Boolean = false
     private lateinit var progress: Progress
+    private var disposables = CompositeDisposable()
 
     override fun initUI() {
-        if (fileMetaData == null) {
+        if (obj == null) {
             showToast("File meta data is empty")
             return
+        }
+        if (obj is Trim) {
+            val trim = obj as Trim
+            fileMetaData = trim.fileMetaData
+            titleET.setText(trim.title)
+            descriptionET.setText(trim.description)
+            categoryET.setText(trim.category)
+        } else {
+            val item = obj as Item
+            fileMetaData = item.fileMetaData
+            titleET.setText(item.title)
+            descriptionET.setText(item.description)
+            categoryET.setText(item.category)
         }
         saveButton.setOnClickListener {
             val title = titleET.text.toString().trim()
@@ -37,7 +55,7 @@ class TrimFragment : BaseFragment<TrimContract.View, TrimContract.Presenter>(),
             presenter?.onSaveClicked(title, description, category, isTrim)
         }
         progress = Progress(context, R.string.please_wait, false)
-        presenter?.setFileMetaData(fileMetaData!!)
+        presenter?.setItem(obj!!)
         setVideoView(fileMetaData!!.path)
     }
 
@@ -73,7 +91,9 @@ class TrimFragment : BaseFragment<TrimContract.View, TrimContract.Presenter>(),
     }
 
     override fun getResult(uri: Uri?) {
-        presenter?.onGetResult(uri.toString())
+        activity?.runOnUiThread {
+            presenter?.onGetResult(uri.toString())
+        }
     }
 
     override fun onVideoPrepared() {
@@ -106,13 +126,19 @@ class TrimFragment : BaseFragment<TrimContract.View, TrimContract.Presenter>(),
 
     override fun getLayoutResId() = R.layout.fragment_trim
 
+    override fun onDestroy() {
+        super.onDestroy()
+        disposables.clear()
+        disposables.dispose()
+    }
+
     companion object {
         fun newInstance(
-            fileMetaData: FileMetaData,
+            obj: Any,
             isTrim: Boolean
         ): TrimFragment {
             return TrimFragment().apply {
-                this.fileMetaData = fileMetaData
+                this.obj = obj
                 this.isTrim = isTrim
             }
         }

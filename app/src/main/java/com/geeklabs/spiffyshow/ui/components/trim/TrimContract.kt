@@ -15,7 +15,6 @@ interface TrimContract {
 
     interface Presenter : BaseContract.Presenter<View> {
         fun onCancelClick()
-        fun setFileMetaData(fileMetaData: FileMetaData)
         fun onVideoTrimStarted()
         fun onVideoPrepared()
         fun onGetResult(uri: String?)
@@ -25,5 +24,6 @@ interface TrimContract {
             category: String,
             isTrim: Boolean
         )
+        fun setItem(obj: Any)
     }
 }

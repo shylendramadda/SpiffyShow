@@ -2,6 +2,7 @@ package com.geeklabs.spiffyshow.ui.components.main.original
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.res.ColorStateList
 import android.net.Uri
 import android.view.View
 import android.view.ViewGroup
@@ -90,9 +91,13 @@ class OriginalAdapter(
                 if (isLikeClicked) {
                     ++likeCount
                     likeTV.setTextColor(context.getColor(R.color.blueTertiary))
+                    likeTV.compoundDrawableTintList =
+                        ColorStateList.valueOf(context.getColor(R.color.blueTertiary))
                 } else {
                     --likeCount
                     likeTV.setTextColor(context.getColor(R.color.grayPrimary))
+                    likeTV.compoundDrawableTintList =
+                        ColorStateList.valueOf(context.getColor(R.color.grayPrimary))
                 }
                 likeTV.text = "$likeCount"
             }
