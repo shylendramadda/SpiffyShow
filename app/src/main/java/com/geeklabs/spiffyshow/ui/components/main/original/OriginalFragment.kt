@@ -23,7 +23,9 @@ class OriginalFragment : BaseFragment<OriginalContract.View, OriginalContract.Pr
     override fun initUI() {
         view?.hideKeyboard(context!!)
         itemsAdapter = OriginalAdapter(onEditClicked,
-            { presenter?.onDeleteClicked(it) }
+            { presenter?.onDeleteClicked(it) },
+            { presenter?.onCommentClicked(it) },
+            { presenter?.onProfileClicked(it) }
         )
         recyclerViewItemList.adapter = itemsAdapter
         itemsAdapter.setEmptyStateView(stateLayout)
@@ -83,6 +85,14 @@ class OriginalFragment : BaseFragment<OriginalContract.View, OriginalContract.Pr
 
     override fun notifyAdapter() {
 //        itemsAdapter.notifyDataSetChanged()
+    }
+
+    override fun navigateToUserProfile(user: User) {
+        (activity as MainActivity).navigateToUserProfile(user)
+    }
+
+    override fun navigateToComment(item: Item) {
+        (activity as MainActivity).navigateToComment(item)
     }
 
     override fun showToast(title: String) {

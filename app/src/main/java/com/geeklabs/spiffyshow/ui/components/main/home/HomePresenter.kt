@@ -83,6 +83,10 @@ class HomePresenter @Inject constructor(
         getView()?.notifyAdapter()
     }
 
+    override fun onCommentClicked(item: Trim) {
+        getView()?.navigateToComment(item)
+    }
+
     override fun onShareClicked(item: Trim) {
         getView()?.startFileShareIntent(item)
     }

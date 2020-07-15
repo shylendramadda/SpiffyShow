@@ -23,6 +23,7 @@ import com.geeklabs.spiffyshow.models.FileMetaData
 import com.geeklabs.spiffyshow.service.AppService
 import com.geeklabs.spiffyshow.ui.base.BaseActivity
 import com.geeklabs.spiffyshow.ui.common.NavigationHandler
+import com.geeklabs.spiffyshow.ui.components.comment.CommentFragment
 import com.geeklabs.spiffyshow.ui.components.login.LoginActivity
 import com.geeklabs.spiffyshow.ui.components.main.drawer.DrawerFragment
 import com.geeklabs.spiffyshow.ui.components.profile.ProfileFragment
@@ -152,6 +153,10 @@ class MainActivity : BaseActivity<MainContract.View, MainContract.Presenter>(), 
             Navigation.PROFILE -> {
                 isShowBottomNav = false
                 R.string.profile
+            }
+            Navigation.COMMENT -> {
+                isShowBottomNav = false
+                R.string.comment
             }
             else -> {
                 R.string.app_name
@@ -306,6 +311,12 @@ class MainActivity : BaseActivity<MainContract.View, MainContract.Presenter>(), 
         val fragment = ProfileFragment.newInstance(user)
         navigationHandler.navigateTo(fragment, "ProfileFragment")
         setToolBarTitle(Navigation.PROFILE)
+    }
+
+    fun navigateToComment(obj: Any) {
+        val fragment = CommentFragment.newInstance(obj)
+        navigationHandler.navigateTo(fragment, "CommentFragment")
+        setToolBarTitle(Navigation.COMMENT)
     }
 
     override fun onBackPressed() {

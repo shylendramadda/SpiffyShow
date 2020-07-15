@@ -6,7 +6,7 @@
     android:background="@color/blackTertiary"
     android:gravity="center">
 
-    <com.jarvanmo.exoplayerview.ui.ExoVideoView
+    <VideoView
         android:id="@+id/videoView"
         android:layout_width="match_parent"
         android:layout_height="100dp" />

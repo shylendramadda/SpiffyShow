@@ -167,5 +167,4 @@ dependencies {
     implementation libraries.firebaseCrashlytics
     //Video Trimmer
     implementation libraries.videoTrimmer
-    implementation 'com.jarvanmo:exoplayerview:2.1.5'
 }

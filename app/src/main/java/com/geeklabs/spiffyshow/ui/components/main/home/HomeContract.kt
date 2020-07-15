@@ -20,6 +20,7 @@ interface HomeContract {
         fun startFileShareIntent(item: Trim)
         fun notifyAdapter()
         fun navigateToUserProfile(user: User)
+        fun navigateToComment(item: Trim)
     }
 
     interface Presenter : BaseContract.Presenter<View> {
@@ -27,6 +28,7 @@ interface HomeContract {
         fun setFileMetaData(fileMetaData: FileMetaData)
         fun onEditClicked(item: Trim)
         fun onDeleteClicked(item: Trim)
+        fun onCommentClicked(item: Trim)
         fun onShareClicked(item: Trim)
         fun onProfileClicked(user: User)
     }

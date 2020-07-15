@@ -5,11 +5,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginStart="@dimen/spacing_medium"
-    android:layout_marginTop="@dimen/spacing_micro"
-    android:layout_marginEnd="@dimen/spacing_medium"
-    android:layout_marginBottom="@dimen/spacing_micro"
-    card_view:cardElevation="4dp">
+    android:layout_marginHorizontal="@dimen/spacing_medium"
+    android:layout_marginVertical="@dimen/spacing_micro"
+    card_view:cardElevation="4dp"
+    card_view:cardUseCompatPadding="true">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -108,6 +107,16 @@
                 </RelativeLayout>
 
                 <TextView
+                    android:id="@+id/descriptionTV"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:gravity="center_vertical"
+                    android:maxLines="2"
+                    android:textSize="12sp"
+                    tools:text="This is the description of the item" />
+
+                <TextView
                     android:id="@+id/categoryTV"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -118,16 +127,31 @@
                     android:textSize="12sp"
                     tools:text="Category" />
 
-                <TextView
-                    android:id="@+id/descriptionTV"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:ellipsize="end"
-                    android:gravity="center_vertical"
-                    android:maxLines="4"
+                    android:orientation="horizontal"
                     android:padding="@dimen/spacing_nano"
-                    android:textSize="12sp"
-                    tools:text="This is the description of the item" />
+                    android:paddingBottom="@dimen/spacing_micro">
+
+                    <TextView
+                        android:id="@+id/dateTV"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/day_ago"
+                        android:textColor="@color/blackTertiary"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:id="@+id/viewsTV"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/spacing_normal"
+                        android:textColor="@color/blackTertiary"
+                        android:textSize="12sp"
+                        tools:text="100 Views" />
+
+                </LinearLayout>
             </LinearLayout>
         </LinearLayout>
 
@@ -137,7 +161,7 @@
             android:background="@color/blackTertiary"
             android:gravity="center">
 
-            <com.jarvanmo.exoplayerview.ui.ExoVideoView
+            <VideoView
                 android:id="@+id/videoView"
                 android:layout_width="match_parent"
                 android:layout_height="250dp" />
@@ -152,83 +176,60 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/spacing_normal"
-                android:orientation="horizontal">
+                android:layout_marginTop="@dimen/spacing_micro"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="@dimen/spacing_micro">
 
-                <ImageView
-                    android:id="@+id/likeIV"
+                <TextView
+                    android:id="@+id/likeTV"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/spacing_double"
-                    android:src="@drawable/ic_icon_like"
+                    android:drawableTop="@drawable/ic_icon_like"
+                    android:drawableTint="@color/grayPrimary"
+                    android:gravity="center"
+                    android:textColor="@color/blackTertiary"
+                    android:textSize="12sp"
                     android:tint="@color/grayPrimary"
-                    tools:ignore="ContentDescription" />
+                    tools:text="101" />
 
-                <ImageView
-                    android:id="@+id/commentIV"
+                <TextView
+                    android:id="@+id/commentTV"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/spacing_double"
-                    android:src="@drawable/ic_icon_comment"
+                    android:drawableTop="@drawable/ic_icon_comment"
+                    android:drawableTint="@color/grayPrimary"
+                    android:gravity="center"
+                    android:textColor="@color/blackTertiary"
+                    android:textSize="12sp"
                     android:tint="@color/grayPrimary"
-                    tools:ignore="ContentDescription" />
+                    tools:text="101" />
 
-                <ImageView
-                    android:id="@+id/shareIV"
+                <TextView
+                    android:id="@+id/shareTV"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/spacing_double"
-                    android:src="@drawable/ic_icon_forward"
-                    android:tint="@color/grayPrimary"
-                    android:visibility="gone"
-                    tools:ignore="ContentDescription"
-                    tools:visibility="visible" />
+                    android:drawableTop="@drawable/ic_icon_forward"
+                    android:drawableTint="@color/grayPrimary"
+                    android:text="@string/share"
+                    android:textColor="@color/blackTertiary"
+                    android:tint="@color/grayPrimary" />
 
                 <TextView
                     android:id="@+id/trimTV"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/spacing_normal"
+                    android:background="@drawable/bg_border"
                     android:padding="@dimen/spacing_micro"
                     android:text="@string/trim"
                     android:textColor="@color/blueTertiary"
                     android:textStyle="bold"
                     android:visibility="gone"
                     tools:visibility="visible" />
-
-            </LinearLayout>
-
-            <TextView
-                android:id="@+id/likesTV"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/spacing_medium"
-                android:padding="@dimen/spacing_nano"
-                android:text="@string/likes"
-                android:textColor="@color/blackTertiary" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/spacing_normal"
-                android:orientation="horizontal"
-                android:paddingBottom="@dimen/spacing_micro">
-
-                <TextView
-                    android:id="@+id/dateTV"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/spacing_normal"
-                    android:text="@string/day_ago"
-                    android:textColor="@color/blackTertiary" />
-
-                <TextView
-                    android:id="@+id/viewsTV"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/spacing_normal"
-                    android:textColor="@color/blackTertiary"
-                    tools:text="100 Views" />
 
             </LinearLayout>
         </LinearLayout>

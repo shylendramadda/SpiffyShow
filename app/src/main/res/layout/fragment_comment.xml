@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/whitePrimary"
+    android:clickable="true"
+    android:focusable="true">
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewComments"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/bottomRL"
+        android:layout_below="@+id/toolbar"
+        android:layout_gravity="center"
+        android:clipToPadding="false"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        tools:itemCount="10"
+        tools:listitem="@layout/item_comment" />
+
+    <RelativeLayout
+        android:id="@+id/bottomRL"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerVertical="true"
+        android:background="@drawable/bg_border">
+
+        <EditText
+            android:id="@+id/commentET"
+            android:layout_width="match_parent"
+            android:layout_height="44dp"
+            android:layout_centerVertical="true"
+            android:layout_toStartOf="@+id/postTV"
+            android:background="@drawable/bg_border"
+            android:hint="@string/add_a_comment"
+            android:imeOptions="actionDone"
+            android:importantForAutofill="no"
+            android:inputType="text"
+            android:paddingHorizontal="@dimen/spacing_normal"
+            android:textColor="@color/blackTertiary" />
+
+        <TextView
+            android:id="@+id/postTV"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="@dimen/spacing_normal"
+            android:enabled="false"
+            android:padding="@dimen/spacing_normal"
+            android:text="@string/post"
+            android:textColor="@color/grayPrimary"
+            android:textStyle="bold" />
+
+    </RelativeLayout>
+
+    <include
+        layout="@layout/view_state_layout"
+        tools:visibility="gone" />
+
+</RelativeLayout>

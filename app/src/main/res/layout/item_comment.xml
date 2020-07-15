@@ -22,8 +22,8 @@
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/userImage"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
                 android:layout_centerHorizontal="true"
                 android:layout_centerVertical="true"
                 android:contentDescription="@string/app_name"
@@ -32,15 +32,15 @@
 
             <TextView
                 android:id="@+id/userImageText"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
                 android:layout_centerHorizontal="true"
                 android:layout_centerVertical="true"
                 android:background="@drawable/circle"
                 android:gravity="center"
                 android:text="@string/s"
                 android:textColor="@color/blackPrimary"
-                android:textSize="35sp"
+                android:textSize="16sp"
                 android:visibility="gone" />
 
         </RelativeLayout>
@@ -49,48 +49,30 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginStart="@dimen/spacing_normal"
-            android:layout_marginEnd="@dimen/spacing_normal"
+            android:layout_marginHorizontal="@dimen/spacing_micro"
             android:orientation="vertical">
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <TextView
-                    android:id="@+id/titleTV"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_toStartOf="@+id/more"
-                    android:ellipsize="end"
-                    android:gravity="center_vertical"
-                    android:maxLines="2"
-                    android:padding="@dimen/spacing_nano"
-                    android:textSize="14sp"
-                    android:textStyle="bold"
-                    tools:text="Title " />
-
-                <ImageView
-                    android:id="@+id/more"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:gravity="center_vertical"
-                    android:padding="@dimen/spacing_nano"
-                    android:src="@drawable/ic_icon_more"
-                    android:tint="@color/blackPrimary" />
-
-            </RelativeLayout>
-
             <TextView
-                android:id="@+id/descriptionTV"
+                android:id="@+id/nameTV"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
                 android:gravity="center_vertical"
-                android:maxLines="4"
+                android:maxLines="2"
+                android:padding="@dimen/spacing_nano"
                 android:textSize="12sp"
-                tools:text="This is the description of the item" />
+                android:textStyle="bold"
+                tools:text="Name " />
+
+            <TextView
+                android:id="@+id/commentTV"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:gravity="center_vertical"
+                android:maxLines="10"
+                android:textSize="12sp"
+                tools:text="This is the comment of the item" />
 
             <TextView
                 android:id="@+id/dateTV"

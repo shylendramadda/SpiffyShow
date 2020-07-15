@@ -5,6 +5,7 @@ import android.content.Context
 import android.net.Uri
 import android.view.View
 import android.view.ViewGroup
+import android.widget.MediaController
 import androidx.appcompat.widget.PopupMenu
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -12,16 +13,15 @@ import com.geeklabs.spiffyshow.R
 import com.geeklabs.spiffyshow.data.local.models.item.Trim
 import com.geeklabs.spiffyshow.data.local.models.user.User
 import com.geeklabs.spiffyshow.extensions.inflate
-import com.geeklabs.spiffyshow.extensions.setTint
 import com.geeklabs.spiffyshow.extensions.shouldShow
 import com.geeklabs.spiffyshow.extensions.visible
 import com.geeklabs.spiffyshow.utils.Utils.getTimeAgo
-import com.jarvanmo.exoplayerview.media.SimpleMediaSource
 import kotlinx.android.synthetic.main.item_layout.view.*
 
 class TrimAdapter(
-    private val itemEditClicked: (Trim) -> Unit,
-    private val itemDeleteClicked: (Trim) -> Unit,
+    private val onEditClicked: (Trim) -> Unit,
+    private val onDeleteClicked: (Trim) -> Unit,
+    private val onCommentClicked: (Trim) -> Unit,
     private val onItemShareClicked: (Trim) -> Unit,
     private val onProfileClicked: (User) -> Unit
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -43,12 +43,14 @@ class TrimAdapter(
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         @SuppressLint("SetTextI18n")
         fun bind(item: Trim) = with(itemView) {
-            shareIV.visible = true
+            shareTV.visible = true
             titleTV.text = item.title
             categoryTV.text = item.category
             descriptionTV.text = item.description
             viewsTV.text = "${adapterPosition + 2} Views"
             dateTV.text = getTimeAgo(item.time)
+            likeTV.text = "20"
+            commentTV.text = "5"
 
             if (user?.imageUrl?.isNotEmpty() == true) {
                 Glide.with(context).load(user?.imageUrl).placeholder(R.drawable.ic_icon_user)
@@ -63,23 +65,36 @@ class TrimAdapter(
             }
 
             val uri = Uri.parse(item.fileMetaData.path)
-            val simpleMediaSource = SimpleMediaSource(uri)
-            videoView.play(simpleMediaSource, false)
+            val mediaController = MediaController(context)
+            mediaController.setAnchorView(videoView)
+            videoView.setMediaController(mediaController)
+            videoView.setVideoURI(uri)
+            videoView.seekTo(1)
 
             moreOptions.setOnClickListener {
                 showPopup(item, context, it)
             }
-            shareIV.setOnClickListener {
+            commentTV.setOnClickListener {
+                onCommentClicked(item)
+            }
+            shareTV.setOnClickListener {
                 onItemShareClicked(item)
             }
             userImageLayout.setOnClickListener {
                 onProfileClicked(user!!)
             }
-            var likeCount = 10
-            likeIV.setOnClickListener {
-                ++likeCount
-                likesTV.text = "$likeCount Likes"
-                likeIV.setTint(R.color.blueTertiary)
+            var likeCount = 20
+            var isLikeClicked = false
+            likeTV.setOnClickListener {
+                isLikeClicked = !isLikeClicked
+                if (isLikeClicked) {
+                    ++likeCount
+                    likeTV.setTextColor(context.getColor(R.color.blueTertiary))
+                } else {
+                    --likeCount
+                    likeTV.setTextColor(context.getColor(R.color.grayPrimary))
+                }
+                likeTV.text = "$likeCount"
             }
         }
     }
@@ -91,10 +106,10 @@ class TrimAdapter(
         popup.setOnMenuItemClickListener(PopupMenu.OnMenuItemClickListener {
             when (it?.itemId) {
                 R.id.itemEdit -> {
-                    itemEditClicked(item)
+                    onEditClicked(item)
                 }
                 R.id.itemDelete -> {
-                    itemDeleteClicked(item)
+                    onDeleteClicked(item)
                 }
             }
             true

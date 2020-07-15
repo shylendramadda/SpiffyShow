@@ -2,7 +2,6 @@ package com.geeklabs.spiffyshow.ui.components.main.original
 
 import com.geeklabs.spiffyshow.data.local.models.item.Item
 import com.geeklabs.spiffyshow.data.local.models.user.User
-import com.geeklabs.spiffyshow.models.FileMetaData
 import com.geeklabs.spiffyshow.ui.base.BaseContract
 
 interface OriginalContract {
@@ -13,12 +12,16 @@ interface OriginalContract {
             items: MutableList<Item>,
             user: User?
         )
+
         fun showToast(title: String)
         fun navigateToTrim(
             item: Item,
             isTrim: Boolean
         )
+
         fun notifyAdapter()
+        fun navigateToUserProfile(user: User)
+        fun navigateToComment(item: Item)
     }
 
     interface Presenter : BaseContract.Presenter<View> {
@@ -27,6 +30,9 @@ interface OriginalContract {
             item: Item,
             isTrim: Boolean
         )
+
         fun onDeleteClicked(item: Item)
+        fun onProfileClicked(user: User)
+        fun onCommentClicked(item: Item)
     }
 }

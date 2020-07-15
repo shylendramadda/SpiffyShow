@@ -34,6 +34,7 @@ class HomeFragment : BaseFragment<HomeContract.View, HomeContract.Presenter>(), 
         trimAdapter = TrimAdapter(
             { presenter?.onEditClicked(it) },
             { presenter?.onDeleteClicked(it) },
+            { presenter?.onCommentClicked(it) },
             { presenter?.onShareClicked(it) },
             { presenter?.onProfileClicked(it) }
         )
@@ -105,18 +106,17 @@ class HomeFragment : BaseFragment<HomeContract.View, HomeContract.Presenter>(), 
 
     override fun startFileShareIntent(item: Trim) {
         val shareIntent = Intent(Intent.ACTION_SEND).apply {
-            val fileNameWithExtension = "${item.fileMetaData.name}.${item.fileMetaData.ext}"
             type = FILE_TYPE
             flags = Intent.FLAG_GRANT_READ_URI_PERMISSION
             flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
             flags = Intent.FLAG_ACTIVITY_NEW_TASK
             putExtra(
                 Intent.EXTRA_SUBJECT,
-                "Sharing File $fileNameWithExtension from SpiffyShow"
+                "Sharing File '${item.title}' from SpiffyShow"
             )
             putExtra(
                 Intent.EXTRA_TEXT,
-                "Sharing File $fileNameWithExtension from SpiffyShow"
+                "Sharing File '${item.title}' from SpiffyShow"
             )
             val fileURI = FileProvider.getUriForFile(
                 context!!, context!!.packageName + ".provider",
@@ -141,6 +141,15 @@ class HomeFragment : BaseFragment<HomeContract.View, HomeContract.Presenter>(), 
 
     override fun navigateToUserProfile(user: User) {
         (activity as MainActivity).navigateToUserProfile(user)
+    }
+
+    override fun navigateToComment(item: Trim) {
+        (activity as MainActivity).navigateToComment(item)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        view?.hideKeyboard(context!!)
     }
 
     override fun initPresenter() = homePresenter

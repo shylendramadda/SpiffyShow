@@ -154,7 +154,7 @@
     <string name="weight">Weight</string>
     <string name="offer">Offer</string>
     <string name="delete_success">Deleted successfully</string>
-    <string name="likes">10 Likes</string>
+    <string name="likes">Likes</string>
     <string name="day_ago">1 day ago</string>
     <string name="title">Title</string>
     <string name="description">Description</string>
@@ -168,4 +168,8 @@
     <string name="trims">Trims</string>
     <string name="followers">Followers</string>
     <string name="originals">Originals</string>
+    <string name="share">Share</string>
+    <string name="comment">Comments</string>
+    <string name="add_a_comment">Add a comment&#8230;</string>
+    <string name="post">Post</string>
 </resources>

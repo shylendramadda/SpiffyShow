@@ -7,6 +7,7 @@ import com.geeklabs.spiffyshow.di.scope.ApplicationScope
 import com.geeklabs.spiffyshow.service.AppService
 import com.geeklabs.spiffyshow.service.MyFirebaseMessageService
 import com.geeklabs.spiffyshow.ui.components.about.AboutFragment
+import com.geeklabs.spiffyshow.ui.components.comment.CommentFragment
 import com.geeklabs.spiffyshow.ui.components.feedback.FeedbackFragment
 import com.geeklabs.spiffyshow.ui.components.login.LoginActivity
 import com.geeklabs.spiffyshow.ui.components.main.MainActivity
@@ -49,4 +50,5 @@ interface ApplicationComponent {
     fun inject(searchFragment: SearchFragment)
     fun inject(trimFragment: TrimFragment)
     fun inject(profileFragment: ProfileFragment)
+    fun inject(commentFragment: CommentFragment)
 }

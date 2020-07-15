@@ -10,6 +10,7 @@ import com.geeklabs.spiffyshow.models.ApplicationState
 import com.geeklabs.spiffyshow.models.MiscState
 import com.geeklabs.spiffyshow.ui.base.BaseFragment
 import com.geeklabs.spiffyshow.ui.components.about.AboutFragment
+import com.geeklabs.spiffyshow.ui.components.comment.CommentFragment
 import com.geeklabs.spiffyshow.ui.components.feedback.FeedbackFragment
 import com.geeklabs.spiffyshow.ui.components.main.MainActivity
 import com.geeklabs.spiffyshow.ui.components.main.home.HomeFragment
@@ -48,6 +49,7 @@ class NavigationHandler(
             is AboutFragment -> Navigation.ABOUT
             is FeedbackFragment -> Navigation.FEEDBACK
             is ProfileFragment -> Navigation.PROFILE
+            is CommentFragment -> Navigation.COMMENT
             else -> Navigation.NONE
         }
     }
@@ -62,6 +64,7 @@ class NavigationHandler(
         Navigation.ABOUT -> AboutFragment()
         Navigation.FEEDBACK -> FeedbackFragment()
         Navigation.PROFILE -> ProfileFragment()
+        Navigation.COMMENT -> CommentFragment()
         Navigation.NONE -> null
         else -> null
     }

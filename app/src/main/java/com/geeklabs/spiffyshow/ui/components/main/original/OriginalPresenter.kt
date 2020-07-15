@@ -78,4 +78,12 @@ class OriginalPresenter @Inject constructor(
         }))
         getView()?.notifyAdapter()
     }
+
+    override fun onProfileClicked(user: User) {
+        getView()?.navigateToUserProfile(user)
+    }
+
+    override fun onCommentClicked(item: Item) {
+        getView()?.navigateToComment(item)
+    }
 }

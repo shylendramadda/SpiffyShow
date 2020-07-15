@@ -5,6 +5,7 @@ import android.content.Context
 import android.net.Uri
 import android.view.View
 import android.view.ViewGroup
+import android.widget.MediaController
 import androidx.appcompat.widget.PopupMenu
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -16,18 +17,17 @@ import com.geeklabs.spiffyshow.extensions.shouldShow
 import com.geeklabs.spiffyshow.extensions.visible
 import com.geeklabs.spiffyshow.utils.Utils
 import com.geeklabs.spiffyshow.utils.Utils.getTimeAgo
-import com.jarvanmo.exoplayerview.media.SimpleMediaSource
-import com.jarvanmo.exoplayerview.ui.ExoVideoView
 import kotlinx.android.synthetic.main.item_layout.view.*
 
 class OriginalAdapter(
-    private val itemEditClicked: (Item, Boolean) -> Unit,
-    private val itemDeleteClicked: (Item) -> Unit
+    private val onEditClicked: (Item, Boolean) -> Unit,
+    private val onDeleteClicked: (Item) -> Unit,
+    private val onCommentClicked: (Item) -> Unit,
+    private val onProfileClicked: (User) -> Unit
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     var items = mutableListOf<Item>()
     var user: User? = null
-    var videoPlayer: ExoVideoView? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val listItemView = parent.inflate(R.layout.item_layout)
@@ -44,11 +44,13 @@ class OriginalAdapter(
         @SuppressLint("SetTextI18n")
         fun bind(item: Item) = with(itemView) {
             trimTV.visible = true
-            Utils.showHideViews(false, commentIV, shareIV, viewsTV, likeIV, likesTV, followText)
+            Utils.showHideViews(false, shareTV, viewsTV)
             titleTV.text = item.title
             categoryTV.text = item.category
             descriptionTV.text = item.description
             dateTV.text = getTimeAgo(item.time)
+            likeTV.text = "15"
+            commentTV.text = "5"
 
             if (user?.imageUrl?.isNotEmpty() == true) {
                 Glide.with(context).load(user?.imageUrl).placeholder(R.drawable.ic_icon_user)
@@ -63,15 +65,36 @@ class OriginalAdapter(
             }
 
             val uri = Uri.parse(item.fileMetaData.path)
-            val simpleMediaSource = SimpleMediaSource(uri)
-            videoPlayer = videoView
-            videoView.play(simpleMediaSource, false)
+            val mediaController = MediaController(context)
+            mediaController.setAnchorView(videoView)
+            videoView.setMediaController(mediaController)
+            videoView.setVideoURI(uri)
+            videoView.seekTo(1)
 
             moreOptions.setOnClickListener {
                 showPopup(item, context, it)
             }
+            commentTV.setOnClickListener {
+                onCommentClicked(item)
+            }
             trimTV.setOnClickListener {
-                itemEditClicked(item, true)
+                onEditClicked(item, true)
+            }
+            userImageLayout.setOnClickListener {
+                onProfileClicked(user!!)
+            }
+            var likeCount = 15
+            var isLikeClicked = false
+            likeTV.setOnClickListener {
+                isLikeClicked = !isLikeClicked
+                if (isLikeClicked) {
+                    ++likeCount
+                    likeTV.setTextColor(context.getColor(R.color.blueTertiary))
+                } else {
+                    --likeCount
+                    likeTV.setTextColor(context.getColor(R.color.grayPrimary))
+                }
+                likeTV.text = "$likeCount"
             }
         }
     }
@@ -83,19 +106,14 @@ class OriginalAdapter(
         popup.setOnMenuItemClickListener(PopupMenu.OnMenuItemClickListener {
             when (it?.itemId) {
                 R.id.itemEdit -> {
-                    itemEditClicked(item, false)
+                    onEditClicked(item, false)
                 }
                 R.id.itemDelete -> {
-                    itemDeleteClicked(item)
+                    onDeleteClicked(item)
                 }
             }
             true
         })
         popup.show()
-    }
-
-    override fun onDetachedFromRecyclerView(recyclerView: RecyclerView) {
-        super.onDetachedFromRecyclerView(recyclerView)
-        videoPlayer?.releasePlayer()
     }
 }

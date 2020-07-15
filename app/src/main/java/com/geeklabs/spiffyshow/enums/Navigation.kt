@@ -11,5 +11,6 @@ enum class Navigation(val tag: String) {
     ABOUT("AboutFragment"),
     FEEDBACK("FeedbackFragment"),
     PROFILE("ProfileFragment"),
+    COMMENT("CommentFragment"),
     NONE("")
 }
