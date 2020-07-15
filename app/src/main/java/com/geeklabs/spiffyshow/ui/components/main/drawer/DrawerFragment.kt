@@ -49,7 +49,7 @@ class DrawerFragment : BaseFragment<DrawerContract.View, DrawerContract.Presente
         val shareIntent = Intent()
         shareIntent.action = Intent.ACTION_SEND
         shareIntent.type = "text/plain"
-        shareIntent.putExtra(Intent.EXTRA_TEXT, "This is a message from SpiffyShow app")
+        shareIntent.putExtra(Intent.EXTRA_TEXT, "This is a message from SpiffyShow(www.spiffyshow.com) app")
         startActivity(Intent.createChooser(shareIntent, getString(R.string.share_app)))
     }
 

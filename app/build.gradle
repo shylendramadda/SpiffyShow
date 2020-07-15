@@ -167,4 +167,5 @@ dependencies {
     implementation libraries.firebaseCrashlytics
     //Video Trimmer
     implementation libraries.videoTrimmer
+    implementation 'com.linsea:universalvideoview:1.1.0@aar'
 }

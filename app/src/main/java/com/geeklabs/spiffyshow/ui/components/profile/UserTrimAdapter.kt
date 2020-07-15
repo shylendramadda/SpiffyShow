@@ -1,20 +1,24 @@
 package com.geeklabs.spiffyshow.ui.components.profile
 
+import android.media.MediaPlayer
 import android.net.Uri
 import android.view.View
 import android.view.ViewGroup
-import android.widget.MediaController
 import androidx.recyclerview.widget.RecyclerView
 import com.geeklabs.spiffyshow.R
 import com.geeklabs.spiffyshow.data.local.models.item.Trim
 import com.geeklabs.spiffyshow.data.local.models.user.User
 import com.geeklabs.spiffyshow.extensions.inflate
+import com.universalvideoview.UniversalMediaController
+import com.universalvideoview.UniversalVideoView
 import kotlinx.android.synthetic.main.item_clip.view.*
 
 class UserTrimAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     var items = mutableListOf<Trim>()
     var user: User? = null
+    private var videoViewUniversal: UniversalVideoView? = null
+    private var videoControllerUniversal: UniversalMediaController? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val listItemView = parent.inflate(R.layout.item_clip)
@@ -30,11 +34,29 @@ class UserTrimAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(item: Trim) = with(itemView) {
             val uri = Uri.parse(item.fileMetaData.path)
-            val mediaController = MediaController(context)
-            mediaController.setAnchorView(videoView)
-            videoView.setMediaController(mediaController)
-            videoView.setVideoURI(uri)
-            videoView.seekTo(1)
+            videoViewUniversal = videoViewUni
+            videoControllerUniversal = mediaController
+            videoViewUniversal?.setMediaController(videoControllerUniversal)
+            videoViewUniversal?.setVideoURI(uri)
+            videoViewUniversal?.seekTo(1)
+            videoViewUniversal?.setVideoViewCallback(object : UniversalVideoView.VideoViewCallback {
+                override fun onBufferingStart(mediaPlayer: MediaPlayer?) {
+                }
+
+                override fun onBufferingEnd(mediaPlayer: MediaPlayer?) {
+                }
+
+                override fun onPause(mediaPlayer: MediaPlayer?) {
+                    mediaPlayer?.pause()
+                }
+
+                override fun onScaleChange(isFullscreen: Boolean) {
+                }
+
+                override fun onStart(mediaPlayer: MediaPlayer?) {
+                    mediaPlayer?.start()
+                }
+            })
         }
     }
 }

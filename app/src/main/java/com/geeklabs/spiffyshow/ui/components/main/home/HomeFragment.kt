@@ -113,11 +113,11 @@ class HomeFragment : BaseFragment<HomeContract.View, HomeContract.Presenter>(), 
             flags = Intent.FLAG_ACTIVITY_NEW_TASK
             putExtra(
                 Intent.EXTRA_SUBJECT,
-                "Sharing File '${item.title}' from SpiffyShow"
+                "Sharing File '${item.title}' from SpiffyShow(www.spiffyshow.com)"
             )
             putExtra(
                 Intent.EXTRA_TEXT,
-                "Sharing File '${item.title}' from SpiffyShow"
+                "Sharing File '${item.title}' from SpiffyShow(www.spiffyshow.com)"
             )
             val fileURI = FileProvider.getUriForFile(
                 context!!, context!!.packageName + ".provider",

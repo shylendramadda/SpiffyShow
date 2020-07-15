@@ -154,17 +154,36 @@
             </LinearLayout>
         </LinearLayout>
 
-        <RelativeLayout
+        <FrameLayout
+            android:id="@+id/videoLayout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/blackTertiary"
-            android:gravity="center">
+            android:layout_height="200dp"
+            android:background="@color/blackPrimary">
 
-            <VideoView
-                android:id="@+id/videoView"
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="250dp" />
-        </RelativeLayout>
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                tools:ignore="UselessParent">
+
+                <com.universalvideoview.UniversalVideoView
+                    android:id="@+id/videoViewUni"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_centerInParent="true"
+                    android:layout_gravity="center"
+                    android:stateListAnimator="@null" />
+
+                <com.universalvideoview.UniversalMediaController
+                    android:id="@+id/mediaController"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_centerInParent="true"
+                    android:stateListAnimator="@null" />
+
+            </RelativeLayout>
+
+        </FrameLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
