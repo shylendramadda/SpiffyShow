@@ -2,6 +2,7 @@ package com.geeklabs.spiffyshow.ui.components.main
 
 import com.geeklabs.spiffyshow.data.local.models.item.Item
 import com.geeklabs.spiffyshow.data.local.models.user.User
+import com.geeklabs.spiffyshow.domain.local.file.ProcessFileUriUseCase
 import com.geeklabs.spiffyshow.domain.local.location.FetchDeviceLocationUseCase
 import com.geeklabs.spiffyshow.domain.local.user.FetchUserFromLocalUseCase
 import com.geeklabs.spiffyshow.domain.local.user.SaveUpdateUserUseCase
@@ -14,7 +15,7 @@ import com.geeklabs.spiffyshow.ui.base.BasePresenter
 import com.geeklabs.spiffyshow.utils.Constants
 import com.geeklabs.spiffyshow.utils.FileUtil
 import com.geeklabs.spiffyshow.utils.RxBus
-import com.geeklabs.spiffyshow.utils.StringUtil
+import com.geeklabs.spiffyshow.utils.StringUtils
 import com.log4k.e
 import io.reactivex.Observable
 import io.reactivex.schedulers.Schedulers
@@ -22,13 +23,14 @@ import javax.inject.Inject
 
 class MainPresenter @Inject constructor(
     private val rxBus: RxBus,
-    private val stringUtil: StringUtil,
+    private val stringUtils: StringUtils,
     private val fileUtil: FileUtil,
     private val applicationState: ApplicationState,
     private val saveUpdateUserUseCase: SaveUpdateUserUseCase,
     private val fetchUserFromLocalUseCase: FetchUserFromLocalUseCase,
     private val saveUpdateUserRemoteUseCase: SaveUpdateUserRemoteUseCase,
-    private val fetchDeviceLocationUseCase: FetchDeviceLocationUseCase
+    private val fetchDeviceLocationUseCase: FetchDeviceLocationUseCase,
+    private val processFileUriUseCase: ProcessFileUriUseCase
 ) : BasePresenter<MainContract.View>(), MainContract.Presenter {
 
     private var user: User? = null
@@ -50,7 +52,7 @@ class MainPresenter @Inject constructor(
                     applicationState.isAdmin = it.role.equals(Constants.ADMIN, false)
                     getView()?.navigateToHome()
                 }, {
-                    getView()?.showToast(stringUtil.getString(StringEnum.SOMETHING_WENT_WRONG.resId) + " Error: " + it.message)
+                    getView()?.showToast(stringUtils.getString(StringEnum.SOMETHING_WENT_WRONG.resId) + " Error: " + it.message)
                     e("loadUserFromLocal ${it.message}")
                 })
         )
@@ -104,15 +106,27 @@ class MainPresenter @Inject constructor(
 
     override fun onSaveFilePath(fileUri: String?) {
         if (fileUri == null) {
-            getView()?.showToast(stringUtil.getString(StringEnum.FILE_PATH_ERROR.resId))
+            getView()?.showToast(stringUtils.getString(StringEnum.FILE_PATH_ERROR.resId))
             return
         }
-        val fileMetaData = fileUtil.getFileMetaData(fileUri)
-        if (fileMetaData == null || fileMetaData.path.isEmpty()) {
-            getView()?.showToast(stringUtil.getString(StringEnum.FILE_PATH_ERROR.resId))
-            return
-        }
-        getView()?.navigateToTrim(Item(fileMetaData = fileMetaData), false)
+        disposables?.add(
+            processFileUriUseCase.execute(fileUri)
+                .applySchedulers()
+                .doOnSubscribe { getView()?.showHideProgress(true) }
+                .doFinally { getView()?.showHideProgress(false) }
+                .subscribe({
+                    if (it.second.isNotEmpty()) {
+                        getView()?.showAlert(it.second)
+                        return@subscribe
+                    }
+                    getView()?.navigateToTrim(Item(fileMetaData = it.first), false)
+                }, {
+                    getView()?.showAlert(
+                        stringUtils.getString(StringEnum.FILE_PATH_ERROR.resId) + "${it.message}"
+                    )
+                    getView()?.showHideProgress(false)
+                })
+        )
     }
 
     private fun saveUpdateUser(user: User) {
@@ -130,7 +144,7 @@ class MainPresenter @Inject constructor(
                 .applySchedulers()
                 .subscribe({
                     if (it == null) {
-                        getView()?.showToast(stringUtil.getString(StringEnum.SOMETHING_WENT_WRONG_SERVER.resId))
+                        getView()?.showToast(stringUtils.getString(StringEnum.SOMETHING_WENT_WRONG_SERVER.resId))
                     }
                 }, {
                     e("Error: ${it.message}")

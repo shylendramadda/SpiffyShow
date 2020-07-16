@@ -15,6 +15,8 @@ interface MainContract {
         fun startVideoIntent()
         fun askPermissions()
         fun navigateToTrim(obj: Any, isTrim: Boolean)
+        fun showAlert(message: String)
+        fun showHideProgress(isShow: Boolean)
     }
 
     interface Presenter : BaseContract.Presenter<View> {

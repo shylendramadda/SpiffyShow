@@ -101,7 +101,7 @@ class HomeFragment : BaseFragment<HomeContract.View, HomeContract.Presenter>(), 
             }
         AlertDialog.Builder(context)
             .setMessage(messageText)
-            .setPositiveButton(R.string.ok, null)
+            .setPositiveButton(R.string.okay, null)
             .show()
     }
 

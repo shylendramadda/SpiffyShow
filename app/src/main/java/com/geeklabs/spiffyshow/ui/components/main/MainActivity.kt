@@ -22,6 +22,7 @@ import com.geeklabs.spiffyshow.models.ApplicationState
 import com.geeklabs.spiffyshow.service.AppService
 import com.geeklabs.spiffyshow.ui.base.BaseActivity
 import com.geeklabs.spiffyshow.ui.common.NavigationHandler
+import com.geeklabs.spiffyshow.ui.common.Progress
 import com.geeklabs.spiffyshow.ui.components.comment.CommentFragment
 import com.geeklabs.spiffyshow.ui.components.login.LoginActivity
 import com.geeklabs.spiffyshow.ui.components.main.drawer.DrawerFragment
@@ -54,6 +55,7 @@ class MainActivity : BaseActivity<MainContract.View, MainContract.Presenter>(), 
     lateinit var workManager: WorkManager
 
     private var isPermissionEnable = false
+    private var progress: Progress? = null
     private lateinit var navigationHandler: NavigationHandler
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -346,6 +348,18 @@ class MainActivity : BaseActivity<MainContract.View, MainContract.Presenter>(), 
 
     override fun showToast(message: String) {
         toast(message)
+    }
+
+    override fun showAlert(message: String) {
+        alert("File Error", message) {
+            positiveButton(getString(R.string.okay))
+            negativeButton("")
+        }.show()
+    }
+
+    override fun showHideProgress(isShow: Boolean) {
+        if (isShow) progress = Progress(this, R.string.please_wait, cancelable = false)
+        progress?.apply { if (isShow) show() else dismiss() }
     }
 
     override fun initPresenter() = mainPresenter

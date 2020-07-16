@@ -9,14 +9,14 @@ import com.geeklabs.spiffyshow.extensions.applySchedulers
 import com.geeklabs.spiffyshow.models.ApplicationState
 import com.geeklabs.spiffyshow.ui.base.BasePresenter
 import com.geeklabs.spiffyshow.utils.FileUtil
-import com.geeklabs.spiffyshow.utils.StringUtil
+import com.geeklabs.spiffyshow.utils.StringUtils
 import com.log4k.e
 import io.reactivex.Observable
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
 class SettingsPresenter @Inject constructor(
-    private val stringUtil: StringUtil,
+    private val stringUtils: StringUtils,
     private val applicationState: ApplicationState,
     private val fetchUserFromLocalUseCase: FetchUserFromLocalUseCase,
     private val saveUpdateUserUseCase: SaveUpdateUserUseCase,
@@ -45,7 +45,7 @@ class SettingsPresenter @Inject constructor(
                         getView()?.showUserDetails(it)
                     }
                 }, {
-                    getView()?.showToast(stringUtil.getString(StringEnum.SOMETHING_WENT_WRONG.resId) + " Error: " + it.message)
+                    getView()?.showToast(stringUtils.getString(StringEnum.SOMETHING_WENT_WRONG.resId) + " Error: " + it.message)
                     e("loadUserFromLocal ${it.message}")
                 })
         )
@@ -63,7 +63,7 @@ class SettingsPresenter @Inject constructor(
         isImageUpdate = true
         val fileMetaData = fileUtil.getFileMetaData(imagePath)
         if (fileMetaData == null || (fileMetaData.path.isEmpty() && fileMetaData.uri.isEmpty())) {
-            getView()?.showToast(stringUtil.getString(StringEnum.FILE_PATH_ERROR.resId))
+            getView()?.showToast(stringUtils.getString(StringEnum.FILE_PATH_ERROR.resId))
             return
         }
         if (fileMetaData.path.isEmpty()) {
@@ -81,7 +81,7 @@ class SettingsPresenter @Inject constructor(
             saveUpdateUserUseCase.execute(user)
         }.subscribeOn(Schedulers.newThread()).subscribe()
 //        saveUpdateUserInRemote(user)
-        getView()?.showToast(stringUtil.getString(StringEnum.UPDATE_SUCCESS.resId))
+        getView()?.showToast(stringUtils.getString(StringEnum.UPDATE_SUCCESS.resId))
         // Just for dev
         if (!isImageUpdate) {
             getView()?.navigateToHome()
@@ -94,7 +94,7 @@ class SettingsPresenter @Inject constructor(
                 .applySchedulers()
                 .subscribe({
                     if (it == null) {
-                        getView()?.showToast(stringUtil.getString(StringEnum.SOMETHING_WENT_WRONG_SERVER.resId))
+                        getView()?.showToast(stringUtils.getString(StringEnum.SOMETHING_WENT_WRONG_SERVER.resId))
                     } else if (!isImageUpdate) {
                         getView()?.navigateToHome()
                     }

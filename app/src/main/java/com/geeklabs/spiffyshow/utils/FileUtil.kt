@@ -262,7 +262,7 @@ class FileUtil @Inject constructor(val context: Context) {
         if (!attachmentCacheDirectoryPath.exists()) {
             attachmentCacheDirectoryPath.mkdir()
         }
-        val file = File(attachmentCacheDirectoryPath, fileMetaData.name)
+        val file = File(attachmentCacheDirectoryPath, fileMetaData.name + "." + fileMetaData.ext)
         val uri = Uri.parse(fileMetaData.uri)
         val inputStream = context.contentResolver.openInputStream(uri) ?: return null
         val outputStream = FileOutputStream(file)
@@ -295,7 +295,7 @@ class FileUtil @Inject constructor(val context: Context) {
      }*/
 
     private fun getFileCacheDirectoryPath(): String {
-        return context.cacheDir.toString() + "/Files/"
+        return context.cacheDir.toString() + "/SpiffyFiles/"
     }
 
     fun deleteCacheDirectory(cacheDirectoryPath: String) {
@@ -307,5 +307,9 @@ class FileUtil @Inject constructor(val context: Context) {
             }
             fileDirectory.delete()
         }
+    }
+
+    fun isFileExists(filePath: String): Boolean {
+        return File(filePath).exists()
     }
 }

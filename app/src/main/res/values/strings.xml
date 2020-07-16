@@ -38,7 +38,7 @@
     <string name="bio">Bio</string>
     <string name="state">State</string>
     <string name="location">Location</string>
-    <string name="ok">Okay</string>
+    <string name="okay">Okay</string>
     <string name="notification_for_status">SpiffyShow accessing location</string>
     <string name="permission_location">App need to access your location</string>
     <string name="google_maps_key">AIzaSyA8XcPlgDMw-Gg5j_5bJ9tH1wsxxpHXgRk</string>
@@ -172,4 +172,7 @@
     <string name="comment">Comments</string>
     <string name="add_a_comment">Add a comment&#8230;</string>
     <string name="post">Post</string>
+    <string name="file_size_exceed">File size is exceeded, supports up to 1 GB only.</string>
+    <string name="file_not_exists_error">File not found in the given location</string>
+    <string name="file_not_exists">File Not Exists</string>
 </resources>

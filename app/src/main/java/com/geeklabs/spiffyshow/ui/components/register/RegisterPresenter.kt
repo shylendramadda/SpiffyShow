@@ -6,7 +6,7 @@ import com.geeklabs.spiffyshow.domain.remote.user.SaveUpdateUserRemoteUseCase
 import com.geeklabs.spiffyshow.enums.StringEnum
 import com.geeklabs.spiffyshow.extensions.applySchedulers
 import com.geeklabs.spiffyshow.ui.base.BasePresenter
-import com.geeklabs.spiffyshow.utils.StringUtil
+import com.geeklabs.spiffyshow.utils.StringUtils
 import com.log4k.d
 import io.reactivex.Observable
 import io.reactivex.schedulers.Schedulers
@@ -15,7 +15,7 @@ import javax.inject.Inject
 class RegisterPresenter @Inject constructor(
     private val saveUpdateUserRemoteUseCase: SaveUpdateUserRemoteUseCase,
     private val saveUpdateUserUseCase: SaveUpdateUserUseCase,
-    private val stringUtil: StringUtil
+    private val stringUtils: StringUtils
 ) :
     BasePresenter<RegisterContract.View>(),
     RegisterContract.Presenter {
@@ -69,7 +69,7 @@ class RegisterPresenter @Inject constructor(
                     if (it != null) {
                         saveUserInLocal(it)
                     }
-                    getView()?.showToast(stringUtil.getString(StringEnum.UPDATE_SUCCESS.resId))
+                    getView()?.showToast(stringUtils.getString(StringEnum.UPDATE_SUCCESS.resId))
                 }, {
                     d("registerUser: ${it.message}")
                 })

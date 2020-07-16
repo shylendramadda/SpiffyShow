@@ -9,7 +9,7 @@ import com.geeklabs.spiffyshow.models.ApplicationState
 import com.geeklabs.spiffyshow.ui.base.BasePresenter
 import com.geeklabs.spiffyshow.utils.Constants
 import com.geeklabs.spiffyshow.utils.PrefManager
-import com.geeklabs.spiffyshow.utils.StringUtil
+import com.geeklabs.spiffyshow.utils.StringUtils
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
@@ -20,7 +20,7 @@ import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
 class LoginPresenter @Inject constructor(
-    private val stringUtil: StringUtil,
+    private val stringUtils: StringUtils,
     private val prefManager: PrefManager,
     private val applicationState: ApplicationState,
     private val loginUseCase: LoginUseCase,
@@ -76,12 +76,12 @@ class LoginPresenter @Inject constructor(
 //                loginUser(phoneNumber) // Just for local Testing TODO
                 saveUserInLocal(User(id = System.currentTimeMillis(), phoneNumber = phoneNumber))
             } else {
-                getView()?.showToast(stringUtil.getString(StringEnum.INVALID_CODE.resId))
+                getView()?.showToast(stringUtils.getString(StringEnum.INVALID_CODE.resId))
             }
         } else {
             w("onCompleteVerification: failure ${task.exception}")
             if (task.exception is FirebaseAuthInvalidCredentialsException) {
-                getView()?.showToast(stringUtil.getString(StringEnum.INVALID_CODE.resId))
+                getView()?.showToast(stringUtils.getString(StringEnum.INVALID_CODE.resId))
             } else {
                 getView()?.showToast("The verification failed due to: ${task.exception}")
             }
@@ -98,11 +98,11 @@ class LoginPresenter @Inject constructor(
                         saveUserInLocal(it)
                     } else {
                         getView()?.hideProgress()
-                        getView()?.showToast(stringUtil.getString(StringEnum.SOMETHING_WENT_WRONG_SERVER.resId))
+                        getView()?.showToast(stringUtils.getString(StringEnum.SOMETHING_WENT_WRONG_SERVER.resId))
                     }
                 }, {
                     getView()?.hideProgress()
-                    getView()?.showToast(stringUtil.getString(StringEnum.SOMETHING_WENT_WRONG.resId))
+                    getView()?.showToast(stringUtils.getString(StringEnum.SOMETHING_WENT_WRONG.resId))
                 })
         )
     }
@@ -115,7 +115,7 @@ class LoginPresenter @Inject constructor(
         prefManager.save(Constants.IS_LOGIN, true)
         prefManager.save(Constants.USER_ID, user.id.toString())
         getView()?.hideProgress()
-        getView()?.showToast(stringUtil.getString(StringEnum.WELCOME.resId))
+        getView()?.showToast(stringUtils.getString(StringEnum.WELCOME.resId))
         getView()?.navigateToMainScreen()
     }
 

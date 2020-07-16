@@ -2,4 +2,5 @@
 <paths>
     <files-path name="files" path="." />
     <external-path name="external_files" path="."/>
+    <cache-path name="spiffy_files" path="SpiffyFiles"/>
 </paths>

@@ -11,5 +11,7 @@ enum class StringEnum(val resId: Int) {
     SOMETHING_WENT_WRONG_SERVER(R.string.something_went_wrong_server),
     INVALID_CODE(R.string.invalid_code),
     FILE_PATH_ERROR(R.string.file_path_error),
+    FILE_SIZE_ERROR(R.string.file_size_exceed),
+    FILE_NOT_EXISTS_ERROR(R.string.file_not_exists_error),
     USER_LOCATION_NOT_UPDATED(R.string.user_location_not_updated),
 }

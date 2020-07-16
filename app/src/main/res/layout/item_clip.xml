@@ -7,34 +7,29 @@
     android:background="@color/blackTertiary"
     android:gravity="center">
 
-    <FrameLayout
-        android:id="@+id/videoLayout"
+
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="100dp"
-        android:background="@color/blackPrimary">
+        android:layout_gravity="center"
+        android:background="@color/blackPrimary"
+        android:stateListAnimator="@null"
+        tools:ignore="UselessParent">
 
-        <RelativeLayout
+        <com.universalvideoview.UniversalVideoView
+            android:id="@+id/videoViewUni"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_centerInParent="true"
             android:layout_gravity="center"
-            tools:ignore="UselessParent">
+            android:stateListAnimator="@null" />
 
-            <com.universalvideoview.UniversalVideoView
-                android:id="@+id/videoViewUni"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_centerInParent="true"
-                android:layout_gravity="center"
-                android:stateListAnimator="@null" />
-
-            <com.universalvideoview.UniversalMediaController
-                android:id="@+id/mediaController"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_centerInParent="true"
-                android:stateListAnimator="@null" />
-        </RelativeLayout>
-
-    </FrameLayout>
+        <com.universalvideoview.UniversalMediaController
+            android:id="@+id/mediaController"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"
+            android:stateListAnimator="@null" />
+    </RelativeLayout>
 
 </RelativeLayout>

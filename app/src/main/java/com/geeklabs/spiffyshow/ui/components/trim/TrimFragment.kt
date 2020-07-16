@@ -6,6 +6,7 @@ import com.geeklabs.spiffyshow.R
 import com.geeklabs.spiffyshow.data.local.models.item.Item
 import com.geeklabs.spiffyshow.data.local.models.item.Trim
 import com.geeklabs.spiffyshow.enums.Navigation
+import com.geeklabs.spiffyshow.extensions.alert
 import com.geeklabs.spiffyshow.extensions.toast
 import com.geeklabs.spiffyshow.extensions.visible
 import com.geeklabs.spiffyshow.models.FileMetaData
@@ -16,6 +17,7 @@ import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.fragment_trim.*
 import life.knowledge4.videotrimmer.interfaces.OnK4LVideoListener
 import life.knowledge4.videotrimmer.interfaces.OnTrimVideoListener
+import java.io.File
 import javax.inject.Inject
 
 
@@ -27,7 +29,7 @@ class TrimFragment : BaseFragment<TrimContract.View, TrimContract.Presenter>(),
     private var obj: Any? = null
     private var fileMetaData: FileMetaData? = null
     private var isTrim: Boolean = false
-    private lateinit var progress: Progress
+    private var progress: Progress? = null
     private var disposables = CompositeDisposable()
 
     override fun initUI() {
@@ -54,17 +56,22 @@ class TrimFragment : BaseFragment<TrimContract.View, TrimContract.Presenter>(),
             val category = categoryET.text.toString().trim()
             presenter?.onSaveClicked(title, description, category, isTrim)
         }
-        progress = Progress(context, R.string.please_wait, false)
         presenter?.setItem(obj!!)
-        setVideoView(fileMetaData!!.path)
+        if (File(fileMetaData!!.path).exists()) {
+            setVideoView(fileMetaData!!.path)
+        } else {
+            alert(getString(R.string.file_not_exists), getString(R.string.file_not_exists_error)) {
+                positiveButton(getString(R.string.okay)) {
+                    navigateToOriginals()
+                }
+                negativeButton("")
+            }.show()
+        }
     }
 
-    override fun showProgress() {
-        progress.show()
-    }
-
-    override fun hideProgress() {
-        progress.dismiss()
+    override fun showHideProgress(isShow: Boolean) {
+        if (isShow) progress = Progress(context, R.string.please_wait, cancelable = false)
+        progress?.apply { if (isShow) show() else dismiss() }
     }
 
     private fun setVideoView(filePath: String) {

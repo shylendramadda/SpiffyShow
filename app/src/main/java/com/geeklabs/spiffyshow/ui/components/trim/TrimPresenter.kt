@@ -31,7 +31,7 @@ class TrimPresenter @Inject constructor(
     }
 
     override fun onVideoTrimStarted() {
-        getView()?.showProgress()
+        getView()?.showHideProgress(true)
     }
 
     override fun setItem(obj: Any) {
@@ -58,11 +58,12 @@ class TrimPresenter @Inject constructor(
             getView()?.showToast("Problem occurred while processing the video")
             e.printStackTrace()
         }
-        getView()?.hideProgress()
+        getView()?.showHideProgress(false)
     }
 
     override fun onVideoPrepared() {
-//        getView()?.showToast("Video prepared")
+        getView()?.showHideProgress(false)
+        getView()?.showToast("Video prepared")
     }
 
     override fun onCancelClick() {
@@ -113,7 +114,7 @@ class TrimPresenter @Inject constructor(
                     }.subscribeOn(Schedulers.newThread()).subscribe()
                     getView()?.navigateToOriginals()
                 }
-                getView()?.hideProgress()
+                getView()?.showHideProgress(false)
             }
         }
     }

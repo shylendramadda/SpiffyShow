@@ -168,4 +168,5 @@ dependencies {
     //Video Trimmer
     implementation libraries.videoTrimmer
     implementation 'com.linsea:universalvideoview:1.1.0@aar'
+    implementation 'com.github.hiteshsondhi88.libffmpeg:FFmpegAndroid:0.2.5'
 }

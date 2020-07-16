@@ -1,6 +1,5 @@
 package com.geeklabs.spiffyshow.ui.components.trim
 
-import com.geeklabs.spiffyshow.models.FileMetaData
 import com.geeklabs.spiffyshow.ui.base.BaseContract
 
 interface TrimContract {
@@ -8,8 +7,7 @@ interface TrimContract {
         fun initUI()
         fun showToast(title: String)
         fun navigateToHome()
-        fun showProgress()
-        fun hideProgress()
+        fun showHideProgress(isShow: Boolean)
         fun navigateToOriginals()
     }
 
@@ -24,6 +22,7 @@ interface TrimContract {
             category: String,
             isTrim: Boolean
         )
+
         fun setItem(obj: Any)
     }
 }
