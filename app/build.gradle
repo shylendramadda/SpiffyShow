@@ -29,28 +29,12 @@ android {
             }
         }
     }
-    signingConfigs {
-        release {
-            storeFile file('keystore/spiffyshow.jks')
-            storePassword 'spiffyshow'
-            keyAlias 'spiffyshow'
-            keyPassword 'spiffyshow'
-        }
-    }
     buildTypes {
         debug {
             minifyEnabled false
             shrinkResources false
             zipAlignEnabled false
-        }
-        dev {
-            debuggable true
-            minifyEnabled true
-            shrinkResources true
-            zipAlignEnabled true
-            signingConfig signingConfigs.release
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-//            applicationIdSuffix ".dev"
             manifestPlaceholders = [applicationLabel: APP_NAME_DEV]
             buildConfigField 'Boolean', 'sqliteEncryptionEnabled', 'false'
             buildConfigField 'String', 'apiEndpointUrl', '"https://jsonplaceholder.typicode.com/"'
@@ -59,27 +43,26 @@ android {
             }
         }
         release {
-            debuggable false
+            debuggable true
             minifyEnabled true
             shrinkResources true
             zipAlignEnabled true
-            signingConfig signingConfigs.release
-            manifestPlaceholders = [applicationLabel: APP_NAME]
-            buildConfigField 'String', 'apiEndpointUrl', '"https://jsonplaceholder.typicode.com/"'
-            buildConfigField 'Boolean', 'sqliteEncryptionEnabled', 'true'
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            manifestPlaceholders = [applicationLabel: APP_NAME]
+            buildConfigField 'Boolean', 'sqliteEncryptionEnabled', 'false'
+            buildConfigField 'String', 'apiEndpointUrl', '"https://jsonplaceholder.typicode.com/"'
             ndk {
-                abiFilters 'arm64-v8a'
+                abiFilters "armeabi-v7a", "x86", 'arm64-v8a'
             }
         }
     }
+
     applicationVariants.all { variant ->
         variant.outputs.all {
             def versionName = variant.versionName
             def versionCode = variant.versionCode
             def variantName = variant.name
-            outputFileName = variantName + '_' + versionName + '_' + versionCode + '.apk'
+            outputFileName = "SpiffyShow_" + variantName + '_' + versionName + '_' + versionCode + '.apk'
         }
     }
 
