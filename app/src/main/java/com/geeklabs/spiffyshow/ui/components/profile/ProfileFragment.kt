@@ -29,7 +29,7 @@ class ProfileFragment : BaseFragment<ProfileContract.View, ProfileContract.Prese
         if (user == null) return
         setUserInfo(user!!)
         followText.setOnClickListener {
-            showToast("Clicked on follow button")
+            followText.text = getString(R.string.following)
         }
         trimAdapter = UserTrimAdapter()
         originalAdapter = UserOriginalAdapter()

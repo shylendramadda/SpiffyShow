@@ -71,16 +71,17 @@ class TrimPresenter @Inject constructor(
     }
 
     override fun onSaveClicked(
+        externalUri: String,
         title: String,
         description: String,
         category: String,
         isTrim: Boolean
     ) {
         when {
+            fileMetaData == null && externalUri.isEmpty() -> getView()?.showToast("Please enter URL")
             title.isEmpty() -> getView()?.showToast("Please enter title")
             description.isEmpty() -> getView()?.showToast("Please enter description")
             category.isEmpty() -> getView()?.showToast("Please enter category")
-            fileMetaData == null -> getView()?.showToast("Data not found")
             else -> {
                 if (trim != null || isTrim) {
                     if (processedUri?.isEmpty() == false) {
@@ -100,12 +101,15 @@ class TrimPresenter @Inject constructor(
                     }.subscribeOn(Schedulers.newThread()).subscribe()
                     getView()?.navigateToHome()
                 } else {
+                    if (externalUri.isNotEmpty()) {
+                        fileMetaData = FileMetaData(path = externalUri)
+                    }
                     val item = Item(
                         id = this.item?.id ?: 0,
                         title = title,
                         description = description,
                         category = category,
-                        fileMetaData = fileMetaData!!,
+                        fileMetaData = fileMetaData,
                         time = Utils.getCurrentTime(),
                         userId = applicationState.user?.id ?: 0
                     )

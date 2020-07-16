@@ -16,20 +16,19 @@
         android:stateListAnimator="@null"
         tools:ignore="UselessParent">
 
-        <com.universalvideoview.UniversalVideoView
-            android:id="@+id/videoViewUni"
+        <com.geeklabs.spiffyshow.ui.common.CustomYoutubePlayer
+            android:id="@+id/youtubePlayer"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_centerInParent="true"
-            android:layout_gravity="center"
-            android:stateListAnimator="@null" />
+            android:stateListAnimator="@null"
+            android:visibility="gone" />
 
-        <com.universalvideoview.UniversalMediaController
-            android:id="@+id/mediaController"
+        <com.geeklabs.spiffyshow.ui.common.CustomUniversalVideoView
+            android:id="@+id/universalVideoView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_centerInParent="true"
-            android:stateListAnimator="@null" />
+            android:visibility="gone"
+            tools:visibility="visible" />
     </RelativeLayout>
 
 </RelativeLayout>

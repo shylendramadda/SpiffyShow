@@ -88,6 +88,10 @@ class HomePresenter @Inject constructor(
     }
 
     override fun onShareClicked(item: Trim) {
+        if (item.fileMetaData?.path.isNullOrEmpty()) {
+            getView()?.showAlertDialog("File not found in the given location to share.")
+            return
+        }
         getView()?.startFileShareIntent(item)
     }
 

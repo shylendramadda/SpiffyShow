@@ -3,12 +3,15 @@ package com.geeklabs.spiffyshow.ui.components.main
 import android.Manifest
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.app.AlertDialog
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Rect
 import android.os.Build
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.MotionEvent
+import android.widget.Button
 import androidx.annotation.RequiresApi
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
@@ -45,6 +48,7 @@ import javax.inject.Inject
 class MainActivity : BaseActivity<MainContract.View, MainContract.Presenter>(), MainContract.View,
     Utils.DialogActionListener {
 
+
     @Inject
     lateinit var mainPresenter: MainPresenter
 
@@ -57,6 +61,7 @@ class MainActivity : BaseActivity<MainContract.View, MainContract.Presenter>(), 
     private var isPermissionEnable = false
     private var progress: Progress? = null
     private lateinit var navigationHandler: NavigationHandler
+    private var uploadDialog: AlertDialog? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -188,6 +193,25 @@ class MainActivity : BaseActivity<MainContract.View, MainContract.Presenter>(), 
         setToolBarTitle(navigation)
     }
 
+    override fun showUploadAlert() {
+        uploadDialog = AlertDialog.Builder(this).create()
+        uploadDialog?.setCancelable(true)
+        val dialogView = LayoutInflater.from(this).inflate(R.layout.layout_upload_alert, null)
+        uploadDialog?.window?.setBackgroundDrawableResource(R.color.transparent)
+        uploadDialog?.setView(dialogView)
+        val chooseFileButton = dialogView?.findViewById<Button>(R.id.chooseFileButton)
+        val addFromLinkButton = dialogView?.findViewById<Button>(R.id.addFromLinkButton)
+        chooseFileButton?.setOnClickListener {
+            presenter?.onChooseFileClicked(isPermissionEnable)
+            uploadDialog?.dismiss()
+        }
+        addFromLinkButton?.setOnClickListener {
+            presenter?.onAddFromLinkButton()
+            uploadDialog?.dismiss()
+        }
+        uploadDialog?.show()
+    }
+
     fun closeDrawer() {
         if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
             drawerLayout.closeDrawer(GravityCompat.START)
@@ -231,10 +255,10 @@ class MainActivity : BaseActivity<MainContract.View, MainContract.Presenter>(), 
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if ((grantResults.isNotEmpty())) {
             val isGiven1 = grantResults[0] == PackageManager.PERMISSION_GRANTED
-            val isGiven2 = grantResults[1] == PackageManager.PERMISSION_GRANTED
-            val isGiven3 = grantResults[2] == PackageManager.PERMISSION_GRANTED
-            val isGiven4 = grantResults[3] == PackageManager.PERMISSION_GRANTED
-            val isGiven5 = grantResults[4] == PackageManager.PERMISSION_GRANTED
+            val isGiven2 = grantResults.size > 1 && grantResults[1] == PackageManager.PERMISSION_GRANTED
+            val isGiven3 = grantResults.size > 2 && grantResults[2] == PackageManager.PERMISSION_GRANTED
+            val isGiven4 = grantResults.size > 3 && grantResults[3] == PackageManager.PERMISSION_GRANTED
+            val isGiven5 = grantResults.size > 4 && grantResults[4] == PackageManager.PERMISSION_GRANTED
             if ((isGiven1 && isGiven2 && isGiven3) || isPermissionEnable) {
                 startService()
             }

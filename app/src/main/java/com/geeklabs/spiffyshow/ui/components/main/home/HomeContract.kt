@@ -13,9 +13,10 @@ interface HomeContract {
             items: MutableList<Trim>,
             user: User?
         )
+
         fun showToast(title: String)
         fun showMessage(message: Int)
-        fun showAlertDialog(message: Int)
+        fun showAlertDialog(message: String)
         fun navigateToTrim(item: Trim)
         fun startFileShareIntent(item: Trim)
         fun notifyAdapter()

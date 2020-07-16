@@ -24,7 +24,6 @@ import kotlinx.android.synthetic.main.layout_content_settings.*
 import permissions.dispatcher.*
 import javax.inject.Inject
 
-@Suppress("DEPRECATION")
 @RuntimePermissions
 class SettingsFragment : BaseFragment<SettingsContract.View, SettingsContract.Presenter>(),
     SettingsContract.View {
@@ -32,10 +31,15 @@ class SettingsFragment : BaseFragment<SettingsContract.View, SettingsContract.Pr
     @Inject
     lateinit var settingsPresenter: SettingsPresenter
     private var isPermissionEnable = false
+    private var isTouched = false
 
+    @SuppressLint("ClickableViewAccessibility")
     override fun initUI() {
-        editImageIV.setOnClickListener {
-            presenter?.onEditImageClicked(isPermissionEnable)
+        editImageIV.setOnTouchListener { _, _ ->
+            if (!isTouched) {
+                presenter?.onEditImageClicked(isPermissionEnable)
+            }
+            true
         }
 
         saveButton.setOnClickListener {
@@ -103,13 +107,14 @@ class SettingsFragment : BaseFragment<SettingsContract.View, SettingsContract.Pr
     }
 
     override fun showUploadImageDialog() {
-        val pictureDialog = AlertDialog.Builder(context!!)
-        pictureDialog.setTitle("Select Action")
+        isTouched = true
+        val pictureDialogBuilder = AlertDialog.Builder(context!!)
+        pictureDialogBuilder.setTitle("Select Action")
         val pictureDialogItems = arrayOf(
             "Select photo from gallery",
             "Capture photo from camera"
         )
-        pictureDialog.setItems(
+        pictureDialogBuilder.setItems(
             pictureDialogItems
         ) { _, which ->
             when (which) {
@@ -117,7 +122,11 @@ class SettingsFragment : BaseFragment<SettingsContract.View, SettingsContract.Pr
                 1 -> startCameraIntent()
             }
         }
-        pictureDialog.show()
+        val dialog = pictureDialogBuilder.create()
+        if (dialog.isShowing) {
+            dialog.dismiss()
+        }
+        dialog.show()
     }
 
     private fun startGalleryIntent() {

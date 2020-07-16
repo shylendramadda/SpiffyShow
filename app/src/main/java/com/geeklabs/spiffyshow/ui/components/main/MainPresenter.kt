@@ -13,7 +13,6 @@ import com.geeklabs.spiffyshow.extensions.applySchedulers
 import com.geeklabs.spiffyshow.models.ApplicationState
 import com.geeklabs.spiffyshow.ui.base.BasePresenter
 import com.geeklabs.spiffyshow.utils.Constants
-import com.geeklabs.spiffyshow.utils.FileUtil
 import com.geeklabs.spiffyshow.utils.RxBus
 import com.geeklabs.spiffyshow.utils.StringUtils
 import com.log4k.e
@@ -24,7 +23,6 @@ import javax.inject.Inject
 class MainPresenter @Inject constructor(
     private val rxBus: RxBus,
     private val stringUtils: StringUtils,
-    private val fileUtil: FileUtil,
     private val applicationState: ApplicationState,
     private val saveUpdateUserUseCase: SaveUpdateUserUseCase,
     private val fetchUserFromLocalUseCase: FetchUserFromLocalUseCase,
@@ -97,11 +95,7 @@ class MainPresenter @Inject constructor(
     }
 
     override fun onAddButtonClicked(isPermissionEnable: Boolean) {
-        if (isPermissionEnable) {
-            getView()?.startVideoIntent()
-        } else {
-            getView()?.askPermissions()
-        }
+        getView()?.showUploadAlert()
     }
 
     override fun onSaveFilePath(fileUri: String?) {
@@ -150,6 +144,18 @@ class MainPresenter @Inject constructor(
                     e("Error: ${it.message}")
                 })
         )
+    }
+
+    override fun onChooseFileClicked(isPermissionEnable: Boolean) {
+        if (isPermissionEnable) {
+            getView()?.startVideoIntent()
+        } else {
+            getView()?.askPermissions()
+        }
+    }
+
+    override fun onAddFromLinkButton() {
+        getView()?.navigateToTrim(Item(), false)
     }
 
     override fun onDestroyed() {

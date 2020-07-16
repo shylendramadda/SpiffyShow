@@ -17,11 +17,14 @@ interface MainContract {
         fun navigateToTrim(obj: Any, isTrim: Boolean)
         fun showAlert(message: String)
         fun showHideProgress(isShow: Boolean)
+        fun showUploadAlert()
     }
 
     interface Presenter : BaseContract.Presenter<View> {
         fun onMenuButtonClicked()
         fun onAddButtonClicked(isPermissionEnable: Boolean)
         fun onSaveFilePath(fileUri: String?)
+        fun onChooseFileClicked(isPermissionEnable: Boolean)
+        fun onAddFromLinkButton()
     }
 }

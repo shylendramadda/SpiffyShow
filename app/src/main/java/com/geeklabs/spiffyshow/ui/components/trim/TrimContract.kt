@@ -17,6 +17,7 @@ interface TrimContract {
         fun onVideoPrepared()
         fun onGetResult(uri: String?)
         fun onSaveClicked(
+            externalUri: String,
             title: String,
             description: String,
             category: String,

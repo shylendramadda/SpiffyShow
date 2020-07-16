@@ -15,23 +15,30 @@
         android:layout_margin="@dimen/spacing_normal"
         android:orientation="vertical">
 
-        <life.knowledge4.videotrimmer.K4LVideoTrimmer
-            android:id="@+id/videoTrimmer"
-            android:layout_width="match_parent"
-            android:layout_height="400dp"
-            android:visibility="gone" />
-
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="350dp"
             android:background="@color/blackTertiary"
-            android:gravity="center">
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <life.knowledge4.videotrimmer.K4LVideoTrimmer
+                android:id="@+id/videoTrimmer"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="gone" />
 
             <VideoView
                 android:id="@+id/videoView"
                 android:layout_width="match_parent"
-                android:layout_height="300dp"
-                android:stateListAnimator="@null" />
+                android:layout_height="match_parent" />
+
+            <com.geeklabs.spiffyshow.ui.common.CustomYoutubePlayer
+                android:id="@+id/youtubePlayer"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="gone" />
+
         </LinearLayout>
 
         <LinearLayout
@@ -39,6 +46,26 @@
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/spacing_double"
             android:orientation="vertical">
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_double">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/urlET"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/spacing_normal"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
+                    android:hint="@string/enter_url"
+                    android:importantForAutofill="yes"
+                    android:inputType="text"
+                    android:maxLength="100"
+                    android:padding="@dimen/spacing_normal"
+                    android:textSize="16sp" />
+            </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"

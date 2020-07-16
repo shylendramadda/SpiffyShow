@@ -3,8 +3,6 @@ package com.geeklabs.spiffyshow.ui.components.main.home
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.res.ColorStateList
-import android.media.MediaPlayer
-import android.net.Uri
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.PopupMenu
@@ -17,8 +15,6 @@ import com.geeklabs.spiffyshow.extensions.inflate
 import com.geeklabs.spiffyshow.extensions.shouldShow
 import com.geeklabs.spiffyshow.extensions.visible
 import com.geeklabs.spiffyshow.utils.Utils.getTimeAgo
-import com.universalvideoview.UniversalMediaController
-import com.universalvideoview.UniversalVideoView
 import kotlinx.android.synthetic.main.item_layout.view.*
 
 class TrimAdapter(
@@ -31,8 +27,6 @@ class TrimAdapter(
 
     var items = mutableListOf<Trim>()
     var user: User? = null
-    private var videoViewUniversal: UniversalVideoView? = null
-    private var videoControllerUniversal: UniversalMediaController? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val listItemView = parent.inflate(R.layout.item_layout)
@@ -81,6 +75,9 @@ class TrimAdapter(
             userImageLayout.setOnClickListener {
                 onProfileClicked(user!!)
             }
+            followText.setOnClickListener {
+                followText.text = context.getString(R.string.following)
+            }
             var likeCount = 20
             var isLikeClicked = false
             likeTV.setOnClickListener {
@@ -99,30 +96,15 @@ class TrimAdapter(
                 likeTV.text = "$likeCount"
             }
 
-            val uri = Uri.parse(item.fileMetaData.path)
-            videoViewUniversal = videoViewUni
-            videoControllerUniversal = mediaController
-            videoViewUniversal?.setMediaController(videoControllerUniversal)
-            videoViewUniversal?.setVideoURI(uri)
-            videoViewUniversal?.seekTo(1)
-            videoViewUniversal?.setVideoViewCallback(object : UniversalVideoView.VideoViewCallback {
-                override fun onBufferingStart(mediaPlayer: MediaPlayer?) {
-                }
-
-                override fun onBufferingEnd(mediaPlayer: MediaPlayer?) {
-                }
-
-                override fun onPause(mediaPlayer: MediaPlayer?) {
-                    mediaPlayer?.pause()
-                }
-
-                override fun onScaleChange(isFullscreen: Boolean) {
-                }
-
-                override fun onStart(mediaPlayer: MediaPlayer?) {
-                    mediaPlayer?.start()
-                }
-            })
+            if (item.fileMetaData!!.path.isNotEmpty() && item.fileMetaData.size.isEmpty()) {
+                youtubePlayer.visible = true
+                universalVideoView.visible = false
+                youtubePlayer.loadYoutubeView(item.fileMetaData.path)
+            } else {
+                youtubePlayer.visible = false
+                universalVideoView.visible = true
+                universalVideoView.playVideo(item.fileMetaData.path)
+            }
         }
     }
 

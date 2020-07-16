@@ -13,7 +13,6 @@ import com.geeklabs.spiffyshow.models.FileMetaData
 import com.geeklabs.spiffyshow.ui.base.BaseFragment
 import com.geeklabs.spiffyshow.ui.common.Progress
 import com.geeklabs.spiffyshow.ui.components.main.MainActivity
-import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.fragment_trim.*
 import life.knowledge4.videotrimmer.interfaces.OnK4LVideoListener
 import life.knowledge4.videotrimmer.interfaces.OnTrimVideoListener
@@ -30,7 +29,6 @@ class TrimFragment : BaseFragment<TrimContract.View, TrimContract.Presenter>(),
     private var fileMetaData: FileMetaData? = null
     private var isTrim: Boolean = false
     private var progress: Progress? = null
-    private var disposables = CompositeDisposable()
 
     override fun initUI() {
         if (obj == null) {
@@ -51,21 +49,43 @@ class TrimFragment : BaseFragment<TrimContract.View, TrimContract.Presenter>(),
             categoryET.setText(item.category)
         }
         saveButton.setOnClickListener {
+            val externalUri = urlET.text.toString().trim()
             val title = titleET.text.toString().trim()
             val description = descriptionET.text.toString().trim()
             val category = categoryET.text.toString().trim()
-            presenter?.onSaveClicked(title, description, category, isTrim)
+            presenter?.onSaveClicked(externalUri, title, description, category, isTrim)
         }
-        presenter?.setItem(obj!!)
-        if (File(fileMetaData!!.path).exists()) {
-            setVideoView(fileMetaData!!.path)
+        if (fileMetaData == null) {
+            urlET.visible = true
+            videoTrimmer.visible = false
+            videoView.visible = false
         } else {
-            alert(getString(R.string.file_not_exists), getString(R.string.file_not_exists_error)) {
-                positiveButton(getString(R.string.okay)) {
-                    navigateToOriginals()
+            presenter?.setItem(obj!!)
+            when {
+                fileMetaData!!.path.isNotEmpty() && fileMetaData!!.size.isEmpty() -> {
+                    youtubePlayer.loadYoutubeView(fileMetaData!!.path)
+                    urlET.visible = true
+                    urlET.setText(fileMetaData?.path ?: "")
+                    youtubePlayer.visible = true
+                    videoTrimmer.visible = false
+                    videoView.visible = false
                 }
-                negativeButton("")
-            }.show()
+                File(fileMetaData!!.path).exists() -> {
+                    urlET.visible = false
+                    setVideoView(fileMetaData!!.path)
+                }
+                else -> {
+                    alert(
+                        getString(R.string.file_not_exists),
+                        getString(R.string.file_not_exists_error)
+                    ) {
+                        positiveButton(getString(R.string.okay)) {
+                            navigateToOriginals()
+                        }
+                        negativeButton("")
+                    }.show()
+                }
+            }
         }
     }
 
@@ -91,6 +111,7 @@ class TrimFragment : BaseFragment<TrimContract.View, TrimContract.Presenter>(),
         }
         videoTrimmer.visible = isTrim
         videoView.visible = !isTrim
+        youtubePlayer.visible = false
     }
 
     override fun onTrimStarted() {
@@ -132,12 +153,6 @@ class TrimFragment : BaseFragment<TrimContract.View, TrimContract.Presenter>(),
     override fun injectDependencies() = getApplicationComponent().inject(this)
 
     override fun getLayoutResId() = R.layout.fragment_trim
-
-    override fun onDestroy() {
-        super.onDestroy()
-        disposables.clear()
-        disposables.dispose()
-    }
 
     companion object {
         fun newInstance(

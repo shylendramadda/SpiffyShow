@@ -14,5 +14,5 @@ data class Trim(
     val description: String = "",
     val category: String = "",
     val time: Long = 0,
-    val fileMetaData: FileMetaData
+    val fileMetaData: FileMetaData? = null
 )

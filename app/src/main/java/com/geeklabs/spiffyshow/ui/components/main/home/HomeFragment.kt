@@ -1,6 +1,5 @@
 package com.geeklabs.spiffyshow.ui.components.main.home
 
-import android.app.AlertDialog
 import android.content.Intent
 import androidx.appcompat.widget.SearchView
 import androidx.core.content.FileProvider
@@ -89,20 +88,8 @@ class HomeFragment : BaseFragment<HomeContract.View, HomeContract.Presenter>(), 
         showToast(messageText)
     }
 
-    override fun showAlertDialog(message: Int) {
-        val messageText =
-            when (message) {
-                1 -> getString(R.string.error_message)
-                2 -> getString(R.string.no_network)
-                5 -> getString(R.string.thanks_order_message)
-                6 -> getString(R.string.order_time_message)
-                7 -> getString(R.string.no_item_select_message)
-                else -> getString(R.string.alert)
-            }
-        AlertDialog.Builder(context)
-            .setMessage(messageText)
-            .setPositiveButton(R.string.okay, null)
-            .show()
+    override fun showAlertDialog(message: String) {
+        alert(message) {}.show()
     }
 
     override fun startFileShareIntent(item: Trim) {
@@ -121,7 +108,7 @@ class HomeFragment : BaseFragment<HomeContract.View, HomeContract.Presenter>(), 
             )
             val fileURI = FileProvider.getUriForFile(
                 context!!, context!!.packageName + ".provider",
-                File(item.fileMetaData.path)
+                File(item.fileMetaData?.path ?: "")
             )
             putExtra(Intent.EXTRA_STREAM, fileURI)
         }

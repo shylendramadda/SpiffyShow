@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/transparent"
+    android:orientation="vertical"
+    android:padding="@dimen/spacing_normal">
+
+    <TextView
+        android:id="@+id/titleTV"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:background="@drawable/bg_top_corner"
+        android:gravity="center"
+        android:padding="@dimen/spacing_normal"
+        android:text="@string/upload_file"
+        android:textColor="@color/whitePrimary"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_bottom_corner"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:paddingTop="@dimen/spacing_normal"
+        android:paddingBottom="@dimen/spacing_double">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/spacing_normal"
+            android:padding="@dimen/spacing_normal"
+            android:text="@string/choose_upload_option_text"
+            android:textColor="@color/blackTertiary"
+            android:textSize="16sp" />
+
+        <Button
+            android:id="@+id/chooseFileButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/spacing_double3"
+            android:layout_marginTop="@dimen/spacing_normal"
+            android:backgroundTint="@color/colorPrimary"
+            android:drawableEnd="@drawable/ic_icon_attach_file"
+            android:text="@string/choose_from_device"
+            android:textColor="@android:color/white"
+            android:textSize="14sp"
+            tools:ignore="ButtonStyle" />
+
+        <Button
+            android:id="@+id/addFromLinkButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/spacing_double3"
+            android:backgroundTint="@color/colorPrimary"
+            android:drawableEnd="@android:drawable/ic_menu_upload"
+            android:text="@string/add_external_link"
+            android:textColor="@android:color/white"
+            android:textSize="14sp"
+            tools:ignore="ButtonStyle" />
+
+    </LinearLayout>
+
+</LinearLayout>
