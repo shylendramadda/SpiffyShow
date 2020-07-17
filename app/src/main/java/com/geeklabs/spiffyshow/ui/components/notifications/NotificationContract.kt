@@ -8,8 +8,10 @@ interface NotificationContract {
         fun initUI()
         fun setState(progress: Boolean = false, empty: Boolean = false, error: Boolean = false)
         fun showItems(list: MutableList<Notification>)
+        fun notifyItemRemoved(position: Int)
     }
 
     interface Presenter : BaseContract.Presenter<View> {
+        fun onDeleteClicked(position: Int)
     }
 }

@@ -9,7 +9,9 @@ import com.geeklabs.spiffyshow.extensions.inflate
 import com.geeklabs.spiffyshow.utils.Utils.getTimeAgo
 import kotlinx.android.synthetic.main.item_notification.view.*
 
-class NotificationAdapter : RecyclerView.Adapter<NotificationAdapter.ViewHolder>() {
+class NotificationAdapter(
+    private val onDeleteClicked: (Int) -> Unit
+) : RecyclerView.Adapter<NotificationAdapter.ViewHolder>() {
 
     var list = mutableListOf<Notification>()
 
@@ -29,6 +31,9 @@ class NotificationAdapter : RecyclerView.Adapter<NotificationAdapter.ViewHolder>
             titleTV.text = notification.title
             descriptionTV.text = notification.desc
             dateTV.text = getTimeAgo(notification.time)
+            deleteIV.setOnClickListener {
+                onDeleteClicked(adapterPosition)
+            }
         }
     }
 }

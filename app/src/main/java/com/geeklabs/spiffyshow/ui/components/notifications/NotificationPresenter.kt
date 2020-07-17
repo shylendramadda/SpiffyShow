@@ -27,4 +27,9 @@ class NotificationPresenter @Inject constructor() : BasePresenter<NotificationCo
         }
         getView()?.showItems(list)
     }
+
+    override fun onDeleteClicked(position: Int) {
+        list.removeAt(position)
+        getView()?.notifyItemRemoved(position)
+    }
 }

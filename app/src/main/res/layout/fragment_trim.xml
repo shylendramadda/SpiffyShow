@@ -60,9 +60,8 @@
                     android:focusable="true"
                     android:focusableInTouchMode="true"
                     android:hint="@string/enter_url"
-                    android:importantForAutofill="yes"
                     android:inputType="text"
-                    android:maxLength="100"
+                    android:maxLength="200"
                     android:padding="@dimen/spacing_normal"
                     android:textSize="16sp" />
             </com.google.android.material.textfield.TextInputLayout>

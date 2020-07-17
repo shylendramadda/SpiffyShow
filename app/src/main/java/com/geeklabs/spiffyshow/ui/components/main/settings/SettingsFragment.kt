@@ -126,6 +126,7 @@ class SettingsFragment : BaseFragment<SettingsContract.View, SettingsContract.Pr
         if (dialog.isShowing) {
             dialog.dismiss()
         }
+        dialog.setOnDismissListener { isTouched = false }
         dialog.show()
     }
 

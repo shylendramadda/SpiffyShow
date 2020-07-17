@@ -10,6 +10,7 @@ import android.graphics.Canvas
 import android.net.ConnectivityManager
 import android.provider.Settings
 import android.util.DisplayMetrics
+import android.util.Patterns
 import android.view.View
 import android.widget.Button
 import android.widget.TextView
@@ -228,5 +229,16 @@ object Utils {
             hours < 24 -> "$hours hours ago"
             else -> "$days days ago"
         }
+    }
+
+    fun isValidURL(url: String): Boolean {
+        return Patterns.WEB_URL.matcher(url).matches()
+    }
+
+    fun isValidYoutubeUrl(youTubeURl: String): Boolean {
+        val success: Boolean
+        val pattern = "^(http(s)?:\\/\\/)?((w){3}.)?youtu(be|.be)?(\\.com)?\\/.+".toRegex()
+        success = youTubeURl.isNotEmpty() && youTubeURl.matches(pattern)
+        return success
     }
 }

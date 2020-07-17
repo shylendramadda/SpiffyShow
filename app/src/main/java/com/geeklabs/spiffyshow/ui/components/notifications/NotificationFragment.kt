@@ -19,7 +19,9 @@ class NotificationFragment :
     private lateinit var adapter: NotificationAdapter
 
     override fun initUI() {
-        adapter = NotificationAdapter()
+        adapter = NotificationAdapter {
+            presenter?.onDeleteClicked(it)
+        }
         adapter.setEmptyStateView(stateLayout)
         recyclerViewNotifications.adapter = adapter
     }
@@ -36,6 +38,10 @@ class NotificationFragment :
     override fun showItems(list: MutableList<Notification>) {
         adapter.list = list
         adapter.notifyDataSetChanged()
+    }
+
+    override fun notifyItemRemoved(position: Int) {
+        adapter.notifyItemRemoved(position)
     }
 
     override fun initPresenter() = notificationPresenter

@@ -51,6 +51,10 @@ class OriginalAdapter(
             likeTV.text = "15"
             commentTV.text = "5"
 
+            if (item.fileMetaData!!.path.isNotEmpty() && item.fileMetaData.size.isEmpty()) {
+                trimTV.visible = false
+            }
+
             if (user?.imageUrl?.isNotEmpty() == true) {
                 Glide.with(context).load(user?.imageUrl).placeholder(R.drawable.ic_icon_user)
                     .dontAnimate()
@@ -96,7 +100,7 @@ class OriginalAdapter(
                 likeTV.text = "$likeCount"
             }
 
-            if (item.fileMetaData!!.path.isNotEmpty() && item.fileMetaData.size.isEmpty()) {
+            if (item.fileMetaData.path.isNotEmpty() && item.fileMetaData.size.isEmpty()) {
                 youtubePlayer.visible = true
                 universalVideoView.visible = false
                 youtubePlayer.loadYoutubeView(item.fileMetaData.path)

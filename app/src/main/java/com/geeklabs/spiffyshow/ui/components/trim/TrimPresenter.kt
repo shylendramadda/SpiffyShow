@@ -8,6 +8,8 @@ import com.geeklabs.spiffyshow.models.ApplicationState
 import com.geeklabs.spiffyshow.models.FileMetaData
 import com.geeklabs.spiffyshow.ui.base.BasePresenter
 import com.geeklabs.spiffyshow.utils.Utils
+import com.geeklabs.spiffyshow.utils.Utils.isValidURL
+import com.geeklabs.spiffyshow.utils.Utils.isValidYoutubeUrl
 import io.reactivex.Observable
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
@@ -79,6 +81,9 @@ class TrimPresenter @Inject constructor(
     ) {
         when {
             fileMetaData == null && externalUri.isEmpty() -> getView()?.showToast("Please enter URL")
+            fileMetaData == null && externalUri.isNotEmpty() && !isValidYoutubeUrl(externalUri) -> getView()?.showToast(
+                "Please enter valid youtube URL"
+            )
             title.isEmpty() -> getView()?.showToast("Please enter title")
             description.isEmpty() -> getView()?.showToast("Please enter description")
             category.isEmpty() -> getView()?.showToast("Please enter category")

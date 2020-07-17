@@ -61,7 +61,7 @@
                     android:id="@+id/titleTV"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_toStartOf="@+id/more"
+                    android:layout_toStartOf="@+id/deleteIV"
                     android:ellipsize="end"
                     android:gravity="center_vertical"
                     android:maxLines="2"
@@ -71,13 +71,13 @@
                     tools:text="Title " />
 
                 <ImageView
-                    android:id="@+id/more"
+                    android:id="@+id/deleteIV"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
                     android:gravity="center_vertical"
                     android:padding="@dimen/spacing_nano"
-                    android:src="@drawable/ic_icon_more"
+                    android:src="@drawable/ic_icon_delete"
                     android:tint="@color/blackPrimary" />
 
             </RelativeLayout>

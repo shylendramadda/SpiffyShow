@@ -22,6 +22,11 @@ class CustomUniversalVideoView(context: Context?, attrs: AttributeSet?) :
         videoViewUniversal?.setMediaController(mediaControllerUniversal)
         videoViewUniversal?.setVideoURI(uri)
         videoViewUniversal?.seekTo(1)
+        videoViewUniversal?.setOnErrorListener { mp, _, _ ->
+            mp.stop()
+            mp.release()
+            false
+        }
         videoViewUniversal?.setVideoViewCallback(object :
             UniversalVideoView.VideoViewCallback {
             override fun onBufferingStart(mediaPlayer: MediaPlayer?) {
@@ -41,5 +46,10 @@ class CustomUniversalVideoView(context: Context?, attrs: AttributeSet?) :
                 mediaPlayer?.start()
             }
         })
+    }
+
+    override fun onDetachedFromWindow() {
+        super.onDetachedFromWindow()
+        videoViewUniversal?.stopPlayback()
     }
 }

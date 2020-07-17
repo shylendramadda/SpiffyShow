@@ -63,6 +63,7 @@ class TrimFragment : BaseFragment<TrimContract.View, TrimContract.Presenter>(),
             presenter?.setItem(obj!!)
             when {
                 fileMetaData!!.path.isNotEmpty() && fileMetaData!!.size.isEmpty() -> {
+                    isTrim = false
                     youtubePlayer.loadYoutubeView(fileMetaData!!.path)
                     urlET.visible = true
                     urlET.setText(fileMetaData?.path ?: "")
