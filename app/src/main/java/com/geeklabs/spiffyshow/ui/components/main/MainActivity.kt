@@ -7,12 +7,10 @@ import android.app.AlertDialog
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Rect
-import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.widget.Button
-import androidx.annotation.RequiresApi
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.work.OneTimeWorkRequest
@@ -255,24 +253,25 @@ class MainActivity : BaseActivity<MainContract.View, MainContract.Presenter>(), 
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if ((grantResults.isNotEmpty())) {
             val isGiven1 = grantResults[0] == PackageManager.PERMISSION_GRANTED
-            val isGiven2 = grantResults.size > 1 && grantResults[1] == PackageManager.PERMISSION_GRANTED
-            val isGiven3 = grantResults.size > 2 && grantResults[2] == PackageManager.PERMISSION_GRANTED
-            val isGiven4 = grantResults.size > 3 && grantResults[3] == PackageManager.PERMISSION_GRANTED
-            val isGiven5 = grantResults.size > 4 && grantResults[4] == PackageManager.PERMISSION_GRANTED
+            val isGiven2 =
+                grantResults.size > 1 && grantResults[1] == PackageManager.PERMISSION_GRANTED
+            val isGiven3 =
+                grantResults.size > 2 && grantResults[2] == PackageManager.PERMISSION_GRANTED
+            val isGiven4 =
+                grantResults.size > 3 && grantResults[3] == PackageManager.PERMISSION_GRANTED
             if ((isGiven1 && isGiven2 && isGiven3) || isPermissionEnable) {
                 startService()
             }
-            if ((isGiven4 && isGiven5) || isPermissionEnable) {
+            if ((isGiven3 && isGiven4) || isPermissionEnable) {
                 presenter?.onAddButtonClicked(isPermissionEnable)
             }
         }
     }
 
-    @RequiresApi(Build.VERSION_CODES.Q)
     @NeedsPermission(
         Manifest.permission.ACCESS_FINE_LOCATION,
         Manifest.permission.ACCESS_COARSE_LOCATION,
-        Manifest.permission.ACCESS_BACKGROUND_LOCATION,
+//        Manifest.permission.ACCESS_BACKGROUND_LOCATION,
         Manifest.permission.WRITE_EXTERNAL_STORAGE,
         Manifest.permission.READ_EXTERNAL_STORAGE
     )
@@ -281,11 +280,10 @@ class MainActivity : BaseActivity<MainContract.View, MainContract.Presenter>(), 
         startService()
     }
 
-    @RequiresApi(Build.VERSION_CODES.Q)
     @OnShowRationale(
         Manifest.permission.ACCESS_FINE_LOCATION,
         Manifest.permission.ACCESS_COARSE_LOCATION,
-        Manifest.permission.ACCESS_BACKGROUND_LOCATION,
+//        Manifest.permission.ACCESS_BACKGROUND_LOCATION,
         Manifest.permission.WRITE_EXTERNAL_STORAGE,
         Manifest.permission.READ_EXTERNAL_STORAGE
     )
@@ -293,11 +291,10 @@ class MainActivity : BaseActivity<MainContract.View, MainContract.Presenter>(), 
         request.proceed()
     }
 
-    @RequiresApi(Build.VERSION_CODES.Q)
     @OnPermissionDenied(
         Manifest.permission.ACCESS_FINE_LOCATION,
         Manifest.permission.ACCESS_COARSE_LOCATION,
-        Manifest.permission.ACCESS_BACKGROUND_LOCATION,
+//        Manifest.permission.ACCESS_BACKGROUND_LOCATION,
         Manifest.permission.WRITE_EXTERNAL_STORAGE,
         Manifest.permission.READ_EXTERNAL_STORAGE
     )
@@ -306,11 +303,10 @@ class MainActivity : BaseActivity<MainContract.View, MainContract.Presenter>(), 
         toast(getString(R.string.permissionDenied))
     }
 
-    @RequiresApi(Build.VERSION_CODES.Q)
     @OnNeverAskAgain(
         Manifest.permission.ACCESS_FINE_LOCATION,
         Manifest.permission.ACCESS_COARSE_LOCATION,
-        Manifest.permission.ACCESS_BACKGROUND_LOCATION,
+//        Manifest.permission.ACCESS_BACKGROUND_LOCATION,
         Manifest.permission.WRITE_EXTERNAL_STORAGE,
         Manifest.permission.READ_EXTERNAL_STORAGE
     )

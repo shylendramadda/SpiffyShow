@@ -150,7 +150,13 @@ class SettingsFragment : BaseFragment<SettingsContract.View, SettingsContract.Pr
             return
         }
         val fileUri = when (requestCode) {
-            GALLERY -> data.data.toString()
+            GALLERY -> {
+                if (data.data?.toString() == null) {
+                    data.clipData?.getItemAt(0)?.uri.toString()
+                } else {
+                    data.data.toString()
+                }
+            }
             CAMERA -> {
                 val bitmap = data.extras?.get("data") as Bitmap
                 val path = MediaStore.Images.Media.insertImage(

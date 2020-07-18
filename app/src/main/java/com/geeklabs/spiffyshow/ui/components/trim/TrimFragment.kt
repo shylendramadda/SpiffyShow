@@ -57,8 +57,7 @@ class TrimFragment : BaseFragment<TrimContract.View, TrimContract.Presenter>(),
         }
         if (fileMetaData == null) {
             urlET.visible = true
-            videoTrimmer.visible = false
-            videoView.visible = false
+            videoLL.visible = false
         } else {
             presenter?.setItem(obj!!)
             when {
@@ -66,6 +65,7 @@ class TrimFragment : BaseFragment<TrimContract.View, TrimContract.Presenter>(),
                     isTrim = false
                     youtubePlayer.loadYoutubeView(fileMetaData!!.path)
                     urlET.visible = true
+                    videoLL.visible = true
                     urlET.setText(fileMetaData?.path ?: "")
                     youtubePlayer.visible = true
                     videoTrimmer.visible = false

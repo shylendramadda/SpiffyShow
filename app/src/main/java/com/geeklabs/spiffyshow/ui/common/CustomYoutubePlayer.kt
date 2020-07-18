@@ -23,11 +23,6 @@ class CustomYoutubePlayer(context: Context?, attrs: AttributeSet?) :
 
     @SuppressLint("SetJavaScriptEnabled")
     fun loadYoutubeView(path: String) {
-        val youtubeVideoId = extractYoutubeId(path)
-        if (youtubeVideoId?.isEmpty() == true) {
-            showToast("Invalid youtube ID")
-            return
-        }
         customYoutubePlayer.addYouTubePlayerListener(object : YouTubePlayerListener {
             override fun onApiChange(youTubePlayer: YouTubePlayer) {
 
@@ -53,7 +48,12 @@ class CustomYoutubePlayer(context: Context?, attrs: AttributeSet?) :
             }
 
             override fun onReady(youTubePlayer: YouTubePlayer) {
-                youTubePlayer.cueVideo(youtubeVideoId!!, 0f)
+                val youtubeVideoId = extractYoutubeId(path)
+                if (youtubeVideoId?.isEmpty() == true) {
+                    showToast("Invalid youtube ID. Please try with different one")
+                    return
+                }
+                youTubePlayer.cueVideo(youtubeVideoId ?: "", 0f)
             }
 
             override fun onStateChange(

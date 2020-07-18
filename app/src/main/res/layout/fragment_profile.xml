@@ -9,9 +9,10 @@
     android:focusable="true"
     app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
         <LinearLayout
             android:id="@+id/headerLL"
@@ -94,7 +95,6 @@
             android:id="@+id/horizontalLine"
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:layout_below="@+id/headerLL"
             android:layout_marginTop="@dimen/spacing_normal"
             android:background="@color/graySecondary" />
 
@@ -102,9 +102,9 @@
             android:id="@+id/countsLL"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/horizontalLine"
             android:layout_marginTop="@dimen/spacing_normal"
             android:baselineAligned="false"
+            android:orientation="horizontal"
             android:padding="@dimen/spacing_normal">
 
             <LinearLayout
@@ -179,7 +179,6 @@
             android:id="@+id/buttonsLL"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/countsLL"
             android:orientation="horizontal">
 
             <TextView
@@ -208,11 +207,13 @@
 
         </LinearLayout>
 
+        <include
+            layout="@layout/view_state_layout"
+            tools:visibility="gone" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/buttonsLL"
             android:orientation="horizontal">
 
             <androidx.recyclerview.widget.RecyclerView
@@ -241,10 +242,6 @@
 
         </LinearLayout>
 
-        <include
-            layout="@layout/view_state_layout"
-            tools:visibility="gone" />
-
-    </RelativeLayout>
+    </LinearLayout>
 
 </androidx.core.widget.NestedScrollView>
