@@ -14,6 +14,10 @@ data class User(
     var imageUrl: String? = null,
     var interests: String? = null,
     var bio: String? = null,
+    var followers: Long = 0,
+    var following: Long = 0,
+    var trims: Long = 0,
+    var originals: Long = 0,
     val firebaseToken: String? = null,
     var latitude: Double? = null,
     var longitude: Double? = null,
@@ -21,6 +25,5 @@ data class User(
     var city: String? = null,
     var state: String? = null,
     var country: String? = null,
-    var addressInfo: String? = null,
-    var landMark: String? = null
+    var addressInfo: String? = null
 )

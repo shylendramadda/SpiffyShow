@@ -1,4 +1,4 @@
-package com.geeklabs.spiffyshow.ui.components.welcome
+package com.geeklabs.spiffyshow.ui.components.onboard
 
 import android.content.Context
 import android.os.Parcelable
@@ -9,9 +9,10 @@ import androidx.viewpager.widget.PagerAdapter
 import com.geeklabs.spiffyshow.R
 import com.geeklabs.spiffyshow.extensions.inflate
 import com.geeklabs.spiffyshow.models.WelcomeScreen
+import com.geeklabs.spiffyshow.utils.Utils
 import kotlinx.android.synthetic.main.item_welcome.view.*
 
-class WelcomeAdapter : PagerAdapter() {
+class OnboardAdapter : PagerAdapter() {
 
     private lateinit var view: View
     lateinit var context: Context
@@ -25,6 +26,7 @@ class WelcomeAdapter : PagerAdapter() {
         view.featureImage.setImageDrawable(context.getDrawable(welcomePage.image))
         view.description.text = welcomePage.descriptionText
         view.description.movementMethod = ScrollingMovementMethod()
+        Utils.showHideViews(false, view.description, view.title)
         container.addView(view)
         return view
     }

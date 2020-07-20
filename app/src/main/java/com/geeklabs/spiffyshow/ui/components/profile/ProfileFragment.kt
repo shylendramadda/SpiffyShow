@@ -3,7 +3,7 @@ package com.geeklabs.spiffyshow.ui.components.profile
 import android.annotation.SuppressLint
 import com.bumptech.glide.Glide
 import com.geeklabs.spiffyshow.R
-import com.geeklabs.spiffyshow.data.local.models.item.Item
+import com.geeklabs.spiffyshow.data.local.models.item.Original
 import com.geeklabs.spiffyshow.data.local.models.item.Trim
 import com.geeklabs.spiffyshow.data.local.models.user.User
 import com.geeklabs.spiffyshow.extensions.setEmptyStateView
@@ -81,13 +81,13 @@ class ProfileFragment : BaseFragment<ProfileContract.View, ProfileContract.Prese
     }
 
     override fun showOriginalItems(
-        items: MutableList<Item>,
+        originals: MutableList<Original>,
         user: User?
     ) {
         originalAdapter.user = user
-        originalAdapter.items = items
+        originalAdapter.items = originals
         originalAdapter.notifyDataSetChanged()
-        val isMoreThanOne = items.size > 1
+        val isMoreThanOne = originals.size > 1
         if (isMoreThanOne) recyclerViewOriginals.smoothScrollToPosition(0)
     }
 

@@ -99,4 +99,9 @@ class HomePresenter @Inject constructor(
         getView()?.navigateToUserProfile(user)
     }
 
+    override fun onResumed() {
+        super.onResumed()
+        this.user = applicationState.user
+    }
+
 }

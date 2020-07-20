@@ -41,11 +41,11 @@ object Utils {
     }
 
     fun getDateFromString(dateString: String, sourceFormat: String): Date {
-        return SimpleDateFormat(sourceFormat, Locale.US).parse(dateString)
+        return SimpleDateFormat(sourceFormat, Locale.getDefault()).parse(dateString) ?: Date()
     }
 
     fun getDateAsString(date: Date, format: String): String {
-        val sdf = SimpleDateFormat(format, Locale.US)
+        val sdf = SimpleDateFormat(format, Locale.getDefault())
         return sdf.format(date)
     }
 

@@ -10,6 +10,7 @@ import android.os.Environment
 import android.provider.DocumentsContract
 import android.provider.MediaStore
 import android.provider.OpenableColumns
+import android.webkit.MimeTypeMap
 import com.geeklabs.spiffyshow.extensions.saveBitmap
 import com.geeklabs.spiffyshow.models.FileMetaData
 import java.io.File
@@ -60,6 +61,10 @@ class FileUtil @Inject constructor(val context: Context) {
         val imageFile = File(cacheFile, fileName)
         imageFile.saveBitmap(bitmap)
         return imageFile
+    }
+
+    fun getMimeType(extension: String): String? {
+        return MimeTypeMap.getSingleton().getMimeTypeFromExtension(extension)
     }
 
     fun getFileSizeInMb(sizeInBytes: Long): String {

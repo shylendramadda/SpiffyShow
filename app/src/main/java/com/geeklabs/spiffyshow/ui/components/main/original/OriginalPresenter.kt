@@ -1,9 +1,9 @@
 package com.geeklabs.spiffyshow.ui.components.main.original
 
-import com.geeklabs.spiffyshow.data.local.models.item.Item
+import com.geeklabs.spiffyshow.data.local.models.item.Original
 import com.geeklabs.spiffyshow.data.local.models.user.User
-import com.geeklabs.spiffyshow.domain.local.item.DeleteItemLocalUseCase
-import com.geeklabs.spiffyshow.domain.local.item.FetchItemsFromLocalUseCase
+import com.geeklabs.spiffyshow.domain.local.original.DeleteOriginalLocalUseCase
+import com.geeklabs.spiffyshow.domain.local.original.FetchOriginalsFromLocalUseCase
 import com.geeklabs.spiffyshow.extensions.applySchedulers
 import com.geeklabs.spiffyshow.models.ApplicationState
 import com.geeklabs.spiffyshow.ui.base.BasePresenter
@@ -15,12 +15,12 @@ import javax.inject.Inject
 
 class OriginalPresenter @Inject constructor(
     private val applicationState: ApplicationState,
-    private val fetchItemsFromLocalUseCase: FetchItemsFromLocalUseCase,
-    private val deleteItemLocalUseCase: DeleteItemLocalUseCase
+    private val fetchOriginalsFromLocalUseCase: FetchOriginalsFromLocalUseCase,
+    private val deleteOriginalLocalUseCase: DeleteOriginalLocalUseCase
 ) : BasePresenter<OriginalContract.View>(),
     OriginalContract.Presenter {
 
-    private var items = mutableListOf<Item>()
+    private var items = mutableListOf<Original>()
     private var user: User? = null
 
     override fun onCreated() {
@@ -33,7 +33,7 @@ class OriginalPresenter @Inject constructor(
     private fun loadItemsFromLocal() {
         items.clear()
         disposables?.add(
-            fetchItemsFromLocalUseCase.execute(Unit)
+            fetchOriginalsFromLocalUseCase.execute(Unit)
                 .applySchedulers()
                 .doOnSubscribe { getView()?.setState(progress = true) }
                 .subscribe({
@@ -64,15 +64,15 @@ class OriginalPresenter @Inject constructor(
     }
 
     override fun onEditClicked(
-        item: Item,
+        original: Original,
         isTrim: Boolean
     ) {
-        getView()?.navigateToTrim(item, isTrim)
+        getView()?.navigateToTrim(original, isTrim)
     }
 
-    override fun onDeleteClicked(item: Item) {
+    override fun onDeleteClicked(original: Original) {
         disposables?.add(Observable.fromCallable {
-            deleteItemLocalUseCase.execute(item.id)
+            deleteOriginalLocalUseCase.execute(original.id)
         }.subscribeOn(Schedulers.io()).subscribe({}, {
             e("Error deleteCategoryLocal: ${it.message}")
         }))
@@ -83,7 +83,7 @@ class OriginalPresenter @Inject constructor(
         getView()?.navigateToUserProfile(user)
     }
 
-    override fun onCommentClicked(item: Item) {
-        getView()?.navigateToComment(item)
+    override fun onCommentClicked(original: Original) {
+        getView()?.navigateToComment(original)
     }
 }

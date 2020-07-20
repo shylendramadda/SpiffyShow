@@ -1,6 +1,6 @@
 package com.geeklabs.spiffyshow.ui.components.main.original
 
-import com.geeklabs.spiffyshow.data.local.models.item.Item
+import com.geeklabs.spiffyshow.data.local.models.item.Original
 import com.geeklabs.spiffyshow.data.local.models.user.User
 import com.geeklabs.spiffyshow.ui.base.BaseContract
 
@@ -9,30 +9,30 @@ interface OriginalContract {
         fun initUI()
         fun setState(progress: Boolean = false, empty: Boolean = false, error: Boolean = false)
         fun showItems(
-            items: MutableList<Item>,
+            originals: MutableList<Original>,
             user: User?
         )
 
         fun showToast(title: String)
         fun navigateToTrim(
-            item: Item,
+            original: Original,
             isTrim: Boolean
         )
 
         fun notifyAdapter()
         fun navigateToUserProfile(user: User)
-        fun navigateToComment(item: Item)
+        fun navigateToComment(original: Original)
     }
 
     interface Presenter : BaseContract.Presenter<View> {
         fun onSearch(query: String)
         fun onEditClicked(
-            item: Item,
+            original: Original,
             isTrim: Boolean
         )
 
-        fun onDeleteClicked(item: Item)
+        fun onDeleteClicked(original: Original)
         fun onProfileClicked(user: User)
-        fun onCommentClicked(item: Item)
+        fun onCommentClicked(original: Original)
     }
 }

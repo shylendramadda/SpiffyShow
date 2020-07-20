@@ -5,7 +5,7 @@ import androidx.room.PrimaryKey
 import com.geeklabs.spiffyshow.models.FileMetaData
 
 @Entity
-data class Item(
+data class Original(
     @PrimaryKey(autoGenerate = true)
     val id: Long = 0,
     val userId: Long = 0,
@@ -14,5 +14,7 @@ data class Item(
     val description: String = "",
     val category: String = "",
     val time: Long = 0,
+    val likes: Long = 0,
+    val comments: MutableList<Comment> = mutableListOf(),
     val fileMetaData: FileMetaData? = null
 )

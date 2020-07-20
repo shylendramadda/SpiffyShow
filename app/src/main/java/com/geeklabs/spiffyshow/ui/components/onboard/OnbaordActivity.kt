@@ -1,4 +1,4 @@
-package com.geeklabs.spiffyshow.ui.components.welcome
+package com.geeklabs.spiffyshow.ui.components.onboard
 
 import android.content.res.ColorStateList
 import android.widget.RadioButton
@@ -13,15 +13,15 @@ import com.geeklabs.spiffyshow.ui.components.login.LoginActivity
 import kotlinx.android.synthetic.main.fragment_welcome.*
 import javax.inject.Inject
 
-class WelcomeActivity : BaseActivity<WelcomeContract.View, WelcomeContract.Presenter>(),
-    WelcomeContract.View, ViewPager.OnPageChangeListener {
+class OnbaordActivity : BaseActivity<OnboardContract.View, OnboardContract.Presenter>(),
+    OnboardContract.View, ViewPager.OnPageChangeListener {
 
     @Inject
-    lateinit var welcomePresenter: WelcomePresenter
-    private lateinit var adapter: WelcomeAdapter
+    lateinit var onboardPresenter: OnboardPresenter
+    private lateinit var adapter: OnboardAdapter
 
     override fun initUI() {
-        adapter = WelcomeAdapter()
+        adapter = OnboardAdapter()
         welcomeViewPager.adapter = adapter
         welcomeViewPager.addOnPageChangeListener(this)
         skip.setOnClickListener {
@@ -80,7 +80,7 @@ class WelcomeActivity : BaseActivity<WelcomeContract.View, WelcomeContract.Prese
         dotIndicatorRadioGroup.removeAllViews()
     }
 
-    override fun initPresenter() = welcomePresenter
+    override fun initPresenter() = onboardPresenter
 
     override fun injectDependencies() = getApplicationComponent().inject(this)
 

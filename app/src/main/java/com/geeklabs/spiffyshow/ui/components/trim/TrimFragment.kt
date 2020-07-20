@@ -3,7 +3,7 @@ package com.geeklabs.spiffyshow.ui.components.trim
 import android.net.Uri
 import android.widget.MediaController
 import com.geeklabs.spiffyshow.R
-import com.geeklabs.spiffyshow.data.local.models.item.Item
+import com.geeklabs.spiffyshow.data.local.models.item.Original
 import com.geeklabs.spiffyshow.data.local.models.item.Trim
 import com.geeklabs.spiffyshow.enums.Navigation
 import com.geeklabs.spiffyshow.extensions.alert
@@ -42,7 +42,7 @@ class TrimFragment : BaseFragment<TrimContract.View, TrimContract.Presenter>(),
             descriptionET.setText(trim.description)
             categoryET.setText(trim.category)
         } else {
-            val item = obj as Item
+            val item = obj as Original
             fileMetaData = item.fileMetaData
             titleET.setText(item.title)
             descriptionET.setText(item.description)

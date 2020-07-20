@@ -1,4 +1,4 @@
-package com.geeklabs.spiffyshow.ui.components.welcome
+package com.geeklabs.spiffyshow.ui.components.onboard
 
 import androidx.annotation.VisibleForTesting
 import com.geeklabs.spiffyshow.R
@@ -8,8 +8,8 @@ import com.geeklabs.spiffyshow.utils.Constants
 import com.geeklabs.spiffyshow.utils.PrefManager
 import javax.inject.Inject
 
-class WelcomePresenter @Inject constructor(private val prefManager: PrefManager) :
-    BasePresenter<WelcomeContract.View>(), WelcomeContract.Presenter {
+class OnboardPresenter @Inject constructor(private val prefManager: PrefManager) :
+    BasePresenter<OnboardContract.View>(), OnboardContract.Presenter {
 
     @VisibleForTesting
     var list = mutableListOf<WelcomeScreen>()
@@ -23,9 +23,24 @@ class WelcomePresenter @Inject constructor(private val prefManager: PrefManager)
     @VisibleForTesting
     fun loadWelcomePages() {
         list = mutableListOf(
-            WelcomeScreen(1, "Trim Videos", "SpiffyShow a great platform1", R.drawable.app_logo),
-            WelcomeScreen(2, "Original Videos", "SpiffyShow a great platform2", R.drawable.app_logo),
-            WelcomeScreen(3, "Follow and get notify", "SpiffyShow a great platform3", R.drawable.app_logo)
+            WelcomeScreen(
+                1,
+                "Trim Videos",
+                "SpiffyShow a great platform",
+                R.drawable.on_board_one
+            ),
+            WelcomeScreen(
+                2,
+                "Original Videos",
+                "SpiffyShow a great platform",
+                R.drawable.on_board_two
+            ),
+            WelcomeScreen(
+                3,
+                "Original Videos",
+                "SpiffyShow a great platform",
+                R.drawable.on_board_three
+            )
         )
         getView()?.showWelcomePages(list)
         onPageSelected(0)

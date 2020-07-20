@@ -2,7 +2,7 @@ package com.geeklabs.spiffyshow.ui.components.main.original
 
 import androidx.appcompat.widget.SearchView
 import com.geeklabs.spiffyshow.R
-import com.geeklabs.spiffyshow.data.local.models.item.Item
+import com.geeklabs.spiffyshow.data.local.models.item.Original
 import com.geeklabs.spiffyshow.data.local.models.user.User
 import com.geeklabs.spiffyshow.extensions.*
 import com.geeklabs.spiffyshow.ui.base.BaseFragment
@@ -49,10 +49,10 @@ class OriginalFragment : BaseFragment<OriginalContract.View, OriginalContract.Pr
     }
 
     private val onEditClicked = fun(
-        item: Item,
+        original: Original,
         isTrim: Boolean
     ) {
-        presenter?.onEditClicked(item, isTrim)
+        presenter?.onEditClicked(original, isTrim)
     }
 
     override fun setState(progress: Boolean, empty: Boolean, error: Boolean) {
@@ -66,22 +66,22 @@ class OriginalFragment : BaseFragment<OriginalContract.View, OriginalContract.Pr
     }
 
     override fun showItems(
-        items: MutableList<Item>,
+        originals: MutableList<Original>,
         user: User?
     ) {
-        itemsAdapter.items = items
+        itemsAdapter.items = originals
         itemsAdapter.user = user
         itemsAdapter.notifyDataSetChanged()
-        val isMoreThanOne = items.size > 1
+        val isMoreThanOne = originals.size > 1
         if (isMoreThanOne) recyclerViewItemList.smoothScrollToPosition(0)
-        if (items.size == 0) setState(empty = true)
+        if (originals.size == 0) setState(empty = true)
     }
 
     override fun navigateToTrim(
-        item: Item,
+        original: Original,
         isTrim: Boolean
     ) {
-        (activity as MainActivity).navigateToTrim(item, isTrim)
+        (activity as MainActivity).navigateToTrim(original, isTrim)
     }
 
     override fun notifyAdapter() {
@@ -92,8 +92,8 @@ class OriginalFragment : BaseFragment<OriginalContract.View, OriginalContract.Pr
         (activity as MainActivity).navigateToUserProfile(user)
     }
 
-    override fun navigateToComment(item: Item) {
-        (activity as MainActivity).navigateToComment(item)
+    override fun navigateToComment(original: Original) {
+        (activity as MainActivity).navigateToComment(original)
     }
 
     override fun showToast(title: String) {

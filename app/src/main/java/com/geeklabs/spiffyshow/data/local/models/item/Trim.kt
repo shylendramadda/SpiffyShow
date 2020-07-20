@@ -14,5 +14,7 @@ data class Trim(
     val description: String = "",
     val category: String = "",
     val time: Long = 0,
+    val likes: MutableList<Like> = mutableListOf(),
+    val comments: MutableList<Comment> = mutableListOf(),
     val fileMetaData: FileMetaData? = null
 )

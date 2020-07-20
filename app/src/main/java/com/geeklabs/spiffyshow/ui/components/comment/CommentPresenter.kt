@@ -27,7 +27,7 @@ class CommentPresenter @Inject constructor(
             val comment = Comment(
                 id = i.toLong(),
                 text = "Test Comment $i",
-                byName = user?.name,
+                userName = user?.name,
                 imageUrl = user?.imageUrl,
                 time = Utils.getCurrentTime()
             )
@@ -40,7 +40,7 @@ class CommentPresenter @Inject constructor(
     override fun onPostCommentClicked(text: String) {
         val comment = Comment(
             text = text,
-            byName = user?.name,
+            userName = user?.name,
             imageUrl = user?.imageUrl,
             time = Utils.getCurrentTime()
         )

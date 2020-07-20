@@ -28,7 +28,7 @@ class CommentAdapter : RecyclerView.Adapter<CommentAdapter.ViewHolder>() {
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(comment: Comment) = with(itemView) {
-            nameTV.text = comment.byName
+            nameTV.text = comment.userName
             commentTV.text = comment.text
             dateTV.text = Utils.getTimeAgo(comment.time)
 
@@ -38,8 +38,8 @@ class CommentAdapter : RecyclerView.Adapter<CommentAdapter.ViewHolder>() {
                     .into(userImage)
                 userImage.shouldShow = true
                 userImageText.shouldShow = false
-            } else if (comment.byName?.isNotEmpty() == true) {
-                userImageText.text = comment.byName.substring(0, 1)
+            } else if (comment.userName?.isNotEmpty() == true) {
+                userImageText.text = comment.userName.substring(0, 1)
                 userImage.shouldShow = false
                 userImageText.shouldShow = true
             }

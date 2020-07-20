@@ -1,6 +1,6 @@
 package com.geeklabs.spiffyshow.ui.components.profile
 
-import com.geeklabs.spiffyshow.data.local.models.item.Item
+import com.geeklabs.spiffyshow.data.local.models.item.Original
 import com.geeklabs.spiffyshow.data.local.models.item.Trim
 import com.geeklabs.spiffyshow.data.local.models.user.User
 import com.geeklabs.spiffyshow.ui.base.BaseContract
@@ -16,7 +16,7 @@ interface ProfileContract {
         )
 
         fun showOriginalItems(
-            items: MutableList<Item>,
+            originals: MutableList<Original>,
             user: User?
         )
     }

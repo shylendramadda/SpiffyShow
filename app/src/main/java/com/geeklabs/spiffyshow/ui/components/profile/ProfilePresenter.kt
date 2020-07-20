@@ -1,9 +1,9 @@
 package com.geeklabs.spiffyshow.ui.components.profile
 
-import com.geeklabs.spiffyshow.data.local.models.item.Item
+import com.geeklabs.spiffyshow.data.local.models.item.Original
 import com.geeklabs.spiffyshow.data.local.models.item.Trim
 import com.geeklabs.spiffyshow.data.local.models.user.User
-import com.geeklabs.spiffyshow.domain.local.item.FetchItemsFromLocalUseCase
+import com.geeklabs.spiffyshow.domain.local.original.FetchOriginalsFromLocalUseCase
 import com.geeklabs.spiffyshow.domain.local.trim.FetchTrimsFromLocalUseCase
 import com.geeklabs.spiffyshow.extensions.applySchedulers
 import com.geeklabs.spiffyshow.models.ApplicationState
@@ -14,12 +14,12 @@ import javax.inject.Inject
 class ProfilePresenter @Inject constructor(
     private val applicationState: ApplicationState,
     private val fetchTrimsFromLocalUseCase: FetchTrimsFromLocalUseCase,
-    private val fetchItemsFromLocalUseCase: FetchItemsFromLocalUseCase
+    private val fetchOriginalsFromLocalUseCase: FetchOriginalsFromLocalUseCase
 ) : BasePresenter<ProfileContract.View>(),
     ProfileContract.Presenter {
 
     private var trimItems = mutableListOf<Trim>()
-    private var originalItems = mutableListOf<Item>()
+    private var originalItems = mutableListOf<Original>()
     private var user: User? = null
 
     override fun onCreated() {
@@ -32,7 +32,7 @@ class ProfilePresenter @Inject constructor(
 
     private fun loadOriginals() {
         disposables?.add(
-            fetchItemsFromLocalUseCase.execute(Unit)
+            fetchOriginalsFromLocalUseCase.execute(Unit)
                 .applySchedulers()
                 .doOnSubscribe { getView()?.setState(progress = true) }
                 .subscribe({

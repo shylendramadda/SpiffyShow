@@ -1,6 +1,9 @@
 package com.geeklabs.spiffyshow.utils
 
 import androidx.room.TypeConverter
+import com.geeklabs.spiffyshow.data.local.models.item.Comment
+import com.geeklabs.spiffyshow.data.local.models.item.Like
+import com.geeklabs.spiffyshow.data.local.models.item.Original
 import com.geeklabs.spiffyshow.data.remote.models.Param
 import com.geeklabs.spiffyshow.models.FileMetaData
 import com.google.gson.Gson
@@ -57,15 +60,38 @@ class Converters {
     }
 
     @TypeConverter
-    fun fromAddressList(list: List<com.geeklabs.spiffyshow.data.local.models.user.Address>): String {
-        return Gson().toJson(list)
+    fun fromOriginal(data: Original): String {
+        return Gson().toJson(data)
     }
 
     @TypeConverter
-    fun toAddressList(value: String): List<com.geeklabs.spiffyshow.data.local.models.user.Address> {
-        val listType =
-            object : TypeToken<List<com.geeklabs.spiffyshow.data.local.models.user.Address>>() {
-            }.type
+    fun toOriginal(value: String): Original {
+        val type = object : TypeToken<Original>() {
+        }.type
+        return Gson().fromJson(value, type)
+    }
+
+    @TypeConverter
+    fun fromCommentList(data: List<Comment>): String {
+        return Gson().toJson(data)
+    }
+
+    @TypeConverter
+    fun toCommentList(value: String): List<Comment> {
+        val listType = object : TypeToken<List<Comment>>() {
+        }.type
+        return Gson().fromJson(value, listType)
+    }
+
+    @TypeConverter
+    fun fromLikeList(data: List<Like>): String {
+        return Gson().toJson(data)
+    }
+
+    @TypeConverter
+    fun toLikeList(value: String): List<Like> {
+        val listType = object : TypeToken<List<Like>>() {
+        }.type
         return Gson().fromJson(value, listType)
     }
 
@@ -76,8 +102,8 @@ class Converters {
 
     @TypeConverter
     fun toFileMetaData(value: String): FileMetaData {
-        val listType = object : TypeToken<FileMetaData>() {
+        val type = object : TypeToken<FileMetaData>() {
         }.type
-        return Gson().fromJson(value, listType)
+        return Gson().fromJson(value, type)
     }
 }

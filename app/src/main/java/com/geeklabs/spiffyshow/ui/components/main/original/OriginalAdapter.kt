@@ -9,7 +9,7 @@ import androidx.appcompat.widget.PopupMenu
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.geeklabs.spiffyshow.R
-import com.geeklabs.spiffyshow.data.local.models.item.Item
+import com.geeklabs.spiffyshow.data.local.models.item.Original
 import com.geeklabs.spiffyshow.data.local.models.user.User
 import com.geeklabs.spiffyshow.extensions.inflate
 import com.geeklabs.spiffyshow.extensions.shouldShow
@@ -19,13 +19,13 @@ import com.geeklabs.spiffyshow.utils.Utils.getTimeAgo
 import kotlinx.android.synthetic.main.item_layout.view.*
 
 class OriginalAdapter(
-    private val onEditClicked: (Item, Boolean) -> Unit,
-    private val onDeleteClicked: (Item) -> Unit,
-    private val onCommentClicked: (Item) -> Unit,
+    private val onEditClicked: (Original, Boolean) -> Unit,
+    private val onDeleteClicked: (Original) -> Unit,
+    private val onCommentClicked: (Original) -> Unit,
     private val onProfileClicked: (User) -> Unit
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    var items = mutableListOf<Item>()
+    var items = mutableListOf<Original>()
     var user: User? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -41,17 +41,17 @@ class OriginalAdapter(
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         @SuppressLint("SetTextI18n")
-        fun bind(item: Item) = with(itemView) {
+        fun bind(original: Original) = with(itemView) {
             trimTV.visible = true
             Utils.showHideViews(false, shareTV, viewsTV)
-            titleTV.text = item.title
-            categoryTV.text = item.category
-            descriptionTV.text = item.description
-            dateTV.text = getTimeAgo(item.time)
+            titleTV.text = original.title
+            categoryTV.text = original.category
+            descriptionTV.text = original.description
+            dateTV.text = getTimeAgo(original.time)
             likeTV.text = "15"
             commentTV.text = "5"
 
-            if (item.fileMetaData!!.path.isNotEmpty() && item.fileMetaData.size.isEmpty()) {
+            if (original.fileMetaData!!.path.isNotEmpty() && original.fileMetaData.size.isEmpty()) {
                 trimTV.visible = false
             }
 
@@ -68,13 +68,13 @@ class OriginalAdapter(
             }
 
             moreOptions.setOnClickListener {
-                showPopup(item, context, it)
+                showPopup(original, context, it)
             }
             commentTV.setOnClickListener {
-                onCommentClicked(item)
+                onCommentClicked(original)
             }
             trimTV.setOnClickListener {
-                onEditClicked(item, true)
+                onEditClicked(original, true)
             }
             userImageLayout.setOnClickListener {
                 onProfileClicked(user!!)
@@ -100,29 +100,29 @@ class OriginalAdapter(
                 likeTV.text = "$likeCount"
             }
 
-            if (item.fileMetaData.path.isNotEmpty() && item.fileMetaData.size.isEmpty()) {
+            if (original.fileMetaData.path.isNotEmpty() && original.fileMetaData.size.isEmpty()) {
                 youtubePlayer.visible = true
                 universalVideoView.visible = false
-                youtubePlayer.loadYoutubeView(item.fileMetaData.path)
+                youtubePlayer.loadYoutubeView(original.fileMetaData.path)
             } else {
                 youtubePlayer.visible = false
                 universalVideoView.visible = true
-                universalVideoView.playVideo(item.fileMetaData.path)
+                universalVideoView.playVideo(original.fileMetaData.path)
             }
         }
     }
 
-    private fun showPopup(item: Item, context: Context, view: View) {
+    private fun showPopup(original: Original, context: Context, view: View) {
         val popup: PopupMenu?
         popup = PopupMenu(context, view)
         popup.inflate(R.menu.menu_more_options)
         popup.setOnMenuItemClickListener(PopupMenu.OnMenuItemClickListener {
             when (it?.itemId) {
                 R.id.itemEdit -> {
-                    onEditClicked(item, false)
+                    onEditClicked(original, false)
                 }
                 R.id.itemDelete -> {
-                    onDeleteClicked(item)
+                    onDeleteClicked(original)
                 }
             }
             true

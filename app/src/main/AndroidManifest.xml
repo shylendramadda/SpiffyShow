@@ -46,7 +46,7 @@
             android:configChanges="orientation|screenSize|smallestScreenSize|density|screenLayout"
             android:windowSoftInputMode="stateAlwaysHidden|adjustResize" />
         <activity
-            android:name="com.geeklabs.spiffyshow.ui.components.welcome.WelcomeActivity"
+            android:name="com.geeklabs.spiffyshow.ui.components.onboard.OnbaordActivity"
             android:configChanges="orientation|screenSize|smallestScreenSize|density|screenLayout"
             android:launchMode="singleTop"
             android:windowSoftInputMode="stateAlwaysHidden|adjustResize" />

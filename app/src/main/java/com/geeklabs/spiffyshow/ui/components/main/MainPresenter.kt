@@ -1,6 +1,6 @@
 package com.geeklabs.spiffyshow.ui.components.main
 
-import com.geeklabs.spiffyshow.data.local.models.item.Item
+import com.geeklabs.spiffyshow.data.local.models.item.Original
 import com.geeklabs.spiffyshow.data.local.models.user.User
 import com.geeklabs.spiffyshow.domain.local.file.ProcessFileUriUseCase
 import com.geeklabs.spiffyshow.domain.local.location.FetchDeviceLocationUseCase
@@ -113,7 +113,7 @@ class MainPresenter @Inject constructor(
                         getView()?.showAlert(it.second)
                         return@subscribe
                     }
-                    getView()?.navigateToTrim(Item(fileMetaData = it.first), false)
+                    getView()?.navigateToTrim(Original(fileMetaData = it.first), false)
                 }, {
                     getView()?.showAlert(
                         stringUtils.getString(StringEnum.FILE_PATH_ERROR.resId) + "${it.message}"
@@ -155,7 +155,7 @@ class MainPresenter @Inject constructor(
     }
 
     override fun onAddFromLinkButton() {
-        getView()?.navigateToTrim(Item(), false)
+        getView()?.navigateToTrim(Original(), false)
     }
 
     override fun onDestroyed() {

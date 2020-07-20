@@ -1,6 +1,6 @@
 package com.geeklabs.spiffyshow.data.local
 
-import com.geeklabs.spiffyshow.data.local.models.item.Item
+import com.geeklabs.spiffyshow.data.local.models.item.Original
 import com.geeklabs.spiffyshow.data.local.models.item.Trim
 import com.geeklabs.spiffyshow.data.local.models.location.DeviceLocation
 import com.geeklabs.spiffyshow.data.local.models.user.User
@@ -18,10 +18,10 @@ open class LocalDataSource @Inject constructor(private val appDatabaseWrapper: A
         appDatabase.deviceLocationDao().save(deviceLocation)
 
     //Items
-    fun saveItems(items: MutableList<Item>) = appDatabase.itemDao().insert(items.toList())
-    fun getItems() = appDatabase.itemDao().getAll()
-    fun getItemsByCategoryId(categoryId: Long) = appDatabase.itemDao().getAllById(categoryId)
-    fun deleteItem(id: Long) = appDatabase.itemDao().deleteItem(id)
+    fun saveOriginals(originals: MutableList<Original>) = appDatabase.itemDao().insert(originals.toList())
+    fun getOriginals() = appDatabase.itemDao().getAll()
+    fun getOriginalsByCategoryId(categoryId: Long) = appDatabase.itemDao().getAllById(categoryId)
+    fun deleteOriginal(id: Long) = appDatabase.itemDao().deleteItem(id)
 
     //Trims
     fun saveTrims(items: MutableList<Trim>) = appDatabase.trimDao().insert(items.toList())

@@ -21,7 +21,7 @@ import com.geeklabs.spiffyshow.ui.components.notifications.NotificationFragment
 import com.geeklabs.spiffyshow.ui.components.profile.ProfileFragment
 import com.geeklabs.spiffyshow.ui.components.register.RegisterActivity
 import com.geeklabs.spiffyshow.ui.components.splash.SplashActivity
-import com.geeklabs.spiffyshow.ui.components.welcome.WelcomeActivity
+import com.geeklabs.spiffyshow.ui.components.onboard.OnbaordActivity
 import com.geeklabs.spiffyshow.worker.ItemsWorker
 import dagger.Component
 
@@ -33,7 +33,7 @@ interface ApplicationComponent {
     fun inject(appService: AppService)
 
     fun inject(activity: SplashActivity)
-    fun inject(welcomeActivity: WelcomeActivity)
+    fun inject(onbaordActivity: OnbaordActivity)
     fun inject(loginActivity: LoginActivity)
     fun inject(registerActivity: RegisterActivity)
     fun inject(activity: MainActivity)

@@ -1,9 +1,9 @@
-package com.geeklabs.spiffyshow.ui.components.welcome
+package com.geeklabs.spiffyshow.ui.components.onboard
 
 import com.geeklabs.spiffyshow.models.WelcomeScreen
 import com.geeklabs.spiffyshow.ui.base.BaseContract
 
-interface WelcomeContract {
+interface OnboardContract {
 
     interface View : BaseContract.View {
 

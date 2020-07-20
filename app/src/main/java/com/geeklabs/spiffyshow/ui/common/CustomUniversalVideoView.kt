@@ -22,6 +22,7 @@ class CustomUniversalVideoView(context: Context?, attrs: AttributeSet?) :
         videoViewUniversal?.setMediaController(mediaControllerUniversal)
         videoViewUniversal?.setVideoURI(uri)
         videoViewUniversal?.seekTo(1)
+        videoViewUniversal?.setZOrderMediaOverlay(true)
         videoViewUniversal?.setOnErrorListener { mp, _, _ ->
             mp.stop()
             mp.release()
@@ -46,10 +47,5 @@ class CustomUniversalVideoView(context: Context?, attrs: AttributeSet?) :
                 mediaPlayer?.start()
             }
         })
-    }
-
-    override fun onDetachedFromWindow() {
-        super.onDetachedFromWindow()
-        videoViewUniversal?.stopPlayback()
     }
 }

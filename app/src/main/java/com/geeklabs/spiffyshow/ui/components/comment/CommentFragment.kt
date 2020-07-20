@@ -2,7 +2,7 @@ package com.geeklabs.spiffyshow.ui.components.comment
 
 import com.geeklabs.spiffyshow.R
 import com.geeklabs.spiffyshow.data.local.models.item.Comment
-import com.geeklabs.spiffyshow.data.local.models.item.Item
+import com.geeklabs.spiffyshow.data.local.models.item.Original
 import com.geeklabs.spiffyshow.data.local.models.item.Trim
 import com.geeklabs.spiffyshow.extensions.onTextChanged
 import com.geeklabs.spiffyshow.extensions.setEmptyStateView
@@ -26,7 +26,7 @@ class CommentFragment : BaseFragment<CommentContract.View, CommentContract.Prese
             if (obj is Trim) {
                 val trim = obj as Trim
             } else {
-                val item = obj as Item
+                val item = obj as Original
             }
         }
         adapter = CommentAdapter()

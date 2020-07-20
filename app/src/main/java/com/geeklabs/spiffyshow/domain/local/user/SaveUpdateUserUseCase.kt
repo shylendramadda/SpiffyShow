@@ -21,12 +21,15 @@ class SaveUpdateUserUseCase @Inject constructor(private val dataRepository: Data
                 user.imageUrl = parameters.imageUrl ?: user.imageUrl
                 user.interests = parameters.interests ?: user.interests
                 user.bio = parameters.bio ?: user.bio
+                user.followers = parameters.followers ?: user.followers
+                user.following = parameters.following ?: user.following
+                user.trims = parameters.trims ?: user.trims
+                user.originals = parameters.trims ?: user.originals
                 user.pinCode = parameters.pinCode ?: user.pinCode
                 user.city = parameters.city ?: user.city
                 user.state = parameters.state ?: user.state
                 user.country = parameters.country ?: user.country
                 user.addressInfo = parameters.addressInfo ?: user.addressInfo
-                user.landMark = parameters.landMark ?: user.landMark
                 user.latitude = parameters.latitude ?: user.latitude
                 user.longitude = parameters.longitude ?: user.longitude
                 dataRepository.saveUser(user)
