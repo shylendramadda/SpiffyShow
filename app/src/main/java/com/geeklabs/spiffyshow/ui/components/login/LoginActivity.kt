@@ -1,6 +1,7 @@
 package com.geeklabs.spiffyshow.ui.components.login
 
 import android.annotation.SuppressLint
+import android.text.method.LinkMovementMethod
 import androidx.work.WorkManager
 import com.geeklabs.spiffyshow.R
 import com.geeklabs.spiffyshow.extensions.launchActivity
@@ -47,9 +48,10 @@ class LoginActivity : BaseActivity<LoginContract.View, LoginContract.Presenter>(
         phoneNumberET.requestFocus()
         progress = Progress(this, R.string.please_wait, false)
         firebaseAuth = FirebaseAuth.getInstance()
+        termsCB.movementMethod = LinkMovementMethod.getInstance()
         sendOtpButton.setOnClickListener {
             mobileNumber = phoneNumberET.text.toString()
-            presenter?.onVerifyButtonClicked(mobileNumber ?: "")
+            presenter?.onVerifyButtonClicked(mobileNumber ?: "", termsCB.isChecked)
         }
         registerButton.setOnClickListener {
             navigateToRegisterScreen()
@@ -65,7 +67,7 @@ class LoginActivity : BaseActivity<LoginContract.View, LoginContract.Presenter>(
         }
         resendButton.setOnClickListener {
             mobileNumber = phoneNumberET.text.toString()
-            presenter?.onVerifyButtonClicked(mobileNumber ?: "")
+            presenter?.onVerifyButtonClicked(mobileNumber ?: "", termsCB.isChecked)
         }
     }
 

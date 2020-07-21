@@ -103,11 +103,11 @@ class OriginalAdapter(
             if (original.fileMetaData.path.isNotEmpty() && original.fileMetaData.size.isEmpty()) {
                 youtubePlayer.visible = true
                 universalVideoView.visible = false
-                youtubePlayer.loadYoutubeView(original.fileMetaData.path)
+                youtubePlayer.setYoutubeView(original.fileMetaData.path)
             } else {
                 youtubePlayer.visible = false
                 universalVideoView.visible = true
-                universalVideoView.playVideo(original.fileMetaData.path)
+                universalVideoView.setVideoView(original.fileMetaData.path)
             }
         }
     }

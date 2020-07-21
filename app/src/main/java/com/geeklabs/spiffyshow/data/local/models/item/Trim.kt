@@ -13,6 +13,7 @@ data class Trim(
     val title: String = "",
     val description: String = "",
     val category: String = "",
+    val originalUrl: String = "",
     val time: Long = 0,
     val likes: MutableList<Like> = mutableListOf(),
     val comments: MutableList<Comment> = mutableListOf(),

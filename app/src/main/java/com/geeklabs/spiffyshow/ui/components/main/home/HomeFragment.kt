@@ -7,6 +7,7 @@ import com.geeklabs.spiffyshow.R
 import com.geeklabs.spiffyshow.data.local.models.item.Trim
 import com.geeklabs.spiffyshow.data.local.models.user.User
 import com.geeklabs.spiffyshow.extensions.*
+import com.geeklabs.spiffyshow.models.ApplicationState
 import com.geeklabs.spiffyshow.models.FileMetaData
 import com.geeklabs.spiffyshow.ui.base.BaseFragment
 import com.geeklabs.spiffyshow.ui.components.main.MainActivity
@@ -22,6 +23,9 @@ class HomeFragment : BaseFragment<HomeContract.View, HomeContract.Presenter>(), 
 
     @Inject
     lateinit var homePresenter: HomePresenter
+
+    @Inject
+    lateinit var applicationState: ApplicationState
     private lateinit var trimAdapter: TrimAdapter
     private var fileMetaData: FileMetaData? = null
 
@@ -67,11 +71,8 @@ class HomeFragment : BaseFragment<HomeContract.View, HomeContract.Presenter>(), 
         stateLayout.stateEmpty.emptyDescription.visible = false
     }
 
-    override fun showItems(
-        items: MutableList<Trim>,
-        user: User?
-    ) {
-        trimAdapter.user = user
+    override fun showItems(items: MutableList<Trim>) {
+        trimAdapter.user = applicationState.user
         trimAdapter.items = items
         trimAdapter.notifyDataSetChanged()
         val isMoreThanOne = items.size > 1
@@ -138,6 +139,7 @@ class HomeFragment : BaseFragment<HomeContract.View, HomeContract.Presenter>(), 
     override fun onResume() {
         super.onResume()
         view?.hideKeyboard(context!!)
+        trimAdapter.user = applicationState.user
     }
 
     override fun initPresenter() = homePresenter

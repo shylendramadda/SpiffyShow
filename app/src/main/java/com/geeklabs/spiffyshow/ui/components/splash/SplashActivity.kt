@@ -9,7 +9,7 @@ import com.geeklabs.spiffyshow.extensions.withDelay
 import com.geeklabs.spiffyshow.ui.base.BaseActivity
 import com.geeklabs.spiffyshow.ui.components.login.LoginActivity
 import com.geeklabs.spiffyshow.ui.components.main.MainActivity
-import com.geeklabs.spiffyshow.ui.components.onboard.OnbaordActivity
+import com.geeklabs.spiffyshow.ui.components.onboard.OnboardActivity
 import com.geeklabs.spiffyshow.utils.Utils
 import kotlinx.android.synthetic.main.activity_splash.*
 import javax.inject.Inject
@@ -46,7 +46,7 @@ class SplashActivity : BaseActivity<SplashContract.View, SplashContract.Presente
     }
 
     override fun navigateToWelcomeScreen() {
-        launchActivity<OnbaordActivity> { }
+        launchActivity<OnboardActivity> { }
     }
 
     override fun finishView() {

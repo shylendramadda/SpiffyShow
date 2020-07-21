@@ -13,6 +13,7 @@ data class Original(
     val title: String = "",
     val description: String = "",
     val category: String = "",
+    val originalUrl: String = "",
     val time: Long = 0,
     val likes: Long = 0,
     val comments: MutableList<Comment> = mutableListOf(),

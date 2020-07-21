@@ -9,11 +9,7 @@ interface HomeContract {
     interface View : BaseContract.View {
         fun initUI()
         fun setState(progress: Boolean = false, empty: Boolean = false, error: Boolean = false)
-        fun showItems(
-            items: MutableList<Trim>,
-            user: User?
-        )
-
+        fun showItems(items: MutableList<Trim>)
         fun showToast(title: String)
         fun showMessage(message: Int)
         fun showAlertDialog(message: String)

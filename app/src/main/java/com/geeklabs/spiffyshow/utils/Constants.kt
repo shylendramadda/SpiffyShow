@@ -5,6 +5,7 @@ class Constants {
     companion object {
         const val SMS_TIME_OUT: Long = 120 // 1 minute max
         const val DELAY_REFRESH: Long = 1500 // 1.5 seconds
+        const val DATE_TIME_FORMAT_WITH_SECONDS = "dd/MM/yyyy hh:mm:ss a"
         const val DATE_TIME_FORMAT = "dd/MM/yyyy hh:mm a"
         const val CHAT_TIME_FORMAT = "dd-MMM-YYYY hh:mm a"
         const val FIREBASE_TOKEN = "FireBaseToken"

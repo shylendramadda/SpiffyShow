@@ -22,7 +22,7 @@ interface MainContract {
 
     interface Presenter : BaseContract.Presenter<View> {
         fun onMenuButtonClicked()
-        fun onAddButtonClicked(isPermissionEnable: Boolean)
+        fun onAddButtonClicked()
         fun onSaveFilePath(fileUri: String?)
         fun onChooseFileClicked(isPermissionEnable: Boolean)
         fun onAddFromLinkButton()

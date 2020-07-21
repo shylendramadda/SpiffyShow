@@ -41,20 +41,27 @@ class TrimFragment : BaseFragment<TrimContract.View, TrimContract.Presenter>(),
             titleET.setText(trim.title)
             descriptionET.setText(trim.description)
             categoryET.setText(trim.category)
+            originalUrlET.setText(trim.originalUrl)
         } else {
-            val item = obj as Original
-            fileMetaData = item.fileMetaData
-            titleET.setText(item.title)
-            descriptionET.setText(item.description)
-            categoryET.setText(item.category)
+            val original = obj as Original
+            fileMetaData = original.fileMetaData
+            titleET.setText(original.title)
+            descriptionET.setText(original.description)
+            originalUrlET.setText(original.originalUrl)
+            categoryET.setText(original.category)
         }
         saveButton.setOnClickListener {
             val externalUri = urlET.text.toString().trim()
             val title = titleET.text.toString().trim()
             val description = descriptionET.text.toString().trim()
             val category = categoryET.text.toString().trim()
-            presenter?.onSaveClicked(externalUri, title, description, category, isTrim)
+            val originalUrl = originalUrlET.text.toString().trim()
+            presenter?.onSaveClicked(externalUri, title, description, category, originalUrl, isTrim)
         }
+        setFileMetaData()
+    }
+
+    private fun setFileMetaData() {
         if (fileMetaData == null) {
             urlET.visible = true
             videoLL.visible = false
@@ -63,7 +70,7 @@ class TrimFragment : BaseFragment<TrimContract.View, TrimContract.Presenter>(),
             when {
                 fileMetaData!!.path.isNotEmpty() && fileMetaData!!.size.isEmpty() -> {
                     isTrim = false
-                    youtubePlayer.loadYoutubeView(fileMetaData!!.path)
+                    youtubePlayer.setYoutubeView(fileMetaData!!.path)
                     urlET.visible = true
                     videoLL.visible = true
                     urlET.setText(fileMetaData?.path ?: "")
@@ -147,6 +154,15 @@ class TrimFragment : BaseFragment<TrimContract.View, TrimContract.Presenter>(),
 
     override fun navigateToOriginals() {
         (activity as MainActivity).navigateToScreen(Navigation.ORIGINAL)
+    }
+
+    override fun onBackPressed(): Boolean {
+        if (fragmentManager?.backStackEntryCount ?: 0 > 0) {
+            (activity as MainActivity).setToolBarTitle(Navigation.ORIGINAL)
+            fragmentManager?.popBackStack()
+            return true
+        }
+        return false
     }
 
     override fun initPresenter() = trimPresenter

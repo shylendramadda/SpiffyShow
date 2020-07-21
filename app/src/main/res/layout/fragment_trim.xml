@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/whitePrimary"
@@ -64,7 +65,9 @@
                     android:inputType="text"
                     android:maxLength="200"
                     android:padding="@dimen/spacing_normal"
-                    android:textSize="16sp" />
+                    android:textSize="16sp"
+                    android:visibility="gone"
+                    tools:visibility="visible" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -115,6 +118,23 @@
                     android:focusableInTouchMode="true"
                     android:hint="@string/category"
                     android:imeOptions="actionDone"
+                    android:inputType="text"
+                    android:padding="@dimen/spacing_normal"
+                    android:textSize="16sp" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/originalUrlET"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/spacing_normal"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
+                    android:hint="@string/enter_original_url"
                     android:inputType="text"
                     android:padding="@dimen/spacing_normal"
                     android:textSize="16sp" />

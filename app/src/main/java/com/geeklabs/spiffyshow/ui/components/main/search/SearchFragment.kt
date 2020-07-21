@@ -47,9 +47,7 @@ class SearchFragment : BaseFragment<SearchContract.View, SearchContract.Presente
     override fun showItems(list: MutableList<String>) {
         adapter.items = list
         adapter.notifyDataSetChanged()
-        if (list.size == 0) {
-            setState(empty = true)
-        }
+        if (list.size == 0) setState(empty = true)
     }
 
     override fun initPresenter() = searchPresenter

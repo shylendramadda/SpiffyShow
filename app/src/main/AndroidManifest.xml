@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.geeklabs.spiffyshow">
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -11,7 +12,6 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-<!--    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />-->
 
     <uses-feature
         android:glEsVersion="0x00020000"
@@ -27,10 +27,11 @@
         android:requestLegacyExternalStorage="true"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
-        android:usesCleartextTraffic="true">
+        android:usesCleartextTraffic="true"
+        tools:targetApi="q">
 
         <activity
-            android:name="com.geeklabs.spiffyshow.ui.components.splash.SplashActivity"
+            android:name=".ui.components.splash.SplashActivity"
             android:configChanges="orientation|screenSize|smallestScreenSize|density|screenLayout"
             android:launchMode="singleTop"
             android:theme="@style/Theme.Design.Light.NoActionBar">
@@ -42,20 +43,20 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.geeklabs.spiffyshow.ui.components.main.MainActivity"
+            android:name=".ui.components.main.MainActivity"
             android:configChanges="orientation|screenSize|smallestScreenSize|density|screenLayout"
             android:windowSoftInputMode="stateAlwaysHidden|adjustResize" />
         <activity
-            android:name="com.geeklabs.spiffyshow.ui.components.onboard.OnbaordActivity"
+            android:name=".ui.components.onboard.OnboardActivity"
             android:configChanges="orientation|screenSize|smallestScreenSize|density|screenLayout"
             android:launchMode="singleTop"
             android:windowSoftInputMode="stateAlwaysHidden|adjustResize" />
         <activity
-            android:name="com.geeklabs.spiffyshow.ui.components.login.LoginActivity"
+            android:name=".ui.components.login.LoginActivity"
             android:configChanges="orientation|screenSize|smallestScreenSize|density|screenLayout"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name="com.geeklabs.spiffyshow.ui.components.register.RegisterActivity"
+            android:name=".ui.components.register.RegisterActivity"
             android:configChanges="orientation|screenSize|smallestScreenSize|density|screenLayout" />
 
         <meta-data
@@ -67,11 +68,11 @@
             android:value="@string/google_maps_key" />
 
         <service
-            android:name="com.geeklabs.spiffyshow.service.AppService"
+            android:name=".service.AppService"
             android:stopWithTask="true" />
 
         <service
-            android:name="com.geeklabs.spiffyshow.service.MyFirebaseMessageService"
+            android:name=".service.MyFirebaseMessageService"
             android:exported="false">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />

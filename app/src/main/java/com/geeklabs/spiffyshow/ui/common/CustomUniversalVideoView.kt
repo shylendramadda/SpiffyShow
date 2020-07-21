@@ -17,12 +17,12 @@ class CustomUniversalVideoView(context: Context?, attrs: AttributeSet?) :
         View.inflate(context, R.layout.layout_universal_video_view, this)
     }
 
-    fun playVideo(path: String) {
+    fun setVideoView(path: String) {
         val uri = Uri.parse(path)
         videoViewUniversal?.setMediaController(mediaControllerUniversal)
         videoViewUniversal?.setVideoURI(uri)
         videoViewUniversal?.seekTo(1)
-        videoViewUniversal?.setZOrderMediaOverlay(true)
+        videoViewUniversal?.setZOrderMediaOverlay(false)
         videoViewUniversal?.setOnErrorListener { mp, _, _ ->
             mp.stop()
             mp.release()

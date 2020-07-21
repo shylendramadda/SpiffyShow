@@ -94,7 +94,7 @@ class MainPresenter @Inject constructor(
         getView()?.showDrawer()
     }
 
-    override fun onAddButtonClicked(isPermissionEnable: Boolean) {
+    override fun onAddButtonClicked() {
         getView()?.showUploadAlert()
     }
 

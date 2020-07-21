@@ -103,6 +103,14 @@
 
                     </LinearLayout>
 
+                    <CheckBox
+                        android:id="@+id/termsCB"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/spacing_normal"
+                        android:layout_marginTop="@dimen/spacing_normal"
+                        android:text="@string/terms_and_conditions" />
+
                     <Button
                         android:id="@+id/sendOtpButton"
                         android:layout_width="wrap_content"

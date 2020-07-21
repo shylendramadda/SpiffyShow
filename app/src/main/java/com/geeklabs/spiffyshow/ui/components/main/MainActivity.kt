@@ -126,7 +126,7 @@ class MainActivity : BaseActivity<MainContract.View, MainContract.Presenter>(), 
             true
         }
 
-    private fun setToolBarTitle(navigation: Navigation) {
+    fun setToolBarTitle(navigation: Navigation) {
         var isShowBottomNav = true
         val title = when (navigation) {
             Navigation.HOME -> {
@@ -184,7 +184,7 @@ class MainActivity : BaseActivity<MainContract.View, MainContract.Presenter>(), 
         closeDrawer()
         mainContainer.hideKeyboard(this)
         if (navigation == Navigation.ADD) {
-            presenter?.onAddButtonClicked(isPermissionEnable)
+            presenter?.onAddButtonClicked()
         } else {
             navigationHandler.navigateTo(navigation)
         }
@@ -259,11 +259,14 @@ class MainActivity : BaseActivity<MainContract.View, MainContract.Presenter>(), 
                 grantResults.size > 2 && grantResults[2] == PackageManager.PERMISSION_GRANTED
             val isGiven4 =
                 grantResults.size > 3 && grantResults[3] == PackageManager.PERMISSION_GRANTED
-            if ((isGiven1 && isGiven2 && isGiven3) || isPermissionEnable) {
+            if (isPermissionEnable || (isGiven1 && isGiven2 && isGiven3)) {
                 startService()
             }
-            if ((isGiven3 && isGiven4) || isPermissionEnable) {
-                presenter?.onAddButtonClicked(isPermissionEnable)
+            if (isGiven3 && isGiven4) {
+                presenter?.onAddButtonClicked()
+            }
+            if (isGiven1 && isGiven2 && isGiven3 && isGiven4) {
+                isPermissionEnable = true
             }
         }
     }
@@ -271,7 +274,6 @@ class MainActivity : BaseActivity<MainContract.View, MainContract.Presenter>(), 
     @NeedsPermission(
         Manifest.permission.ACCESS_FINE_LOCATION,
         Manifest.permission.ACCESS_COARSE_LOCATION,
-//        Manifest.permission.ACCESS_BACKGROUND_LOCATION,
         Manifest.permission.WRITE_EXTERNAL_STORAGE,
         Manifest.permission.READ_EXTERNAL_STORAGE
     )
@@ -283,7 +285,6 @@ class MainActivity : BaseActivity<MainContract.View, MainContract.Presenter>(), 
     @OnShowRationale(
         Manifest.permission.ACCESS_FINE_LOCATION,
         Manifest.permission.ACCESS_COARSE_LOCATION,
-//        Manifest.permission.ACCESS_BACKGROUND_LOCATION,
         Manifest.permission.WRITE_EXTERNAL_STORAGE,
         Manifest.permission.READ_EXTERNAL_STORAGE
     )
@@ -294,7 +295,6 @@ class MainActivity : BaseActivity<MainContract.View, MainContract.Presenter>(), 
     @OnPermissionDenied(
         Manifest.permission.ACCESS_FINE_LOCATION,
         Manifest.permission.ACCESS_COARSE_LOCATION,
-//        Manifest.permission.ACCESS_BACKGROUND_LOCATION,
         Manifest.permission.WRITE_EXTERNAL_STORAGE,
         Manifest.permission.READ_EXTERNAL_STORAGE
     )

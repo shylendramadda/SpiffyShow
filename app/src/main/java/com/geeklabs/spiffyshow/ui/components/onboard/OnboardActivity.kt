@@ -13,7 +13,7 @@ import com.geeklabs.spiffyshow.ui.components.login.LoginActivity
 import kotlinx.android.synthetic.main.fragment_welcome.*
 import javax.inject.Inject
 
-class OnbaordActivity : BaseActivity<OnboardContract.View, OnboardContract.Presenter>(),
+class OnboardActivity : BaseActivity<OnboardContract.View, OnboardContract.Presenter>(),
     OnboardContract.View, ViewPager.OnPageChangeListener {
 
     @Inject

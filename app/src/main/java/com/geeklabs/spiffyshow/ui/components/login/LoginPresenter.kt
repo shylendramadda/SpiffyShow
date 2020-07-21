@@ -34,14 +34,19 @@ class LoginPresenter @Inject constructor(
         getView()?.initUI()
     }
 
-    override fun onVerifyButtonClicked(mobileNumber: String) {
-        if (mobileNumber.isEmpty() || mobileNumber.length != 10) {
-            getView()?.showToast("Please enter 10 digit mobile number")
-        } else if (!isNetworkConnected()) {
-            getView()?.showToast("Please check your network and try again")
-        } else {
-            getView()?.showProgress()
-            getView()?.sendOTPViaFirebase("+91 $mobileNumber") //Supports only for India
+    override fun onVerifyButtonClicked(mobileNumber: String, isChecked: Boolean) {
+        when {
+            !isChecked -> getView()?.showToast("Please accept the Terms and Conditions")
+            mobileNumber.isEmpty() || mobileNumber.length != 10 -> {
+                getView()?.showToast("Please enter 10 digit mobile number")
+            }
+            !isNetworkConnected() -> {
+                getView()?.showToast("Please check your network and try again")
+            }
+            else -> {
+                getView()?.showProgress()
+                getView()?.sendOTPViaFirebase("+91 $mobileNumber") //Supports only for India
+            }
         }
     }
 

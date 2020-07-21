@@ -21,6 +21,7 @@ interface TrimContract {
             title: String,
             description: String,
             category: String,
+            originalUrl: String,
             isTrim: Boolean
         )
 

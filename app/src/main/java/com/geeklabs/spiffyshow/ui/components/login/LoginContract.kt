@@ -17,7 +17,7 @@ interface LoginContract {
     }
 
     interface Presenter : BaseContract.Presenter<View> {
-        fun onVerifyButtonClicked(mobileNumber: String)
+        fun onVerifyButtonClicked(mobileNumber: String, isChecked: Boolean)
         fun onVerifyOTPClicked(otp: String, mobileNumber: String?)
         fun onChangeNumberClicked()
         fun onCompleteVerification(task: Task<AuthResult>)

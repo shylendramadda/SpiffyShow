@@ -38,7 +38,7 @@
                         android:layout_centerHorizontal="true"
                         android:layout_centerVertical="true"
                         android:contentDescription="@string/app_name"
-                        android:src="@drawable/app_logo"
+                        android:src="@drawable/ic_icon_user"
                         android:visibility="visible" />
 
                     <TextView
@@ -171,6 +171,13 @@
 
             <com.geeklabs.spiffyshow.ui.common.CustomUniversalVideoView
                 android:id="@+id/universalVideoView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="gone"
+                tools:visibility="visible" />
+
+            <com.geeklabs.spiffyshow.ui.common.CustomVideoPlayer
+                android:id="@+id/videoPlayer"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:visibility="gone"

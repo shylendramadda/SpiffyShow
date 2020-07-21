@@ -22,7 +22,7 @@ class CustomYoutubePlayer(context: Context?, attrs: AttributeSet?) :
     }
 
     @SuppressLint("SetJavaScriptEnabled")
-    fun loadYoutubeView(path: String) {
+    fun setYoutubeView(path: String) {
         customYoutubePlayer.addYouTubePlayerListener(object : YouTubePlayerListener {
             override fun onApiChange(youTubePlayer: YouTubePlayer) {
 

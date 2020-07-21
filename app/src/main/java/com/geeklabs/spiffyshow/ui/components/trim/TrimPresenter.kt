@@ -8,6 +8,7 @@ import com.geeklabs.spiffyshow.models.ApplicationState
 import com.geeklabs.spiffyshow.models.FileMetaData
 import com.geeklabs.spiffyshow.ui.base.BasePresenter
 import com.geeklabs.spiffyshow.utils.Utils
+import com.geeklabs.spiffyshow.utils.Utils.isValidURL
 import com.geeklabs.spiffyshow.utils.Utils.isValidYoutubeUrl
 import io.reactivex.Observable
 import io.reactivex.schedulers.Schedulers
@@ -76,18 +77,20 @@ class TrimPresenter @Inject constructor(
         title: String,
         description: String,
         category: String,
+        originalUrl: String,
         isTrim: Boolean
     ) {
         when {
-            fileMetaData == null && externalUri.isEmpty() -> getView()?.showToast("Please enter URL")
+            fileMetaData == null && externalUri.isEmpty() -> getView()?.showToast("Please enter the URL")
             fileMetaData == null && externalUri.isNotEmpty() && !isValidYoutubeUrl(externalUri) -> getView()?.showToast(
-                "Please enter valid youtube URL"
+                "Please enter a valid youtube URL"
             )
-            title.isEmpty() -> getView()?.showToast("Please enter title")
-            description.isEmpty() -> getView()?.showToast("Please enter description")
-            category.isEmpty() -> getView()?.showToast("Please enter category")
+            title.isEmpty() -> getView()?.showToast("Please enter a title")
+            description.isEmpty() -> getView()?.showToast("Please enter a description")
+            category.isEmpty() -> getView()?.showToast("Please enter a category")
+            originalUrl.isNotEmpty() && !isValidURL(originalUrl) -> getView()?.showToast("Please enter a valid original URL")
             else -> {
-                if (trim != null || isTrim) {
+                if (trim != null || isTrim) { // save trimmed video
                     if (processedUri?.isEmpty() == false) {
                         fileMetaData?.path = processedUri ?: ""
                     }
@@ -96,6 +99,7 @@ class TrimPresenter @Inject constructor(
                         title = title,
                         description = description,
                         category = category,
+                        originalUrl = originalUrl,
                         fileMetaData = fileMetaData!!,
                         time = Utils.getCurrentTime(),
                         userId = applicationState.user?.id ?: 0
@@ -104,7 +108,7 @@ class TrimPresenter @Inject constructor(
                         saveUpdateTrimInLocalUseCase.execute(mutableListOf(trim))
                     }.subscribeOn(Schedulers.newThread()).subscribe()
                     getView()?.navigateToHome()
-                } else {
+                } else { // update original
                     if (externalUri.isNotEmpty()) {
                         fileMetaData = FileMetaData(path = externalUri)
                     }
@@ -113,6 +117,7 @@ class TrimPresenter @Inject constructor(
                         title = title,
                         description = description,
                         category = category,
+                        originalUrl = originalUrl,
                         fileMetaData = fileMetaData,
                         time = Utils.getCurrentTime(),
                         userId = applicationState.user?.id ?: 0

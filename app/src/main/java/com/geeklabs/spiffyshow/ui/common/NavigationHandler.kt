@@ -2,6 +2,7 @@ package com.geeklabs.spiffyshow.ui.common
 
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Lifecycle
 import com.geeklabs.spiffyshow.enums.AppStateEnum
 import com.geeklabs.spiffyshow.enums.Navigation
 import com.geeklabs.spiffyshow.extensions.addFragment
@@ -90,9 +91,9 @@ class NavigationHandler(
     }
 
     fun navigateTo(fragment: Fragment, tag: String) {
-        /*if (!activity.lifecycle.currentState.isAtLeast(Lifecycle.State.RESUMED)) {
+        if (!activity.lifecycle.currentState.isAtLeast(Lifecycle.State.RESUMED)) {
             return
-        }*/
+        }
         currentFragment = fragment
         val navigation = getCurrentDisplayingFragment(currentFragment)
         currentNavigation = navigation
@@ -130,12 +131,6 @@ class NavigationHandler(
         val stack = miscState.fragmentStack
         if (!handled && stack.isNotEmpty()) {
             stack.pop()
-        }
-        if (handled && fragmentManager.backStackEntryCount > 1 && stack.isNotEmpty()) {
-            stack.pop()
-            if (stack.isNotEmpty()) {
-                currentFragment = fragmentManager.findFragmentByTag(stack.peek())
-            }
         }
         miscState.fragmentStack = stack
         return handled

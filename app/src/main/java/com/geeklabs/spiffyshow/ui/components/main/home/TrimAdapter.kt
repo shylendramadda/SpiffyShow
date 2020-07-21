@@ -41,13 +41,13 @@ class TrimAdapter(
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         @SuppressLint("SetTextI18n")
-        fun bind(item: Trim) = with(itemView) {
+        fun bind(trim: Trim) = with(itemView) {
             shareTV.visible = true
-            titleTV.text = item.title
-            categoryTV.text = item.category
-            descriptionTV.text = item.description
+            titleTV.text = trim.title
+            categoryTV.text = trim.category
+            descriptionTV.text = trim.description
             viewsTV.text = "${adapterPosition + 2} Views"
-            dateTV.text = getTimeAgo(item.time)
+            dateTV.text = getTimeAgo(trim.time)
             likeTV.text = "20"
             commentTV.text = "5"
 
@@ -64,13 +64,13 @@ class TrimAdapter(
             }
 
             moreOptions.setOnClickListener {
-                showPopup(item, context, it)
+                showPopup(trim, context, it)
             }
             commentTV.setOnClickListener {
-                onCommentClicked(item)
+                onCommentClicked(trim)
             }
             shareTV.setOnClickListener {
-                onItemShareClicked(item)
+                onItemShareClicked(trim)
             }
             userImageLayout.setOnClickListener {
                 onProfileClicked(user!!)
@@ -96,14 +96,14 @@ class TrimAdapter(
                 likeTV.text = "$likeCount"
             }
 
-            if (item.fileMetaData!!.path.isNotEmpty() && item.fileMetaData.size.isEmpty()) {
+            if (trim.fileMetaData!!.path.isNotEmpty() && trim.fileMetaData.size.isEmpty()) { // if youtube URL
                 youtubePlayer.visible = true
                 universalVideoView.visible = false
-                youtubePlayer.loadYoutubeView(item.fileMetaData.path)
+                youtubePlayer.setYoutubeView(trim.fileMetaData.path)
             } else {
                 youtubePlayer.visible = false
                 universalVideoView.visible = true
-                universalVideoView.playVideo(item.fileMetaData.path)
+                universalVideoView.setVideoView(trim.fileMetaData.path)
             }
         }
     }

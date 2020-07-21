@@ -5,7 +5,6 @@ import com.geeklabs.spiffyshow.data.local.models.user.User
 import com.geeklabs.spiffyshow.domain.local.trim.DeleteTrimFromLocalUseCase
 import com.geeklabs.spiffyshow.domain.local.trim.FetchTrimsFromLocalUseCase
 import com.geeklabs.spiffyshow.extensions.applySchedulers
-import com.geeklabs.spiffyshow.models.ApplicationState
 import com.geeklabs.spiffyshow.models.FileMetaData
 import com.geeklabs.spiffyshow.ui.base.BasePresenter
 import com.log4k.e
@@ -15,7 +14,6 @@ import java.util.*
 import javax.inject.Inject
 
 class HomePresenter @Inject constructor(
-    private val applicationState: ApplicationState,
     private val fetchTrimsFromLocalUseCase: FetchTrimsFromLocalUseCase,
     private val deleteTrimsFromLocalUseCase: DeleteTrimFromLocalUseCase
 ) : BasePresenter<HomeContract.View>(),
@@ -23,12 +21,10 @@ class HomePresenter @Inject constructor(
 
     private var items = mutableListOf<Trim>()
     private lateinit var fileMetaData: FileMetaData
-    private var user: User? = null
 
     override fun onCreated() {
         super.onCreated()
         getView()?.initUI()
-        this.user = applicationState.user
         loadItemsFromLocal()
     }
 
@@ -45,7 +41,7 @@ class HomePresenter @Inject constructor(
                     }
                     it.sortByDescending { item -> item.time }
                     items = it
-                    getView()?.showItems(it, user)
+                    getView()?.showItems(it)
                     getView()?.setState(progress = false)
                 }, {
                     getView()?.setState(error = true)
@@ -67,7 +63,7 @@ class HomePresenter @Inject constructor(
                     it.category.contains(inputQuery, true)
         }
         finalList.sortedBy { it.title }
-        getView()?.showItems(finalList.toMutableList(), user)
+        getView()?.showItems(finalList.toMutableList())
     }
 
     override fun onEditClicked(item: Trim) {
@@ -98,10 +94,4 @@ class HomePresenter @Inject constructor(
     override fun onProfileClicked(user: User) {
         getView()?.navigateToUserProfile(user)
     }
-
-    override fun onResumed() {
-        super.onResumed()
-        this.user = applicationState.user
-    }
-
 }
