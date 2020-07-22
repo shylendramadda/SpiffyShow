@@ -14,8 +14,6 @@
         android:layout_height="match_parent"
         android:layout_below="@+id/toolbar"
         android:layout_gravity="center"
-        android:clipToPadding="false"
-        android:paddingBottom="100dp"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         tools:itemCount="13"
         tools:listitem="@layout/item_notification" />

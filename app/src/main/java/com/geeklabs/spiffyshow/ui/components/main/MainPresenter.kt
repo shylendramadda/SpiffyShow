@@ -45,6 +45,7 @@ class MainPresenter @Inject constructor(
             fetchUserFromLocalUseCase.execute(Unit)
                 .applySchedulers()
                 .subscribe({
+                    if (it == null) return@subscribe
                     user = it
                     applicationState.user = it
                     applicationState.isAdmin = it.role.equals(Constants.ADMIN, false)

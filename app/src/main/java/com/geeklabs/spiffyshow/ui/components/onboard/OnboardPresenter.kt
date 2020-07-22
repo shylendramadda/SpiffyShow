@@ -37,7 +37,7 @@ class OnboardPresenter @Inject constructor(private val prefManager: PrefManager)
             ),
             WelcomeScreen(
                 3,
-                "Original Videos",
+                "Share Videos",
                 "SpiffyShow a great platform",
                 R.drawable.on_board_three
             )

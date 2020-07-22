@@ -2,6 +2,7 @@ package com.geeklabs.spiffyshow.ui.components.feedback
 
 import com.geeklabs.spiffyshow.R
 import com.geeklabs.spiffyshow.enums.Navigation
+import com.geeklabs.spiffyshow.extensions.input
 import com.geeklabs.spiffyshow.extensions.toast
 import com.geeklabs.spiffyshow.ui.base.BaseFragment
 import com.geeklabs.spiffyshow.ui.components.main.MainActivity
@@ -16,7 +17,7 @@ class FeedbackFragment : BaseFragment<FeedbackContract.View, FeedbackContract.Pr
 
     override fun initUI() {
         submitButton.setOnClickListener {
-            val feedbackText = feedbackET.text.toString()
+            val feedbackText = feedbackET.input()
             val rating = ratingBar.rating
             presenter?.onSubmitClicked(feedbackText, rating)
         }

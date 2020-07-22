@@ -13,7 +13,7 @@ import kotlinx.android.synthetic.main.item_layout.view.*
 
 class UserTrimAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    var items = mutableListOf<Trim>()
+    var trims = mutableListOf<Trim>()
     var user: User? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -21,22 +21,22 @@ class UserTrimAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         return ViewHolder(listItemView)
     }
 
-    override fun getItemCount() = items.size
+    override fun getItemCount() = trims.size
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        (holder as ViewHolder).bind(items[position])
+        (holder as ViewHolder).bind(trims[position])
     }
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        fun bind(item: Trim) = with(itemView) {
-            if (item.fileMetaData!!.path.isNotEmpty() && item.fileMetaData.size.isEmpty()) {
+        fun bind(trim: Trim) = with(itemView) {
+            if (trim.fileMetaData!!.path.isNotEmpty() && trim.fileMetaData.size.isEmpty()) {
                 youtubePlayer.visible = true
                 universalVideoView.visible = false
-                youtubePlayer.setYoutubeView(item.fileMetaData.path)
+                youtubePlayer.setYoutubeView(trim.fileMetaData.path)
             } else {
                 youtubePlayer.visible = false
                 universalVideoView.visible = true
-                universalVideoView.setVideoView(item.fileMetaData.path)
+                universalVideoView.setVideoView(trim.fileMetaData.path)
             }
         }
     }

@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.text.method.LinkMovementMethod
 import androidx.work.WorkManager
 import com.geeklabs.spiffyshow.R
+import com.geeklabs.spiffyshow.extensions.input
 import com.geeklabs.spiffyshow.extensions.launchActivity
 import com.geeklabs.spiffyshow.extensions.toast
 import com.geeklabs.spiffyshow.extensions.visible
@@ -50,14 +51,14 @@ class LoginActivity : BaseActivity<LoginContract.View, LoginContract.Presenter>(
         firebaseAuth = FirebaseAuth.getInstance()
         termsCB.movementMethod = LinkMovementMethod.getInstance()
         sendOtpButton.setOnClickListener {
-            mobileNumber = phoneNumberET.text.toString()
+            mobileNumber = phoneNumberET.input()
             presenter?.onVerifyButtonClicked(mobileNumber ?: "", termsCB.isChecked)
         }
         registerButton.setOnClickListener {
             navigateToRegisterScreen()
         }
         verifyOTPButton.setOnClickListener {
-            val otp = otpET.text.toString().trim()
+            val otp = otpET.input().trim()
             presenter?.onVerifyOTPClicked(otp, mobileNumber)
         }
         changeNumberButton.setOnClickListener {
@@ -66,7 +67,7 @@ class LoginActivity : BaseActivity<LoginContract.View, LoginContract.Presenter>(
             presenter?.onChangeNumberClicked()
         }
         resendButton.setOnClickListener {
-            mobileNumber = phoneNumberET.text.toString()
+            mobileNumber = phoneNumberET.input()
             presenter?.onVerifyButtonClicked(mobileNumber ?: "", termsCB.isChecked)
         }
     }

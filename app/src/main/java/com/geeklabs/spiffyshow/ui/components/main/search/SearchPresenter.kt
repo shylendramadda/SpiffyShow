@@ -87,4 +87,8 @@ class SearchPresenter @Inject constructor() : BasePresenter<SearchContract.View>
         finalList.sortedBy { it }
         getView()?.showItems(finalList.toMutableList())
     }
+
+    override fun onItemClicked(text: String) {
+        getView()?.navigateToHome()
+    }
 }

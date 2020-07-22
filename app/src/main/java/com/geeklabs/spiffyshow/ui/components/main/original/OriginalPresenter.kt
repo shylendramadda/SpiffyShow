@@ -5,7 +5,6 @@ import com.geeklabs.spiffyshow.data.local.models.user.User
 import com.geeklabs.spiffyshow.domain.local.original.DeleteOriginalLocalUseCase
 import com.geeklabs.spiffyshow.domain.local.original.FetchOriginalsFromLocalUseCase
 import com.geeklabs.spiffyshow.extensions.applySchedulers
-import com.geeklabs.spiffyshow.models.ApplicationState
 import com.geeklabs.spiffyshow.ui.base.BasePresenter
 import com.log4k.e
 import io.reactivex.Observable
@@ -14,20 +13,17 @@ import java.util.*
 import javax.inject.Inject
 
 class OriginalPresenter @Inject constructor(
-    private val applicationState: ApplicationState,
     private val fetchOriginalsFromLocalUseCase: FetchOriginalsFromLocalUseCase,
     private val deleteOriginalLocalUseCase: DeleteOriginalLocalUseCase
 ) : BasePresenter<OriginalContract.View>(),
     OriginalContract.Presenter {
 
     private var items = mutableListOf<Original>()
-    private var user: User? = null
 
     override fun onCreated() {
         super.onCreated()
         getView()?.initUI()
         loadItemsFromLocal()
-        this.user = applicationState.user
     }
 
     private fun loadItemsFromLocal() {
@@ -43,7 +39,7 @@ class OriginalPresenter @Inject constructor(
                     }
                     it.sortByDescending { item -> item.time }
                     items = it
-                    getView()?.showItems(it, user)
+                    getView()?.showItems(it)
                 }, {
                     getView()?.setState(error = true)
                     e("Error getItemsFromLocal: ${it.message}")
@@ -60,7 +56,7 @@ class OriginalPresenter @Inject constructor(
                     it.category.contains(inputQuery, true)
         }
         finalList.sortedBy { it.title }
-        getView()?.showItems(finalList.toMutableList(), user)
+        getView()?.showItems(finalList.toMutableList())
     }
 
     override fun onEditClicked(
@@ -76,7 +72,7 @@ class OriginalPresenter @Inject constructor(
         }.subscribeOn(Schedulers.io()).subscribe({}, {
             e("Error deleteCategoryLocal: ${it.message}")
         }))
-        getView()?.notifyAdapter()
+        getView()?.notifyItemDeleted(original)
     }
 
     override fun onProfileClicked(user: User) {

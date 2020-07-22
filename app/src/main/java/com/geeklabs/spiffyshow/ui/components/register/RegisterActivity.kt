@@ -2,6 +2,7 @@ package com.geeklabs.spiffyshow.ui.components.register
 
 import com.geeklabs.spiffyshow.R
 import com.geeklabs.spiffyshow.data.local.models.user.User
+import com.geeklabs.spiffyshow.extensions.input
 import com.geeklabs.spiffyshow.extensions.launchActivity
 import com.geeklabs.spiffyshow.extensions.toast
 import com.geeklabs.spiffyshow.extensions.visible
@@ -22,12 +23,12 @@ class RegisterActivity : BaseActivity<RegisterContract.View, RegisterContract.Pr
         titleToolbar.text = getString(R.string.registration)
         saveButton.text = getString(R.string.register)
         saveButton.setOnClickListener {
-            val name = nameET.text.toString().trim()
-            val mobile = phoneNumberET.text.toString().trim()
-            val email = emailET.text.toString().trim()
-            val address = addressET.text.toString().trim()
-            val interests = interestET.text.toString().trim()
-            val bio = bioET.text.toString().trim()
+            val name = nameET.input().trim()
+            val mobile = phoneNumberET.input().trim()
+            val email = emailET.input().trim()
+            val address = addressET.input().trim()
+            val interests = interestET.input().trim()
+            val bio = bioET.input().trim()
             val user = User(
                 name = name, phoneNumber = mobile, email = email,
                 addressInfo = address, interests = interests, bio = bio

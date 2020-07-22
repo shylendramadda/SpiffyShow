@@ -8,10 +8,7 @@ interface OriginalContract {
     interface View : BaseContract.View {
         fun initUI()
         fun setState(progress: Boolean = false, empty: Boolean = false, error: Boolean = false)
-        fun showItems(
-            originals: MutableList<Original>,
-            user: User?
-        )
+        fun showItems(originals: MutableList<Original>)
 
         fun showToast(title: String)
         fun navigateToTrim(
@@ -19,9 +16,9 @@ interface OriginalContract {
             isTrim: Boolean
         )
 
-        fun notifyAdapter()
         fun navigateToUserProfile(user: User)
         fun navigateToComment(original: Original)
+        fun notifyItemDeleted(original: Original)
     }
 
     interface Presenter : BaseContract.Presenter<View> {

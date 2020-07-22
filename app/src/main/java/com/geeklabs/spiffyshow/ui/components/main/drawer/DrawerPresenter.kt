@@ -52,5 +52,4 @@ class DrawerPresenter @Inject constructor(
     override fun onShareClicked() {
         getView()?.showShareIntent()
     }
-
 }

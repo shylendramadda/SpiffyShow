@@ -2,9 +2,11 @@ package com.geeklabs.spiffyshow.ui.components.main.search
 
 import androidx.appcompat.widget.SearchView
 import com.geeklabs.spiffyshow.R
+import com.geeklabs.spiffyshow.enums.Navigation
 import com.geeklabs.spiffyshow.extensions.setEmptyStateView
 import com.geeklabs.spiffyshow.extensions.visible
 import com.geeklabs.spiffyshow.ui.base.BaseFragment
+import com.geeklabs.spiffyshow.ui.components.main.MainActivity
 import kotlinx.android.synthetic.main.fragment_search.*
 import kotlinx.android.synthetic.main.view_state_layout.*
 import kotlinx.android.synthetic.main.view_state_layout.view.*
@@ -18,7 +20,9 @@ class SearchFragment : BaseFragment<SearchContract.View, SearchContract.Presente
     private lateinit var adapter: SearchAdapter
 
     override fun initUI() {
-        adapter = SearchAdapter()
+        adapter = SearchAdapter {
+            presenter?.onItemClicked(it)
+        }
         adapter.setEmptyStateView(stateLayout)
         recyclerViewSearch.adapter = adapter
 
@@ -48,6 +52,10 @@ class SearchFragment : BaseFragment<SearchContract.View, SearchContract.Presente
         adapter.items = list
         adapter.notifyDataSetChanged()
         if (list.size == 0) setState(empty = true)
+    }
+
+    override fun navigateToHome() {
+        (activity as MainActivity).navigateToScreen(Navigation.HOME)
     }
 
     override fun initPresenter() = searchPresenter

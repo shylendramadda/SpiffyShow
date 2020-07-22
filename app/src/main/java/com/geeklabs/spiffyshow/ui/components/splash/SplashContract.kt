@@ -8,8 +8,8 @@ interface SplashContract {
         fun navigateToWelcomeScreen()
         fun navigateToMainScreen()
         fun navigateToLoginScreen()
-        fun finishView()
         fun showNoInternetSnackBar()
+        fun finishView()
     }
 
     interface Presenter : BaseContract.Presenter<View> {

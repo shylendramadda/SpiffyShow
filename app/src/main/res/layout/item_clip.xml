@@ -1,33 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_margin="@dimen/spacing_nano"
-    android:background="@color/blackTertiary"
-    android:gravity="center">
+    android:layout_height="100dp"
+    android:layout_margin="@dimen/spacing_one"
+    android:stateListAnimator="@null">
 
-    <RelativeLayout
+    <com.geeklabs.spiffyshow.ui.common.CustomUniversalVideoView
+        android:id="@+id/universalVideoView"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:layout_gravity="center"
-        android:background="@color/blackPrimary"
+        android:layout_height="match_parent"
         android:stateListAnimator="@null"
-        tools:ignore="UselessParent">
+        android:visibility="gone"
+        tools:visibility="visible" />
 
-        <com.geeklabs.spiffyshow.ui.common.CustomYoutubePlayer
-            android:id="@+id/youtubePlayer"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:stateListAnimator="@null"
-            android:visibility="gone" />
+    <com.geeklabs.spiffyshow.ui.common.CustomYoutubePlayer
+        android:id="@+id/youtubePlayer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:stateListAnimator="@null"
+        android:visibility="gone" />
+</FrameLayout>
 
-        <com.geeklabs.spiffyshow.ui.common.CustomUniversalVideoView
-            android:id="@+id/universalVideoView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:visibility="gone"
-            tools:visibility="visible" />
-    </RelativeLayout>
-
-</RelativeLayout>

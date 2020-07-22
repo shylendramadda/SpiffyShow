@@ -15,19 +15,7 @@ class CustomUniversalVideoView(context: Context?, attrs: AttributeSet?) :
 
     init {
         View.inflate(context, R.layout.layout_universal_video_view, this)
-    }
 
-    fun setVideoView(path: String) {
-        val uri = Uri.parse(path)
-        videoViewUniversal?.setMediaController(mediaControllerUniversal)
-        videoViewUniversal?.setVideoURI(uri)
-        videoViewUniversal?.seekTo(1)
-        videoViewUniversal?.setZOrderMediaOverlay(false)
-        videoViewUniversal?.setOnErrorListener { mp, _, _ ->
-            mp.stop()
-            mp.release()
-            false
-        }
         videoViewUniversal?.setVideoViewCallback(object :
             UniversalVideoView.VideoViewCallback {
             override fun onBufferingStart(mediaPlayer: MediaPlayer?) {
@@ -47,5 +35,12 @@ class CustomUniversalVideoView(context: Context?, attrs: AttributeSet?) :
                 mediaPlayer?.start()
             }
         })
+    }
+
+    fun setVideoView(path: String) {
+        val uri = Uri.parse(path)
+        videoViewUniversal?.setMediaController(mediaControllerUniversal)
+        videoViewUniversal?.setVideoURI(uri)
+        videoViewUniversal?.seekTo(1000)
     }
 }

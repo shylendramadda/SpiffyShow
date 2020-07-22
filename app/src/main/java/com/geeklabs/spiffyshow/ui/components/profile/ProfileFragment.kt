@@ -32,9 +32,9 @@ class ProfileFragment : BaseFragment<ProfileContract.View, ProfileContract.Prese
             followText.text = getString(R.string.following)
         }
         trimAdapter = UserTrimAdapter()
-        originalAdapter = UserOriginalAdapter()
         recyclerViewTrims.adapter = trimAdapter
         trimAdapter.setEmptyStateView(stateLayout)
+        originalAdapter = UserOriginalAdapter()
         recyclerViewOriginals.adapter = originalAdapter
         originalAdapter.setEmptyStateView(stateLayout)
     }
@@ -69,26 +69,16 @@ class ProfileFragment : BaseFragment<ProfileContract.View, ProfileContract.Prese
         stateLayout.stateEmpty.emptyDescription.visible = false
     }
 
-    override fun showTrimItems(
-        items: MutableList<Trim>,
-        user: User?
-    ) {
+    override fun showTrimItems(trims: MutableList<Trim>) {
         trimAdapter.user = user
-        trimAdapter.items = items
+        trimAdapter.trims = trims
         trimAdapter.notifyDataSetChanged()
-        val isMoreThanOne = items.size > 1
-        if (isMoreThanOne) recyclerViewTrims.smoothScrollToPosition(0)
     }
 
-    override fun showOriginalItems(
-        originals: MutableList<Original>,
-        user: User?
-    ) {
+    override fun showOriginalItems(originals: MutableList<Original>) {
         originalAdapter.user = user
-        originalAdapter.items = originals
+        originalAdapter.originals = originals
         originalAdapter.notifyDataSetChanged()
-        val isMoreThanOne = originals.size > 1
-        if (isMoreThanOne) recyclerViewOriginals.smoothScrollToPosition(0)
     }
 
     override fun showToast(message: String) {

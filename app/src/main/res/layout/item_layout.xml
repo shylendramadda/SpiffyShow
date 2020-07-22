@@ -159,8 +159,7 @@
             android:layout_height="200dp"
             android:layout_gravity="center"
             android:background="@color/blackPrimary"
-            android:stateListAnimator="@null"
-            tools:ignore="UselessParent">
+            android:stateListAnimator="@null">
 
             <com.geeklabs.spiffyshow.ui.common.CustomYoutubePlayer
                 android:id="@+id/youtubePlayer"
@@ -171,13 +170,6 @@
 
             <com.geeklabs.spiffyshow.ui.common.CustomUniversalVideoView
                 android:id="@+id/universalVideoView"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:visibility="gone"
-                tools:visibility="visible" />
-
-            <com.geeklabs.spiffyshow.ui.common.CustomVideoPlayer
-                android:id="@+id/videoPlayer"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:visibility="gone"

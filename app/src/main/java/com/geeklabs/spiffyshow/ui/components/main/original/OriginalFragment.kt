@@ -5,9 +5,11 @@ import com.geeklabs.spiffyshow.R
 import com.geeklabs.spiffyshow.data.local.models.item.Original
 import com.geeklabs.spiffyshow.data.local.models.user.User
 import com.geeklabs.spiffyshow.extensions.*
+import com.geeklabs.spiffyshow.models.ApplicationState
 import com.geeklabs.spiffyshow.ui.base.BaseFragment
 import com.geeklabs.spiffyshow.ui.components.main.MainActivity
 import com.geeklabs.spiffyshow.utils.Constants
+import com.log4k.e
 import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.view_state_layout.*
 import kotlinx.android.synthetic.main.view_state_layout.view.*
@@ -18,6 +20,9 @@ class OriginalFragment : BaseFragment<OriginalContract.View, OriginalContract.Pr
 
     @Inject
     lateinit var originalPresenter: OriginalPresenter
+
+    @Inject
+    lateinit var applicationState: ApplicationState
     private lateinit var itemsAdapter: OriginalAdapter
 
     override fun initUI() {
@@ -66,15 +71,23 @@ class OriginalFragment : BaseFragment<OriginalContract.View, OriginalContract.Pr
     }
 
     override fun showItems(
-        originals: MutableList<Original>,
-        user: User?
+        originals: MutableList<Original>
     ) {
         itemsAdapter.items = originals
-        itemsAdapter.user = user
+        itemsAdapter.user = applicationState.user
         itemsAdapter.notifyDataSetChanged()
-        val isMoreThanOne = originals.size > 1
-        if (isMoreThanOne) recyclerViewItemList.smoothScrollToPosition(0)
-        if (originals.size == 0) setState(empty = true)
+    }
+
+    override fun notifyItemDeleted(original: Original) {
+        try {
+            val itemIndex = itemsAdapter.items.indexOfFirst { it.id == original.id }
+            if (itemIndex >= 0) {
+                itemsAdapter.items.removeAt(itemIndex)
+                itemsAdapter.notifyItemRemoved(itemIndex)
+            }
+        } catch (ex: IndexOutOfBoundsException) {
+            e("itemRemoved failed", ex)
+        }
     }
 
     override fun navigateToTrim(
@@ -82,10 +95,6 @@ class OriginalFragment : BaseFragment<OriginalContract.View, OriginalContract.Pr
         isTrim: Boolean
     ) {
         (activity as MainActivity).navigateToTrim(original, isTrim)
-    }
-
-    override fun notifyAdapter() {
-//        itemsAdapter.notifyDataSetChanged()
     }
 
     override fun navigateToUserProfile(user: User) {

@@ -70,13 +70,13 @@ class HomePresenter @Inject constructor(
         getView()?.navigateToTrim(item)
     }
 
-    override fun onDeleteClicked(item: Trim) {
+    override fun onDeleteClicked(trim: Trim) {
         disposables?.add(Observable.fromCallable {
-            deleteTrimsFromLocalUseCase.execute(item.id)
+            deleteTrimsFromLocalUseCase.execute(trim.id)
         }.subscribeOn(Schedulers.io()).subscribe({}, {
             e("Error deleteCategoryLocal: ${it.message}")
         }))
-        getView()?.notifyAdapter()
+        getView()?.notifyItemDeleted(trim)
     }
 
     override fun onCommentClicked(item: Trim) {

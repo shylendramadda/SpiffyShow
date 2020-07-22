@@ -4,6 +4,7 @@ import com.geeklabs.spiffyshow.R
 import com.geeklabs.spiffyshow.data.local.models.item.Comment
 import com.geeklabs.spiffyshow.data.local.models.item.Original
 import com.geeklabs.spiffyshow.data.local.models.item.Trim
+import com.geeklabs.spiffyshow.extensions.input
 import com.geeklabs.spiffyshow.extensions.onTextChanged
 import com.geeklabs.spiffyshow.extensions.setEmptyStateView
 import com.geeklabs.spiffyshow.extensions.visible
@@ -43,7 +44,7 @@ class CommentFragment : BaseFragment<CommentContract.View, CommentContract.Prese
             }
         }
         postTV.setOnClickListener {
-            presenter?.onPostCommentClicked(commentET.text.toString().trim())
+            presenter?.onPostCommentClicked(commentET.input().trim())
             commentET.setText("")
         }
     }

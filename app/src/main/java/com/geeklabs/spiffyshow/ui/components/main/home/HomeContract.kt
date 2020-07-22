@@ -18,6 +18,7 @@ interface HomeContract {
         fun notifyAdapter()
         fun navigateToUserProfile(user: User)
         fun navigateToComment(item: Trim)
+        fun notifyItemDeleted(trim: Trim)
     }
 
     interface Presenter : BaseContract.Presenter<View> {

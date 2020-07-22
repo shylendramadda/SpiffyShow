@@ -7,7 +7,9 @@ import com.geeklabs.spiffyshow.R
 import com.geeklabs.spiffyshow.extensions.inflate
 import kotlinx.android.synthetic.main.item_search.view.*
 
-class SearchAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class SearchAdapter(
+    private val onItemClicked: (String) -> Unit
+) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     var items = mutableListOf<String>()
 
@@ -25,6 +27,9 @@ class SearchAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(item: String) = with(itemView) {
             searchTextTV.text = "$item related videos"
+            setOnClickListener {
+                onItemClicked(item)
+            }
         }
     }
 }

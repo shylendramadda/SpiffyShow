@@ -1,6 +1,9 @@
 package com.geeklabs.spiffyshow.ui.components.onboard
 
 import android.content.res.ColorStateList
+import android.os.Bundle
+import android.view.Window
+import android.view.WindowManager
 import android.widget.RadioButton
 import androidx.core.content.ContextCompat
 import androidx.viewpager.widget.ViewPager
@@ -19,6 +22,15 @@ class OnboardActivity : BaseActivity<OnboardContract.View, OnboardContract.Prese
     @Inject
     lateinit var onboardPresenter: OnboardPresenter
     private lateinit var adapter: OnboardAdapter
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        requestWindowFeature(Window.FEATURE_NO_TITLE)
+        window.setFlags(
+            WindowManager.LayoutParams.FLAG_FULLSCREEN,
+            WindowManager.LayoutParams.FLAG_FULLSCREEN
+        )
+        super.onCreate(savedInstanceState)
+    }
 
     override fun initUI() {
         adapter = OnboardAdapter()

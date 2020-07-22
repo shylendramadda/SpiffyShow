@@ -12,6 +12,7 @@ import com.geeklabs.spiffyshow.models.FileMetaData
 import com.geeklabs.spiffyshow.ui.base.BaseFragment
 import com.geeklabs.spiffyshow.ui.components.main.MainActivity
 import com.geeklabs.spiffyshow.utils.Constants
+import com.log4k.e
 import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.view_state_layout.*
 import kotlinx.android.synthetic.main.view_state_layout.view.*
@@ -75,9 +76,18 @@ class HomeFragment : BaseFragment<HomeContract.View, HomeContract.Presenter>(), 
         trimAdapter.user = applicationState.user
         trimAdapter.items = items
         trimAdapter.notifyDataSetChanged()
-        val isMoreThanOne = items.size > 1
-        if (isMoreThanOne) recyclerViewItemList.smoothScrollToPosition(0)
-        if (items.size == 0) setState(empty = true)
+    }
+
+    override fun notifyItemDeleted(trim: Trim) {
+        try {
+            val itemIndex = trimAdapter.items.indexOfFirst { it.id == trim.id }
+            if (itemIndex >= 0) {
+                trimAdapter.items.removeAt(itemIndex)
+                trimAdapter.notifyItemRemoved(itemIndex)
+            }
+        } catch (ex: IndexOutOfBoundsException) {
+            e("itemRemoved failed", ex)
+        }
     }
 
     override fun showMessage(message: Int) {

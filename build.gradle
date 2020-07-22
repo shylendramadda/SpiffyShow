@@ -105,6 +105,8 @@ ext.libraries = [
         firebaseCrashlytics       : "com.google.firebase:firebase-crashlytics:17.0.0-beta01",
         //Video Trimmer
         videoTrimmer              : "life.knowledge4:k4l-video-trimmer:1.1.3-SNAPSHOT",
+        universalVideoView        : "com.linsea:universalvideoview:1.1.0@aar",
+        youtubePlayerView         : "com.pierfrancescosoffritti.androidyoutubeplayer:core:10.0.5",
 ]
 
 task clean(type: Delete) {

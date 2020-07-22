@@ -13,7 +13,7 @@ import kotlinx.android.synthetic.main.item_layout.view.*
 
 class UserOriginalAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    var items = mutableListOf<Original>()
+    var originals = mutableListOf<Original>()
     var user: User? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -21,10 +21,10 @@ class UserOriginalAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         return ViewHolder(listItemView)
     }
 
-    override fun getItemCount() = items.size
+    override fun getItemCount() = originals.size
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        (holder as ViewHolder).bind(items[position])
+        (holder as ViewHolder).bind(originals[position])
     }
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

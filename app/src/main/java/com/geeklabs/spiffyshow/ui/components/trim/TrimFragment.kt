@@ -7,6 +7,7 @@ import com.geeklabs.spiffyshow.data.local.models.item.Original
 import com.geeklabs.spiffyshow.data.local.models.item.Trim
 import com.geeklabs.spiffyshow.enums.Navigation
 import com.geeklabs.spiffyshow.extensions.alert
+import com.geeklabs.spiffyshow.extensions.input
 import com.geeklabs.spiffyshow.extensions.toast
 import com.geeklabs.spiffyshow.extensions.visible
 import com.geeklabs.spiffyshow.models.FileMetaData
@@ -51,11 +52,11 @@ class TrimFragment : BaseFragment<TrimContract.View, TrimContract.Presenter>(),
             categoryET.setText(original.category)
         }
         saveButton.setOnClickListener {
-            val externalUri = urlET.text.toString().trim()
-            val title = titleET.text.toString().trim()
-            val description = descriptionET.text.toString().trim()
-            val category = categoryET.text.toString().trim()
-            val originalUrl = originalUrlET.text.toString().trim()
+            val externalUri = urlET.input().trim()
+            val title = titleET.input().trim()
+            val description = descriptionET.input().trim()
+            val category = categoryET.input().trim()
+            val originalUrl = originalUrlET.input().trim()
             presenter?.onSaveClicked(externalUri, title, description, category, originalUrl, isTrim)
         }
         setFileMetaData()

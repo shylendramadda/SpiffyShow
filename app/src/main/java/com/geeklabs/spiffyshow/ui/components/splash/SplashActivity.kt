@@ -67,7 +67,7 @@ class SplashActivity : BaseActivity<SplashContract.View, SplashContract.Presente
     override fun getLayoutResId() = R.layout.activity_splash
 
     companion object {
-        private const val SPLASH_DELAY: Long = 2000 //1 second
+        private const val SPLASH_DELAY: Long = 2000
     }
 
 }

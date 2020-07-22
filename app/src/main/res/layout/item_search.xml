@@ -2,7 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
 
     <TextView
         android:id="@+id/searchTextTV"
@@ -12,5 +13,10 @@
         android:padding="@dimen/spacing_normal"
         android:textStyle="bold"
         tools:text="Search hint text based on user input" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/spacing_one"
+        android:background="@color/graySecondary" />
 
 </LinearLayout>

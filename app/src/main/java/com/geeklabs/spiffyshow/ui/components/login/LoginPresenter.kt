@@ -79,7 +79,7 @@ class LoginPresenter @Inject constructor(
                     phoneNumber = phoneNumber.replace("\\+91".toRegex(), "")
                 }
 //                loginUser(phoneNumber) // Just for local Testing TODO
-                saveUserInLocal(User(id = System.currentTimeMillis(), phoneNumber = phoneNumber))
+                saveUserInLocal(User(id = phoneNumber.toLong(), phoneNumber = phoneNumber))
             } else {
                 getView()?.showToast(stringUtils.getString(StringEnum.INVALID_CODE.resId))
             }
