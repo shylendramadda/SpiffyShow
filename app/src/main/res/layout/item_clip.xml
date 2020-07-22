@@ -3,8 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="100dp"
-    android:layout_margin="@dimen/spacing_one"
-    android:stateListAnimator="@null">
+    android:layout_margin="@dimen/spacing_one">
 
     <com.geeklabs.spiffyshow.ui.common.CustomUniversalVideoView
         android:id="@+id/universalVideoView"

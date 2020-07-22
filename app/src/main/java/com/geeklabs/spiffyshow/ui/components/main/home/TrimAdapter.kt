@@ -44,7 +44,8 @@ class TrimAdapter(
         fun bind(trim: Trim) = with(itemView) {
             shareTV.visible = true
             titleTV.text = trim.title
-            categoryTV.text = trim.category
+            categoryTV.text = trim.originalUrl
+            categoryTV.setTextColor(context.getColor(R.color.blueTertiary))
             descriptionTV.text = trim.description
             viewsTV.text = "${adapterPosition + 2} Views"
             dateTV.text = getTimeAgo(trim.time)
