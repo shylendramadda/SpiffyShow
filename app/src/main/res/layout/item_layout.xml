@@ -175,6 +175,7 @@
                 android:id="@+id/universalVideoView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:stateListAnimator="@null"
                 android:visibility="gone"
                 tools:visibility="visible" />
 

@@ -177,10 +177,10 @@
     <string name="file_not_exists">File Not Exists</string>
     <string name="enter_url">Enter youtube URL</string>
     <string name="enter_original_url">Enter original URL</string>
-    <string name="choose_from_device">Choose File From Device</string>
     <string name="upload_file">Upload a Video</string>
-    <string name="add_external_link">Add External Link</string>
+    <string name="choose_from_device">Add From Gallery</string>
+    <string name="add_external_link">Add From URL</string>
     <string name="choose_upload_option_text">Select an option to upload your video</string>
     <string name="following">Following</string>
-    <string name="terms_and_conditions">I read and accept the <a href="http://www.spiffyshow.com/">Terms and Conditions</a></string>
+    <string name="terms_and_conditions">I read and accept the <a href="http://www.spiffyshow.com/terms-conditions/">Terms and Conditions</a></string>
 </resources>

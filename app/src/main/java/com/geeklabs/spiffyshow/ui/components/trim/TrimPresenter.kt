@@ -54,7 +54,7 @@ class TrimPresenter @Inject constructor(
                 getView()?.showToast("Unable to get the file path")
             } else {
                 this.processedUri = uri
-                getView()?.showToast("Processed video successfully")
+                getView()?.showToast("Processed and trimmed video successfully")
             }
         } catch (e: Exception) {
             getView()?.showToast("Problem occurred while processing the video")
@@ -91,7 +91,10 @@ class TrimPresenter @Inject constructor(
             originalUrl.isNotEmpty() && !isValidURL(originalUrl) -> getView()?.showToast("Please enter a valid original URL")
             else -> {
                 if (trim != null || isTrim) { // save trimmed video
-                    if (processedUri?.isEmpty() == false) {
+                    if (processedUri == null) {
+                        getView()?.showToast("Please trim the video before save")
+                        return
+                    } else {
                         fileMetaData?.path = processedUri ?: ""
                     }
                     val trim = Trim(
@@ -108,7 +111,7 @@ class TrimPresenter @Inject constructor(
                         saveUpdateTrimInLocalUseCase.execute(mutableListOf(trim))
                     }.subscribeOn(Schedulers.newThread()).subscribe()
                     getView()?.navigateToHome()
-                } else { // update original
+                } else { // update original video
                     if (externalUri.isNotEmpty()) {
                         fileMetaData = FileMetaData(path = externalUri)
                     }
