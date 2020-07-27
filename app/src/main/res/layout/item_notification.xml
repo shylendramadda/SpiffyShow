@@ -50,7 +50,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginEnd="@dimen/spacing_normal"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:paddingBottom="@dimen/spacing_nano">
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -77,7 +78,8 @@
                     android:gravity="center_vertical"
                     android:padding="@dimen/spacing_nano"
                     android:src="@drawable/ic_icon_delete"
-                    android:tint="@color/blackPrimary" />
+                    android:tint="@color/blackPrimary"
+                    tools:ignore="ContentDescription" />
 
             </RelativeLayout>
 

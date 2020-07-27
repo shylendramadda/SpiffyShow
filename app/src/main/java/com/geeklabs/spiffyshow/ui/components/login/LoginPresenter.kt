@@ -1,6 +1,7 @@
 package com.geeklabs.spiffyshow.ui.components.login
 
 import com.geeklabs.spiffyshow.data.local.models.user.User
+import com.geeklabs.spiffyshow.domain.local.user.FetchUserFromLocalUseCase
 import com.geeklabs.spiffyshow.domain.local.user.LoginUseCase
 import com.geeklabs.spiffyshow.domain.local.user.SaveUpdateUserUseCase
 import com.geeklabs.spiffyshow.enums.StringEnum
@@ -14,6 +15,7 @@ import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.log4k.d
+import com.log4k.e
 import com.log4k.w
 import io.reactivex.Observable
 import io.reactivex.schedulers.Schedulers
@@ -24,6 +26,7 @@ class LoginPresenter @Inject constructor(
     private val prefManager: PrefManager,
     private val applicationState: ApplicationState,
     private val loginUseCase: LoginUseCase,
+    private val fetchUserFromLocalUseCase: FetchUserFromLocalUseCase,
     private val saveUpdateUserUseCase: SaveUpdateUserUseCase
 ) :
     BasePresenter<LoginContract.View>(),
@@ -79,7 +82,8 @@ class LoginPresenter @Inject constructor(
                     phoneNumber = phoneNumber.replace("\\+91".toRegex(), "")
                 }
 //                loginUser(phoneNumber) // Just for local Testing TODO
-                saveUserInLocal(User(id = phoneNumber.toLong(), phoneNumber = phoneNumber))
+//                saveUserInLocal(User(id = phoneNumber.toLong(), phoneNumber = phoneNumber))
+                getUserFromLocal(User(id = phoneNumber.toLong(), phoneNumber = phoneNumber))
             } else {
                 getView()?.showToast(stringUtils.getString(StringEnum.INVALID_CODE.resId))
             }
@@ -122,6 +126,23 @@ class LoginPresenter @Inject constructor(
         getView()?.hideProgress()
         getView()?.showToast(stringUtils.getString(StringEnum.WELCOME.resId))
         getView()?.navigateToMainScreen()
+    }
+
+    private fun getUserFromLocal(user: User) {
+        disposables?.add(
+            fetchUserFromLocalUseCase.execute(Unit)
+                .applySchedulers()
+                .subscribe({
+                    if (it == null) {
+                        saveUserInLocal(user)
+                        return@subscribe
+                    }
+                    saveUserInLocal(it)
+                }, {
+                    getView()?.showToast(stringUtils.getString(StringEnum.SOMETHING_WENT_WRONG.resId) + " Error: " + it.message)
+                    e("loadUserFromLocal ${it.message}")
+                })
+        )
     }
 
     override fun onChangeNumberClicked() {

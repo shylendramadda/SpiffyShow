@@ -34,7 +34,6 @@ import com.geeklabs.spiffyshow.utils.Utils
 import com.geeklabs.spiffyshow.utils.Utils.showHideViews
 import com.geeklabs.spiffyshow.worker.ItemsWorker
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.google.firebase.crashlytics.internal.common.CommonUtils.hideKeyboard
 import com.log4k.d
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.toolbar_main.*
@@ -342,9 +341,8 @@ class MainActivity : BaseActivity<MainContract.View, MainContract.Presenter>(), 
     }
 
     override fun onBackPressed() {
-        hideKeyboard(this, toolBar)
+        this.currentFocus?.setKeyboardVisibility(false)
         if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
-            this.currentFocus?.setKeyboardVisibility(false)
             closeDrawer()
         } else if (!navigationHandler.onBackPressed()) {
             Utils.showAlertDialog(
@@ -380,6 +378,11 @@ class MainActivity : BaseActivity<MainContract.View, MainContract.Presenter>(), 
     override fun showHideProgress(isShow: Boolean) {
         if (isShow) progress = Progress(this, R.string.please_wait, cancelable = false)
         progress?.apply { if (isShow) show() else dismiss() }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        stopService()
     }
 
     override fun initPresenter() = mainPresenter

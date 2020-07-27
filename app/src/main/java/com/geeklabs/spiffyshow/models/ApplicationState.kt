@@ -6,7 +6,6 @@ import java.util.*
 class ApplicationState {
     private var appStateMap: HashMap<String, Any?> = hashMapOf()
     var user: User? = null
-    var isAdmin: Boolean = false
 
     fun getAppState(appStateKey: String, default: Any): Any {
         if (appStateMap[appStateKey] == null) {
@@ -18,6 +17,5 @@ class ApplicationState {
     fun clear() {
         appStateMap.clear()
         user = null
-        isAdmin = false
     }
 }

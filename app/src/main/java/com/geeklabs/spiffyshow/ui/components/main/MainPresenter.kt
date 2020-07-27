@@ -48,7 +48,6 @@ class MainPresenter @Inject constructor(
                     if (it == null) return@subscribe
                     user = it
                     applicationState.user = it
-                    applicationState.isAdmin = it.role.equals(Constants.ADMIN, false)
                     getView()?.navigateToHome()
                 }, {
                     getView()?.showToast(stringUtils.getString(StringEnum.SOMETHING_WENT_WRONG.resId) + " Error: " + it.message)

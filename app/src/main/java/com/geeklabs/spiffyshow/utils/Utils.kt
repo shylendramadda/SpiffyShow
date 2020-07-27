@@ -230,9 +230,11 @@ object Utils {
         return when {
             seconds < 10 -> "just now"
             seconds < 60 -> "$seconds seconds ago"
+            minutes < 2 -> "$minutes minute ago"
             minutes < 60 -> "$minutes minutes ago"
             hours < 2 -> "$hours hour ago"
             hours < 24 -> "$hours hours ago"
+            days < 2 -> "$days day ago"
             else -> "$days days ago"
         }
     }

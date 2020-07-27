@@ -36,7 +36,7 @@ class UserTrimAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             } else {
                 youtubePlayer.visible = false
                 universalVideoView.visible = true
-                universalVideoView.setVideoView(trim.fileMetaData.path)
+                universalVideoView.setVideoView(trim.fileMetaData.path, trim.title)
             }
         }
     }

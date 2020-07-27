@@ -91,10 +91,10 @@ class TrimPresenter @Inject constructor(
             originalUrl.isNotEmpty() && !isValidURL(originalUrl) -> getView()?.showToast("Please enter a valid original URL")
             else -> {
                 if (trim != null || isTrim) { // save trimmed video
-                    if (processedUri == null) {
-                        getView()?.showToast("Please trim the video before save")
+                    if (processedUri == null && isTrim) {
+                        getView()?.showToast("Please trim the video and save before submit")
                         return
-                    } else {
+                    } else if (processedUri != null) {
                         fileMetaData?.path = processedUri ?: ""
                     }
                     val trim = Trim(

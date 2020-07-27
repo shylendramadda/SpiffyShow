@@ -9,6 +9,7 @@ interface TrimContract {
         fun navigateToHome()
         fun showHideProgress(isShow: Boolean)
         fun navigateToOriginals()
+        fun onBackPressed(): Boolean
     }
 
     interface Presenter : BaseContract.Presenter<View> {

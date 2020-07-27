@@ -89,7 +89,7 @@ class TrimFragment : BaseFragment<TrimContract.View, TrimContract.Presenter>(),
                         getString(R.string.file_not_exists_error)
                     ) {
                         positiveButton(getString(R.string.okay)) {
-                            navigateToOriginals()
+                            onBackPressed()
                         }
                         negativeButton("")
                     }.show()
@@ -150,20 +150,29 @@ class TrimFragment : BaseFragment<TrimContract.View, TrimContract.Presenter>(),
     }
 
     override fun navigateToHome() {
+        fragmentManager?.popBackStack()
         (activity as MainActivity).navigateToScreen(Navigation.HOME)
     }
 
     override fun navigateToOriginals() {
+        fragmentManager?.popBackStack()
         (activity as MainActivity).navigateToScreen(Navigation.ORIGINAL)
     }
 
     override fun onBackPressed(): Boolean {
-        if (fragmentManager?.backStackEntryCount ?: 0 > 0) {
-            (activity as MainActivity).setToolBarTitle(Navigation.ORIGINAL)
+        if (fragmentManager?.backStackEntryCount ?: 0 > 1) {
             fragmentManager?.popBackStack()
             return true
         }
         return false
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+        if (videoView?.isPlaying == true) {
+            videoView?.pause()
+            videoView?.stopPlayback()
+        }
     }
 
     override fun initPresenter() = trimPresenter

@@ -182,5 +182,6 @@
     <string name="add_external_link">Add From URL</string>
     <string name="choose_upload_option_text">Select an option to upload your video</string>
     <string name="following">Following</string>
-    <string name="terms_and_conditions">I read and accept the <a href="http://www.spiffyshow.com/terms-conditions/">Terms and Conditions</a></string>
+    <string name="terms_and_conditions">I read and accept the <a href="https://drive.google.com/file/d/1nuHhhmXiA6ECe-JNIxnbfadDH9DrM5Bb/view">Terms and Conditions</a></string>
+    <string name="about_app">SpiffyShow Is A Flexible Platform For Business, Education And Entertainment, Due To It Are Never Before Flexible Features To The Uploaded Original Content. \n\nIt Gives A Flexible Seamless Immersive Experience To The Multi-Users That They Can Trim, Enhance, Store, And Share Original Videos.</string>
 </resources>

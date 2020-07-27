@@ -21,7 +21,6 @@ class Constants {
         const val IS_WELCOME_SEEN = "IS_WELCOME_SEEN"
         const val IS_LOGIN = "IS_LOGIN"
         const val USER_ID = "USER_ID"
-        const val ADMIN = "ADMIN"
 
         const val ITEMS_WORKER = "ITEMS_WORKER"
 

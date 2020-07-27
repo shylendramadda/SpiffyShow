@@ -36,7 +36,7 @@ class UserOriginalAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             } else {
                 youtubePlayer.visible = false
                 universalVideoView.visible = true
-                universalVideoView.setVideoView(original.fileMetaData.path)
+                universalVideoView.setVideoView(original.fileMetaData.path, original.title)
             }
         }
     }
